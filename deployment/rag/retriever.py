@@ -617,6 +617,58 @@ class HybridRetriever:
                                  overlap_threshold=self._mmr_overlap_threshold)
         return selected
 
+    def retrieve_multi(
+        self,
+        queries: list[str],
+        rerank_query: str | None = None,
+        top_n: int = 3,
+        filters: MetadataFilters | None = None,
+    ) -> list[RetrievedChunk]:
+        """
+        Multi-query retrieval: run recall for each query, merge candidate pools,
+        rerank with the original question, then apply MMR.
+
+        Args:
+            queries:       2-3 retrieval queries from query_rewriter.rewrite_query()
+            rerank_query:  query used for cross-encoder reranking — should be the
+                           original user question (not sub-queries) for best relevance.
+                           Defaults to queries[0] if not provided.
+            top_n:         final number of diverse chunks to return
+            filters:       metadata filters; auto-extracted from queries[0] if None
+
+        Why merge then rerank with original question:
+            Each sub-query surfaces different chunks (better recall), but we want
+            the final ranking to reflect what the user *actually asked*, not which
+            sub-query happened to match best.
+        """
+        if not queries:
+            return []
+
+        if filters is None:
+            filters = parse_filters(queries[0])
+            _log_filters(queries[0], filters)
+
+        # Recall across all queries — dedup by chunk_id, keep best RRF score
+        merged: dict[str, RetrievedChunk] = {}
+        for q in queries:
+            dense_hits  = _dense_recall(q, self._collection, self._embed, self._recall_k, filters)
+            sparse_hits = _sparse_recall(q, self._bm25, self._recall_k, self._collection, filters)
+            for chunk in _reciprocal_rank_fusion(dense_hits, sparse_hits):
+                if chunk.chunk_id not in merged:
+                    merged[chunk.chunk_id] = chunk
+                elif chunk.rrf_score > merged[chunk.chunk_id].rrf_score:
+                    merged[chunk.chunk_id] = chunk
+
+        candidates = sorted(merged.values(), key=lambda c: c.rrf_score, reverse=True)
+
+        # Rerank with original question, not sub-queries
+        rerank_q = rerank_query or queries[0]
+        reranked = self._reranker.rerank(rerank_q, candidates)
+        selected = mmr_select(reranked, top_n,
+                              lambda_param=self._mmr_lambda,
+                              overlap_threshold=self._mmr_overlap_threshold)
+        return selected
+
     def retrieve_with_debug(
         self,
         query: str,

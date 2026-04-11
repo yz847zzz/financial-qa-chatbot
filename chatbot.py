@@ -3,10 +3,13 @@ Financial QA Chatbot — simple interactive pipeline.
 
 Architecture:
   user question
-    → classify_intent()   → Type1 / Type2 / Type3
-    → Type1: generate_sql() → execute_sql() → answer_from_sql()
-    → Type2: retrieve_chunks() → answer_from_context()
-    → Type3: direct_answer()
+    → decompose_question()           → sub-questions (or [question] if not compound)
+    → per sub-question:
+        → classify_intent()          → Type1 / Type2 / Type3
+        → Type1: generate_sql() → execute_sql() → answer_from_sql()
+        → Type2: rewrite_query() → retrieve_chunks_multi() → answer_from_context()
+        → Type3: direct_answer()
+    → if multiple sub-questions: synthesize answers
 
 All LLM calls are isolated in functions marked [VLLM_SWAP].
 To migrate to vLLM later, replace those functions with OpenAI-style API calls:
@@ -101,7 +104,7 @@ def load_vectordb():
         import chromadb
 
         sys.path.insert(0, str(ROOT / "deployment"))
-        from rag.retriever import HybridRetriever
+        from rag.retriever import HybridRetriever  # noqa: F401 (also used in retrieve_chunks_multi)
 
         client = chromadb.PersistentClient(path=str(VECTORDB_DIR))
         # Open without embedding_function to avoid ChromaDB 1.x name-conflict error.
@@ -327,12 +330,24 @@ def answer_from_sql(question: str, sql: str, sql_result: str, model, tokenizer) 
 
 # ── Step 2b: Type2 — RAG path ─────────────────────────────────────────────────
 
-def retrieve_chunks(question: str, retriever, top_n: int = 3) -> list:
+def retrieve_chunks_multi(
+    original_question: str,
+    queries: list[str],
+    retriever,
+    top_n: int = 3,
+) -> list:
     """
-    Hybrid retrieval: BM25 + dense vector → RRF merge → cross-encoder rerank → top_n.
-    Returns list of RetrievedChunk (see deployment/rag/retriever.py).
+    Multi-query hybrid retrieval.
+
+    Each query in `queries` runs a full BM25 + dense recall pass.
+    All candidate pools are merged (dedup by chunk_id, best RRF score wins),
+    then reranked by cross-encoder using `original_question` (not sub-queries),
+    then MMR-selected.
+
+    Using the original question for reranking keeps the final relevance judgement
+    anchored to what the user actually asked, not which sub-query happened to match.
     """
-    return retriever.retrieve(question, top_n=top_n)
+    return retriever.retrieve_multi(queries, rerank_query=original_question, top_n=top_n)
 
 
 def format_context(chunks: list) -> str:
@@ -383,23 +398,21 @@ def direct_answer(question: str, model, tokenizer) -> str:
 
 # ── Main pipeline ──────────────────────────────────────────────────────────────
 
-def answer(question: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
-           retriever) -> dict:
+def _answer_single(sub_q: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
+                   retriever) -> dict:
     """
-    Full pipeline: classify → route → answer.
-    Returns dict with intent, sql (if Type1), answer, and debug info.
+    Route a single, focused sub-question through the full pipeline.
+    Returns dict with intent, sql, answer, and debug info.
     """
-    result = {"question": question, "intent": None, "sql": None,
+    result = {"question": sub_q, "intent": None, "sql": None,
               "sql_repaired": None, "repairs": [], "answer": None, "error": None}
 
-    # Step 1: classify
-    intent = classify_intent(question, base_model, base_tok)
+    intent = classify_intent(sub_q, base_model, base_tok)
     result["intent"] = intent
     print(f"[Intent: {intent}]", flush=True)
 
     if intent == "Type1":
-        # NL2SQL → execute → answer
-        raw_sql = generate_sql(question, nl2sql_model, nl2sql_tok)
+        raw_sql = generate_sql(sub_q, nl2sql_model, nl2sql_tok)
         result["sql"] = raw_sql
         print(f"[SQL generated]: {raw_sql}", flush=True)
 
@@ -416,14 +429,10 @@ def answer(question: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
             return result
 
         sql_result_str = format_sql_result(rows)
-        result["answer"] = answer_from_sql(
-            question, repaired_sql, sql_result_str, base_model, base_tok
-        )
+        result["answer"] = answer_from_sql(sub_q, repaired_sql, sql_result_str,
+                                           base_model, base_tok)
 
     elif intent == "Type2":
-        # Hybrid RAG (BM25 + dense → RRF → cross-encoder rerank) → answer
-        # Metadata filters (ticker, filing_type, year) are extracted from the question
-        # automatically inside retriever.retrieve() — no extra step needed here.
         if retriever is None:
             result["answer"] = (
                 "I'd need to search through financial filings to answer that, "
@@ -431,14 +440,92 @@ def answer(question: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
             )
             return result
 
-        chunks = retrieve_chunks(question, retriever, top_n=3)
+        # Rewrite → multi-query retrieval → answer
+        sys.path.insert(0, str(ROOT / "deployment"))
+        from rag.query_rewriter import rewrite_query
+        queries = rewrite_query(sub_q, base_model, base_tok)
+        chunks  = retrieve_chunks_multi(sub_q, queries, retriever, top_n=3)
         context = format_context(chunks)
-        result["answer"] = answer_from_context(question, context, base_model, base_tok)
+        result["answer"] = answer_from_context(sub_q, context, base_model, base_tok)
 
     else:  # Type3
-        result["answer"] = direct_answer(question, base_model, base_tok)
+        result["answer"] = direct_answer(sub_q, base_model, base_tok)
 
     return result
+
+
+def answer(question: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
+           retriever) -> dict:
+    """
+    Full pipeline: decompose → per-sub-question route → synthesize.
+
+    Step 0: decompose_question() — splits compound questions into sub-questions.
+            "What was Apple revenue in 2023 and how did they discuss AI risks?"
+            → ["What was Apple revenue in FY2023?",
+               "How did Apple discuss AI risks in their 10-K?"]
+            Single questions pass through unchanged as [question].
+
+    Step 1 (per sub-question): classify_intent → Type1/Type2/Type3 routing.
+
+    Step 2 (Type2 only): rewrite_query() → 2-3 retrieval queries → retrieve_multi()
+            improves recall by merging candidate pools from different phrasings.
+
+    Step 3: if multiple sub-questions, synthesize partial answers into one reply.
+    """
+    sys.path.insert(0, str(ROOT / "deployment"))
+    from rag.query_rewriter import decompose_question
+
+    # Step 0: decompose
+    sub_questions = decompose_question(question, base_model, base_tok)
+
+    if len(sub_questions) == 1:
+        # Common case — single question, no synthesis needed
+        res = _answer_single(sub_questions[0], base_model, base_tok,
+                             nl2sql_model, nl2sql_tok, retriever)
+        res["question"] = question  # restore original phrasing
+        return res
+
+    # Compound question — route each sub-question independently
+    print(f"[Decomposed into {len(sub_questions)} sub-questions]", flush=True)
+    partial_results = []
+    for i, sub_q in enumerate(sub_questions, 1):
+        print(f"\n--- Sub-question {i}/{len(sub_questions)}: {sub_q} ---", flush=True)
+        partial_results.append(_answer_single(sub_q, base_model, base_tok,
+                                              nl2sql_model, nl2sql_tok, retriever))
+
+    # Synthesize partial answers
+    combined_answer = _synthesize_answers(question, partial_results, base_model, base_tok)
+
+    # Return merged result (first sub-question's metadata + combined answer)
+    merged = partial_results[0].copy()
+    merged["question"] = question
+    merged["answer"]   = combined_answer
+    merged["sub_results"] = partial_results
+    return merged
+
+
+SYNTHESIZE_SYSTEM = (
+    "You are a financial analyst assistant. "
+    "You have answers to several sub-questions that together address the user's original question. "
+    "Combine them into a single, coherent, well-structured response. "
+    "Do not repeat information. Be concise."
+)
+
+
+def _synthesize_answers(original_q: str, partial_results: list[dict],
+                         model, tokenizer) -> str:
+    """Combine partial answers from multiple sub-questions into one reply."""
+    parts = []
+    for i, r in enumerate(partial_results, 1):
+        parts.append(f"Sub-question {i}: {r['question']}\nAnswer: {r['answer']}")
+    combined = "\n\n".join(parts)
+
+    messages = [
+        {"role": "system", "content": SYNTHESIZE_SYSTEM},
+        {"role": "user",   "content":
+            f"Original question: {original_q}\n\n{combined}"},
+    ]
+    return llm_generate(model, tokenizer, messages, max_new_tokens=600)
 
 
 # ── Entry point ────────────────────────────────────────────────────────────────
