@@ -96,6 +96,85 @@ TYPE2_CASE = {
     ],
 }
 
+# ── New decomposition test cases ──────────────────────────────────────────────
+
+DECOMPOSE_CASES = [
+    {
+        "type":     "Single Type1 (no decomposition)",
+        "question": "What was Microsoft's net income in FY2022?",
+        "checks": [
+            lambda r: r.get("sub_results") is None,          # no decomposition
+            lambda r: r["intent"] == "Type1",
+            lambda r: r["sql"] is not None,
+            lambda r: "MSFT" in (r["sql_repaired"] or "").upper(),
+            lambda r: "FY2022" in (r["sql_repaired"] or ""),
+            lambda r: r["error"] is None,
+            lambda r: r["answer"] is not None and len(r["answer"]) > 10,
+        ],
+        "check_names": [
+            "no decomposition (single question)",
+            "intent==Type1",
+            "SQL generated",
+            "ticker MSFT",
+            "year FY2022",
+            "no exec error",
+            "answer non-empty",
+        ],
+    },
+    {
+        "type":     "Multi-Type (Type1 + Type2 compound)",
+        "question": (
+            "What was Apple's revenue in FY2023 and "
+            "how did they describe their supply chain risks?"
+        ),
+        "checks": [
+            lambda r: r.get("sub_results") is not None,       # decomposed
+            lambda r: len(r["sub_results"]) == 2,             # split into 2
+            lambda r: any(s["intent"] == "Type1" for s in r["sub_results"]),
+            lambda r: any(s["intent"] == "Type2" for s in r["sub_results"]),
+            lambda r: any(s["sql"] is not None for s in r["sub_results"]),
+            lambda r: all(s["error"] is None for s in r["sub_results"]),
+            lambda r: r["answer"] is not None and len(r["answer"]) > 20,
+        ],
+        "check_names": [
+            "question was decomposed",
+            "exactly 2 sub-questions",
+            "one Type1 sub-question",
+            "one Type2 sub-question",
+            "SQL generated for Type1",
+            "no exec errors",
+            "synthesized answer non-empty",
+        ],
+    },
+    {
+        "type":     "Multi-Type1 (two SQL questions)",
+        "question": (
+            "What was Apple's revenue in FY2023 and "
+            "what was Microsoft's net income in FY2022?"
+        ),
+        "checks": [
+            lambda r: r.get("sub_results") is not None,       # decomposed
+            lambda r: len(r["sub_results"]) == 2,             # split into 2
+            lambda r: all(s["intent"] == "Type1" for s in r["sub_results"]),
+            lambda r: all(s["sql"] is not None for s in r["sub_results"]),
+            lambda r: any("AAPL" in (s["sql_repaired"] or "").upper() for s in r["sub_results"]),
+            lambda r: any("MSFT" in (s["sql_repaired"] or "").upper() for s in r["sub_results"]),
+            lambda r: all(s["error"] is None for s in r["sub_results"]),
+            lambda r: r["answer"] is not None and len(r["answer"]) > 20,
+        ],
+        "check_names": [
+            "question was decomposed",
+            "exactly 2 sub-questions",
+            "both sub-questions Type1",
+            "both have SQL",
+            "AAPL in one SQL",
+            "MSFT in other SQL",
+            "no exec errors",
+            "synthesized answer non-empty",
+        ],
+    },
+]
+
 
 def run_case(case: dict, base_model, base_tok, nl2sql_model, nl2sql_tok, retriever) -> bool:
     print(f"\n{'─'*60}")
@@ -107,13 +186,24 @@ def run_case(case: dict, base_model, base_tok, nl2sql_model, nl2sql_tok, retriev
     elapsed = time.time() - t0
 
     # Print pipeline trace
-    print(f"  intent  : {res['intent']}")
-    if res["sql"]:
-        print(f"  sql     : {res['sql_repaired'][:100]}")
-    if res["repairs"]:
-        print(f"  repairs : {res['repairs']}")
-    if res["error"]:
-        print(f"  ERROR   : {res['error']}")
+    sub_results = res.get("sub_results")
+    if sub_results:
+        print(f"  decomposed : {len(sub_results)} sub-questions")
+        for i, s in enumerate(sub_results, 1):
+            print(f"    [{i}] intent={s['intent']} | q={s['question']}")
+            if s["sql_repaired"]:
+                print(f"        sql={s['sql_repaired'][:90]}")
+            if s["error"]:
+                print(f"        ERROR={s['error']}")
+            print(f"        answer={s['answer'][:100] if s['answer'] else 'None'}")
+    else:
+        print(f"  intent  : {res['intent']}")
+        if res["sql"]:
+            print(f"  sql     : {res['sql_repaired'][:100]}")
+        if res["repairs"]:
+            print(f"  repairs : {res['repairs']}")
+        if res["error"]:
+            print(f"  ERROR   : {res['error']}")
     print(f"  answer  : {(res['answer'] or '')[:200]}")
     print(f"  time    : {elapsed:.1f}s")
 
@@ -137,6 +227,8 @@ def run_case(case: dict, base_model, base_tok, nl2sql_model, nl2sql_tok, retriev
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--no-rag", action="store_true", help="Skip VectorDB/RAG test")
+    parser.add_argument("--decompose-only", action="store_true",
+                        help="Run only the three decomposition test cases")
     args = parser.parse_args()
 
     print("=" * 60)
@@ -163,9 +255,14 @@ def main():
             print("  VectorDB: not available — skipping Type2 test")
 
     # ── Run test cases ─────────────────────────────────────────────
-    cases = list(TEST_CASES)
-    if retriever and not args.no_rag:
-        cases.append(TYPE2_CASE)
+    if args.decompose_only:
+        # Multi-Type2 decompose case needs RAG; others don't
+        cases = DECOMPOSE_CASES
+    else:
+        cases = list(TEST_CASES)
+        if retriever and not args.no_rag:
+            cases.append(TYPE2_CASE)
+        cases.extend(DECOMPOSE_CASES)
 
     results = []
     for case in cases:

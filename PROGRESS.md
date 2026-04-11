@@ -90,9 +90,45 @@
 
 ---
 
+## 2026-04-11
+
+**Security — repo hygiene**
+- Removed GitHub token from git remote URL (was embedded in local `.git/config`, never committed)
+- Confirmed no hardcoded secrets in any committed file — all OpenAI key usage reads from `os.environ.get("OPENAI_API_KEY")`
+- Added feedback memory rule: all credentials go in `.env` file (already in `.gitignore`), never hardcoded
+
+**Part 3 (Deployment) — Query rewriting pipeline**
+- Created `deployment/rag/query_rewriter.py` — prompt-based, no SFT needed:
+  - `rewrite_query(question, model, tokenizer) → list[str]`: expands a Type2 question into 2-3 retrieval-focused phrasings using few-shot Llama prompt; improves recall by surfacing different relevant chunks per phrasing
+  - `decompose_question(question, model, tokenizer) → list[str]`: splits compound questions ("A and B?") into independent sub-questions; returns `[question]` unchanged for single questions; falls back to original on JSON parse failure
+- Added `HybridRetriever.retrieve_multi(queries, rerank_query, top_n)` to `retriever.py`:
+  - Runs BM25 + dense recall for each query independently
+  - Merges all candidate pools (dedup by chunk_id, best RRF score wins)
+  - Reranks with the **original user question** (not sub-queries) — keeps relevance anchored to user intent
+  - Applies MMR as before
+
+**Part 3 (Deployment) — Multi-intent pipeline**
+- Rewrote `chatbot.py` main pipeline:
+  - New flow: `decompose_question()` → per sub-question: `classify_intent()` → route → answer → synthesize
+  - Type2 path now: `rewrite_query()` → `retrieve_multi()` → `answer_from_context()`
+  - Compound questions route each sub-question independently (one may go Type1 SQL, another Type2 RAG)
+  - `_synthesize_answers()`: combines partial answers into one coherent reply via LLM
+- Architecture decision: rewriting happens **after** intent classification (Type2 only), not before — avoids polluting intent signal with filing terminology
+
+**Testing — decomposition smoke tests**
+- Added 3 new cases to `smoke_test.py --decompose-only`:
+  - **Single Type1**: MSFT net income FY2022 — no decomposition triggered, correct SQL, answer `$72.738B` ✓ (5.0s)
+  - **Multi-Type (T1+T2)**: Apple revenue + supply chain risks — split into 2, Type1 SQL executed, Type2 RAG retrieved, synthesized ✓ (33.1s)
+  - **Multi-Type1**: Apple revenue + MSFT net income — split into 2, both Type1, both SQLs executed, clean combined answer ✓ (12.2s)
+- All 3 PASS
+
+---
+
 ## Remaining
 
+- [ ] Intent classifier: improve few-shot prompt (current keyword+LLM fallback is functional but brittle)
 - [ ] Train intent classifier adapter (currently keyword + base Llama placeholder)
 - [ ] Train query rewriter adapter
 - [ ] vLLM deployment (requires Linux/WSL2; `[VLLM_SWAP]` markers already in chatbot.py)
 - [ ] Improve Type2 RAG quality (AI strategy chunks score low — consider larger chunk windows)
+
