@@ -1,0 +1,72 @@
+# ── Model weights (too large for git) ─────────────────────────────────────────
+models/llama/
+models/gemma/
+models/nl2sql/checkpoint-*/
+models/nl2sql/optimizer.pt
+models/nl2sql/*.png
+models/*/snapshots/
+# Keep adapter weights (small ~47MB) and eval results
+!models/nl2sql/adapter_config.json
+!models/nl2sql/adapter_model.safetensors
+!models/nl2sql/tokenizer.json
+!models/nl2sql/tokenizer_config.json
+!models/nl2sql/chat_template.jinja
+!models/nl2sql/run_metadata.json
+!models/nl2sql/eval_results.json
+!models/nl2sql/exec_accuracy.json
+
+# ── Raw data (large binary / proprietary filings) ─────────────────────────────
+data/filings/
+data/vectordb/
+data/financials.db
+data/analysis/
+data/panel.csv
+# Keep dataset files (JSONL, small)
+!data/nl2sql/
+!data/intent/
+!data/rewriter/
+
+# ── Python ────────────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ── Environments ──────────────────────────────────────────────────────────────
+.env
+.venv/
+venv/
+env/
+*.env
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+train.log
+eval.log
+smoke_test.log
+demo.log
+
+# ── OS / Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Claude Code internal ──────────────────────────────────────────────────────
+.claude/
+
+# ── Jupyter ───────────────────────────────────────────────────────────────────
+.ipynb_checkpoints/
+*.ipynb
+
+# ── HuggingFace cache ─────────────────────────────────────────────────────────
+.cache/
+hf_home/

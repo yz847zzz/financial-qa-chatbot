@@ -1,0 +1,37 @@
+# ── data_pipeline ─────────────────────────────────────────────────────────────
+beautifulsoup4>=4.12
+lxml>=5.0
+pdfplumber>=0.10
+chromadb>=0.5
+sentence-transformers>=3.0
+matplotlib>=3.8
+seaborn>=0.13
+
+# ── finetune ──────────────────────────────────────────────────────────────────
+torch>=2.3
+transformers>=4.41
+peft>=0.11
+trl>=0.9
+bitsandbytes>=0.43
+accelerate>=0.30
+datasets>=2.19
+rouge-score>=0.1
+pyyaml>=6.0
+
+# ── retrieval / RAG ───────────────────────────────────────────────────────────
+rank-bm25>=0.2.2
+
+# ── deployment / chatbot ──────────────────────────────────────────────────────
+# For future vLLM migration (OpenAI-compatible API):
+#   pip install vllm  (Linux only)
+#   pip install openai>=1.30
+
+# ── data generation (optional — only needed to rebuild NL2SQL dataset) ────────
+openai>=1.30
+
+# ── shared ────────────────────────────────────────────────────────────────────
+loguru>=0.7
+pandas>=2.0
+numpy>=1.26
+requests>=2.31
+pytest>=8.0

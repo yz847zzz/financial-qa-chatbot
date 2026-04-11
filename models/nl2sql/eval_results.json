@@ -1,0 +1,1442 @@
+[
+  {
+    "question": "What is CVX's inventory for FY2023?",
+    "reference": "SELECT inventories FROM panel WHERE ticker='CVX' AND year='FY2023';",
+    "base_pred": "SELECT inventories FROM panel WHERE ticker = 'CVX' AND year = 'FY2023'",
+    "ft_pred": "SELECT inventories FROM panel WHERE ticker='CVX' AND year='FY2023';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "How did UnitedHealth's net earnings change from FY2022 to FY2023?",
+    "reference": "SELECT a.year, a.net_income, b.net_income AS prev_year, (a.net_income - b.net_income) AS change\nFROM panel a JOIN panel b ON a.ticker=b.ticker\nWHERE a.ticker='UNH' AND a.year='FY2023' AND b.year='FY2022'",
+    "base_pred": "SELECT net_income FROM panel WHERE ticker = 'UNH' AND year = 'FY2023'",
+    "ft_pred": "SELECT a.year, a.net_income, b.net_income, (a.net_income - b.net_income) AS yoy_change FROM panel a JOIN panel b ON a.ticker = b.ticker AND a.year = 'FY2023' AND b.year = 'FY2022' WHERE a.ticker = 'UNH' AND a.net_income IS NOT NULL AND b.net_income IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "When did ExxonMobil file their latest 10-K report?",
+    "reference": "SELECT MAX(date) FROM filing_metadata WHERE ticker = 'XOM' AND filing_type = '10-K';",
+    "base_pred": "SELECT date FROM filing_metadata WHERE ticker = 'XOM' AND filing_type = '10-K'",
+    "ft_pred": "SELECT date FROM filing_metadata WHERE ticker='XOM' AND filing_type='10-K' ORDER BY date DESC LIMIT 1;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 0,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 0,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "How does Gilead's net profit margin compare to Pfizer's in FY2022?",
+    "reference": "SELECT ticker, net_margin FROM panel WHERE ticker IN ('GILD','PFE') AND year='FY2022' ORDER BY net_margin DESC;",
+    "base_pred": "SELECT net_margin FROM panel WHERE ticker = 'GILEAD' AND year = 'FY2022' AND net_income IS NOT NULL\nUNION\nSELECT net_margin FROM panel WHERE ticker = 'PFIZER' AND year = 'FY2022' AND net_income IS NOT NULL",
+    "ft_pred": "SELECT ticker, net_margin FROM panel WHERE ticker IN ('GILD','PFE') AND year='FY2022' ORDER BY net_margin DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Which 10 companies had the highest bottom line in FY2020?",
+    "reference": "SELECT ticker, net_income FROM panel WHERE year='FY2020' AND net_income IS NOT NULL ORDER BY net_income DESC LIMIT 10",
+    "base_pred": "SELECT ticker FROM panel WHERE year = 'FY2020' ORDER BY net_income DESC LIMIT 10",
+    "ft_pred": "SELECT ticker, net_income FROM panel WHERE year='FY2020' AND net_income IS NOT NULL ORDER BY net_income DESC LIMIT 10",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Which companies had the highest operating income in FY2020?",
+    "reference": "SELECT ticker, operating_income FROM panel WHERE year = 'FY2020' AND operating_income IS NOT NULL ORDER BY operating_income DESC LIMIT 3;",
+    "base_pred": "SELECT company FROM panel WHERE operating_income IS NOT NULL AND year = 'FY2020' ORDER BY operating_income DESC LIMIT 1",
+    "ft_pred": "SELECT ticker, operating_income FROM panel WHERE year = 'FY2020' AND operating_income IS NOT NULL ORDER BY operating_income DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Find the year-over-year change in goodwill for AVGO between FY2022 and FY2023.",
+    "reference": "SELECT p1.ticker, p1.year, p1.goodwill - p2.goodwill AS yoy_change FROM panel p1 JOIN panel p2 ON p1.ticker = p2.ticker AND p1.year = 'FY2023' AND p2.year = 'FY2022' WHERE p1.ticker = 'AVGO' AND p1.goodwill IS NOT NULL AND p2.goodwill IS NOT NULL;",
+    "base_pred": "SELECT T1.goodwill - T2.goodwill FROM panel AS T1 INNER JOIN panel AS T2 ON T1.ticker = T2.ticker AND T1.year = T2.year WHERE T1.ticker = 'AVGO' AND T1.year = 'FY2022' AND T2.year = 'FY2023'",
+    "ft_pred": "SELECT p1.goodwill - p2.goodwill AS goodwill_change FROM panel p1 JOIN panel p2 ON p1.ticker = p2.ticker AND p1.year = 'FY2023' AND p2.year = 'FY2022' WHERE p1.ticker = 'AVGO' AND p1.goodwill IS NOT NULL AND p2.goodwill IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Find the average current liabilities for FY2024.",
+    "reference": "SELECT AVG(current_liabilities) FROM panel WHERE year = 'FY2024' AND current_liabilities IS NOT NULL;",
+    "base_pred": "SELECT AVG(current_liabilities) FROM panel WHERE year = 'FY2024'",
+    "ft_pred": "SELECT AVG(current_liabilities) FROM panel WHERE year = 'FY2024' AND current_liabilities IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Compare Costco operating result in FY2022 vs FY2023.",
+    "reference": "SELECT year, operating_income FROM panel WHERE ticker='COST' AND year IN ('FY2022','FY2023') ORDER BY year;",
+    "base_pred": "SELECT operating_income FROM panel WHERE year = 'FY2022' AND ticker = 'COST' UNION ALL SELECT operating_income FROM panel WHERE year = 'FY2023' AND ticker = 'COST'",
+    "ft_pred": "SELECT year, operating_income FROM panel WHERE ticker='COST' AND year IN ('FY2022','FY2023') ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show the operating income trend for AMGN from FY2021 to FY2024.",
+    "reference": "SELECT year, operating_income FROM panel WHERE ticker = 'AMGN' AND year IN ('FY2021', 'FY2022', 'FY2023', 'FY2024') AND operating_income IS NOT NULL ORDER BY year;",
+    "base_pred": "SELECT operating_income FROM panel WHERE ticker = 'AMGN' AND year = 'FY2021'",
+    "ft_pred": "SELECT year, operating_income FROM panel WHERE ticker = 'AMGN' AND year IN ('FY2021', 'FY2022', 'FY2023', 'FY2024') AND operating_income IS NOT NULL ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Which companies had profitable (net margin > 10%) in FY2022?",
+    "reference": "SELECT ticker, net_margin FROM panel WHERE year='FY2022' AND net_margin > 0.1 ORDER BY net_margin DESC;",
+    "base_pred": "SELECT company FROM filing_metadata WHERE date = '2022-12-31' AND ticker IN ( SELECT ticker FROM panel WHERE year = 'FY2022' AND net_margin > 10 )",
+    "ft_pred": "SELECT ticker, net_margin FROM panel WHERE year='FY2022' AND net_margin > 0.1 ORDER BY net_margin DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What are Gilead's D and A and long term debt in FY2020?",
+    "reference": "SELECT da, long_term_debt FROM panel WHERE ticker='GILD' AND year='FY2020';",
+    "base_pred": "SELECT da, da, long_term_debt FROM panel WHERE ticker = 'Gilead Sciences Inc.' AND year = 'FY2020'",
+    "ft_pred": "SELECT da, long_term_debt FROM panel WHERE ticker='GILD' AND year='FY2020';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show me UNH's interest paid alongside goodwill in FY2024.",
+    "reference": "SELECT interest_expense, goodwill FROM panel WHERE ticker='UNH' AND year='FY2024';",
+    "base_pred": "SELECT interest_expense, goodwill FROM panel WHERE ticker = 'UNH' AND year = 'FY2024'",
+    "ft_pred": "SELECT interest_expense, goodwill FROM panel WHERE ticker='UNH' AND year='FY2024';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is the year-over-year change in net income for META from FY2020 to FY2021?",
+    "reference": "SELECT p1.net_income - p2.net_income AS net_income_change FROM panel p1 JOIN panel p2 ON p1.ticker = p2.ticker AND p1.year = 'FY2021' AND p2.year = 'FY2020' WHERE p1.ticker = 'META' AND p1.net_income IS NOT NULL AND p2.net_income IS NOT NULL;",
+    "base_pred": "SELECT net_income - LAG(net_income) OVER (ORDER BY year) AS net_income_change\nFROM panel\nWHERE ticker = 'META' AND year = 'FY2021' AND year = 'FY2020'",
+    "ft_pred": "SELECT p1.ticker, p1.year, p1.net_income - p2.net_income AS yoy_change FROM panel p1 JOIN panel p2 ON p1.ticker = p2.ticker AND p1.year = 'FY2021' AND p2.year = 'FY2020' WHERE p1.ticker = 'META' AND p1.net_income IS NOT NULL AND p2.net_income IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show Visa's interest cost trend from FY2020 to FY2024.",
+    "reference": "SELECT year, interest_expense FROM panel WHERE ticker='V' AND interest_expense IS NOT NULL ORDER BY year;",
+    "base_pred": "SELECT interest_expense FROM panel WHERE ticker = 'V' AND year = 'FY2020'",
+    "ft_pred": "SELECT year, interest_expense FROM panel WHERE ticker='V' AND interest_expense IS NOT NULL ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Report NVIDIA liquidity ratio for fiscal 2021.",
+    "reference": "SELECT current_ratio FROM panel WHERE ticker='NVDA' AND year='FY2021';",
+    "base_pred": "SELECT current_ratio FROM panel WHERE year = 'FY2021'",
+    "ft_pred": "SELECT current_ratio FROM panel WHERE ticker='NVDA' AND year='FY2021';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Find the retained earnings and other assets for PG in FY2024.",
+    "reference": "SELECT retained_earnings, other_assets FROM panel WHERE ticker = 'PG' AND year = 'FY2024' AND retained_earnings IS NOT NULL AND other_assets IS NOT NULL;",
+    "base_pred": "SELECT retained_earnings, other_assets FROM panel WHERE ticker = 'PG' AND year = 'FY2024'",
+    "ft_pred": "SELECT retained_earnings, other_assets FROM panel WHERE ticker = 'PG' AND year = 'FY2024' AND retained_earnings IS NOT NULL AND other_assets IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Determine the top 4 companies by debt to assets ratio in FY2022.",
+    "reference": "SELECT ticker, debt_to_assets FROM panel WHERE year = 'FY2022' AND debt_to_assets IS NOT NULL ORDER BY debt_to_assets DESC LIMIT 4;",
+    "base_pred": "SELECT ticker, SUM(current_liabilities) / SUM(total_assets) FROM panel WHERE year = 'FY2022' GROUP BY ticker ORDER BY SUM(current_liabilities) / SUM(total_assets) DESC LIMIT 4",
+    "ft_pred": "SELECT ticker, debt_to_assets FROM panel WHERE year = 'FY2022' AND debt_to_assets IS NOT NULL ORDER BY debt_to_assets DESC LIMIT 4;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Get the retained earnings and other assets for AMGN in FY2020.",
+    "reference": "SELECT retained_earnings, other_assets FROM panel WHERE ticker = 'AMGN' AND year = 'FY2020' AND retained_earnings IS NOT NULL AND other_assets IS NOT NULL;",
+    "base_pred": "SELECT retained_earnings, other_assets FROM panel WHERE ticker = 'AMGN' AND year = 'FY2020'",
+    "ft_pred": "SELECT retained_earnings, other_assets FROM panel WHERE ticker = 'AMGN' AND year = 'FY2020' AND retained_earnings IS NOT NULL AND other_assets IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What was Merck's PP&E purchases in FY2021?",
+    "reference": "SELECT capex FROM panel WHERE ticker='MRK' AND year='FY2021'",
+    "base_pred": "SELECT capex FROM panel WHERE ticker = 'MRK' AND year = 'FY2021'",
+    "ft_pred": "SELECT capex FROM panel WHERE ticker='MRK' AND year='FY2021';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 0,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 0,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Retrieve the total revenue of DIS in fiscal year FY2021.",
+    "reference": "SELECT total_revenue FROM panel WHERE ticker = 'DIS' AND year = 'FY2021';",
+    "base_pred": "SELECT total_revenue FROM panel WHERE ticker = 'DIS' AND year = 'FY2021'",
+    "ft_pred": "SELECT total_revenue FROM panel WHERE ticker = 'DIS' AND year = 'FY2021' AND total_revenue IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show AAPL vs WMT current assets for FY2021.",
+    "reference": "SELECT ticker, current_assets FROM panel WHERE ticker IN ('AAPL','WMT') AND year='FY2021' ORDER BY current_assets DESC;",
+    "base_pred": "SELECT current_assets FROM panel WHERE ticker = 'AAPL' AND year = 'FY2021' UNION ALL SELECT current_assets FROM panel WHERE ticker = 'WMT' AND year = 'FY2021'",
+    "ft_pred": "SELECT ticker, current_assets FROM panel WHERE ticker IN ('AAPL','WMT') AND year='FY2021' ORDER BY current_assets DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "When did XOM file their most recent 10-K?",
+    "reference": "SELECT date FROM filing_metadata WHERE ticker='XOM' AND filing_type='10-K' ORDER BY date DESC LIMIT 1;",
+    "base_pred": "SELECT date FROM filing_metadata WHERE ticker = 'XOM' AND filing_type = '10-K' ORDER BY date DESC LIMIT 1",
+    "ft_pred": "SELECT date FROM filing_metadata WHERE ticker='XOM' AND filing_type='10-K' ORDER BY date DESC LIMIT 1;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 0,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 0,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Maximum cash from operating activities in the dataset for FY2023.",
+    "reference": "SELECT MAX(cfo) FROM panel WHERE year='FY2023' AND cfo IS NOT NULL;",
+    "base_pred": "SELECT MAX(cash) FROM panel WHERE year = 'FY2023'",
+    "ft_pred": "SELECT MAX(cfo) FROM panel WHERE year='FY2023' AND cfo IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Which company had the best net margin in FY2020?",
+    "reference": "SELECT ticker, net_margin FROM panel WHERE year='FY2020' AND net_margin IS NOT NULL ORDER BY net_margin DESC LIMIT 5;",
+    "base_pred": "SELECT company FROM panel WHERE year = 'FY2020' AND net_margin IS NOT NULL ORDER BY net_margin DESC LIMIT 1",
+    "ft_pred": "SELECT ticker, net_margin FROM panel WHERE year='FY2020' AND net_margin IS NOT NULL ORDER BY net_margin DESC LIMIT 1;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What was Merck's total assets in FY2024?",
+    "reference": "SELECT total_assets FROM panel WHERE ticker='MRK' AND year='FY2024'",
+    "base_pred": "SELECT total_assets FROM panel WHERE ticker = 'MRK' AND year = 'FY2024'",
+    "ft_pred": "SELECT total_assets FROM panel WHERE ticker='MRK' AND year='FY2024';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is Walmart's current liabilities for FY2022?",
+    "reference": "SELECT current_liabilities FROM panel WHERE ticker='WMT' AND year='FY2022';",
+    "base_pred": "SELECT current_liabilities FROM panel WHERE ticker = 'WMT' AND year = 'FY2022' AND current_liabilities IS NOT NULL",
+    "ft_pred": "SELECT current_liabilities FROM panel WHERE ticker='WMT' AND year='FY2022';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show UnitedHealth's income for all years between FY2020 and FY2023.",
+    "reference": "SELECT year, net_income FROM panel WHERE ticker='UNH' AND year BETWEEN 'FY2020' AND 'FY2023' ORDER BY year;",
+    "base_pred": "SELECT SUM(net_income) AS total_income FROM panel WHERE ticker = 'UNH' AND year = 'FY2020' AND year = 'FY2021' AND year = 'FY2022' AND year = 'FY2023'",
+    "ft_pred": "SELECT year, net_income FROM panel WHERE ticker='UNH' AND year BETWEEN 'FY2020' AND 'FY2023' ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "List the top 5 companies by operating earnings in FY2023.",
+    "reference": "SELECT ticker, operating_income FROM panel WHERE year='FY2023' AND operating_income IS NOT NULL ORDER BY operating_income DESC LIMIT 5;",
+    "base_pred": "SELECT ticker, operating_income FROM panel WHERE year = 'FY2023' ORDER BY operating_income DESC LIMIT 5",
+    "ft_pred": "SELECT ticker, operating_income FROM panel WHERE year='FY2023' AND operating_income IS NOT NULL ORDER BY operating_income DESC LIMIT 5;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Maximum current assets in the dataset for FY2021.",
+    "reference": "SELECT MAX(current_assets) FROM panel WHERE year='FY2021' AND current_assets IS NOT NULL;",
+    "base_pred": "SELECT MAX(current_assets) FROM panel WHERE year = 'FY2021'",
+    "ft_pred": "SELECT MAX(current_assets) FROM panel WHERE year='FY2021' AND current_assets IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What was Honeywell's return on assets in FY2021?",
+    "reference": "SELECT roa FROM panel WHERE ticker='HON' AND year='FY2021';",
+    "base_pred": "SELECT roa FROM panel WHERE ticker = 'HON' AND year = 'FY2021'",
+    "ft_pred": "SELECT roa FROM panel WHERE ticker='HON' AND year='FY2021'",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What was the min after-tax profit across all companies in FY2023?",
+    "reference": "SELECT MIN(net_income) FROM panel WHERE year='FY2023' AND net_income IS NOT NULL",
+    "base_pred": "SELECT MIN net_income FROM panel WHERE year = 'FY2023'",
+    "ft_pred": "SELECT MIN(net_income) FROM panel WHERE year='FY2023' AND net_income IS NOT NULL",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Find all tickers where debt-to-assets ratio < 0.3 for FY2023.",
+    "reference": "SELECT ticker, debt_to_assets FROM panel WHERE year='FY2023' AND debt_to_assets < 0.3 ORDER BY debt_to_assets DESC;",
+    "base_pred": "SELECT ticker FROM panel WHERE year = 'FY2023' AND debt_to_assets < 0.3",
+    "ft_pred": "SELECT ticker, debt_to_assets FROM panel WHERE year='FY2023' AND debt_to_assets < 0.3 ORDER BY debt_to_assets DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "How did JPMorgan's total revenue change from FY2022 to FY2023?",
+    "reference": "SELECT year, total_revenue FROM panel WHERE ticker='JPM' AND year IN ('FY2022','FY2023') ORDER BY year;",
+    "base_pred": "SELECT total_revenue FROM panel WHERE ticker = 'JPM' AND year = 'FY2022' AND year = 'FY2023'",
+    "ft_pred": "SELECT a.year, a.total_revenue, b.total_revenue, (a.total_revenue - b.total_revenue) AS yoy_change FROM panel a JOIN panel b ON a.ticker=b.ticker WHERE a.ticker='JPM' AND a.year='FY2023' AND b.year='FY2022'",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Which companies had a return on assets (ROA) above 10% in FY2023?",
+    "reference": "SELECT ticker FROM panel WHERE year = 'FY2023' AND roa > 10;",
+    "base_pred": "SELECT company FROM panel WHERE roa > 10 AND year = 'FY2023'",
+    "ft_pred": "SELECT ticker FROM panel WHERE year = 'FY2023' AND roa > 10;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is the average total assets for all companies in FY2021?",
+    "reference": "SELECT AVG(total_assets) FROM panel WHERE year = 'FY2021' AND total_assets IS NOT NULL;",
+    "base_pred": "SELECT AVG(total_assets) FROM panel WHERE year = 'FY2021'",
+    "ft_pred": "SELECT AVG(total_assets) FROM panel WHERE year = 'FY2021' AND total_assets IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is Netflix's liquid assets for FY2023?",
+    "reference": "SELECT current_assets FROM panel WHERE ticker='NFLX' AND year='FY2023';",
+    "base_pred": "SELECT SUM(current_assets) - SUM(current_liabilities) AS liquid_assets FROM panel WHERE ticker = 'NFLX' AND year = 'FY2023'",
+    "ft_pred": "SELECT current_assets FROM panel WHERE ticker='NFLX' AND year='FY2023';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is the cash amount for VRTX in FY2023?",
+    "reference": "SELECT cash FROM panel WHERE ticker = 'VRTX' AND year = 'FY2023';",
+    "base_pred": "SELECT cash FROM panel WHERE ticker = 'VRTX' AND year = 'FY2023'",
+    "ft_pred": "SELECT cash FROM panel WHERE ticker = 'VRTX' AND year = 'FY2023' AND cash IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "List companies with current ratio > 2.0 in FY2023.",
+    "reference": "SELECT ticker, current_ratio FROM panel WHERE year='FY2023' AND current_ratio > 2.0 ORDER BY current_ratio DESC;",
+    "base_pred": "SELECT company FROM panel WHERE current_ratio > 2.0 AND year = 'FY2023'",
+    "ft_pred": "SELECT ticker, current_ratio FROM panel WHERE year='FY2023' AND current_ratio > 2.0 ORDER BY current_ratio DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Find Meta's liquid assets in fiscal year 2022.",
+    "reference": "SELECT current_assets FROM panel WHERE ticker='META' AND year='FY2022';",
+    "base_pred": "SELECT SUM(other_assets) FROM panel WHERE year = 'FY2022' AND ticker = 'META'",
+    "ft_pred": "SELECT current_assets FROM panel WHERE ticker='META' AND year='FY2022';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Retrieve CSCO's cash, net income, and cfo for FY2022.",
+    "reference": "SELECT cash, net_income, cfo FROM panel WHERE ticker = 'CSCO' AND year = 'FY2022' AND cash IS NOT NULL AND net_income IS NOT NULL AND cfo IS NOT NULL;",
+    "base_pred": "SELECT cash, net_income, cfo FROM panel WHERE ticker = 'CSCO' AND year = 'FY2022'",
+    "ft_pred": "SELECT cash, net_income, cfo FROM panel WHERE ticker = 'CSCO' AND year = 'FY2022' AND cash IS NOT NULL AND net_income IS NOT NULL AND cfo IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is GILD's operating income for FY2024?",
+    "reference": "SELECT operating_income FROM panel WHERE ticker='GILD' AND year='FY2024';",
+    "base_pred": "SELECT operating_income FROM panel WHERE ticker = 'GILD' AND year = 'FY2024'",
+    "ft_pred": "SELECT operating_income FROM panel WHERE ticker='GILD' AND year='FY2024';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is the net income for McDonald's in fiscal year 2022?",
+    "reference": "SELECT net_income FROM panel WHERE ticker = 'MCD' AND year = 'FY2022' AND net_income IS NOT NULL;",
+    "base_pred": "SELECT net_income FROM panel WHERE ticker = 'MCD' AND year = 'FY2022'",
+    "ft_pred": "SELECT net_income FROM panel WHERE ticker = 'MCD' AND year = 'FY2022' AND net_income IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "How does Johnson & Johnson's liquid assets compare to Alphabet's in FY2022?",
+    "reference": "SELECT ticker, current_assets FROM panel WHERE ticker IN ('JNJ','GOOGL') AND year='FY2022' ORDER BY current_assets DESC;",
+    "base_pred": "SELECT SUM(CASE WHEN ticker = 'JNJ' THEN other_assets ELSE 0 END) / SUM(CASE WHEN ticker = 'GOOGL' THEN other_assets ELSE 0 END) AS jnj_to_alphabet_ratio",
+    "ft_pred": "SELECT ticker, current_assets FROM panel WHERE ticker IN ('JNJ','GOOGL') AND year='FY2022' ORDER BY current_assets DESC;",
+    "base_scores": {
+      "valid_sql": 0,
+      "correct_table": 0,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Plot Johnson & Johnson's total revenue for all available years.",
+    "reference": "SELECT year, total_revenue FROM panel WHERE ticker='JNJ' AND total_revenue IS NOT NULL ORDER BY year;",
+    "base_pred": "SELECT year, total_revenue FROM panel WHERE ticker = 'JNJ'",
+    "ft_pred": "SELECT year, total_revenue FROM panel WHERE ticker='JNJ' AND total_revenue IS NOT NULL ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "How much cash and total assets did BRK-B have in FY2022?",
+    "reference": "SELECT cash, total_assets FROM panel WHERE ticker='BRK-B' AND year='FY2022' AND cash IS NOT NULL AND total_assets IS NOT NULL;",
+    "base_pred": "SELECT cash, total_assets FROM panel WHERE ticker = 'BRK-B' AND year = 'FY2022'",
+    "ft_pred": "SELECT cash, total_assets FROM panel WHERE ticker = 'BRK-B' AND year = 'FY2022' AND cash IS NOT NULL AND total_assets IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show me ABT's profit alongside merchandise inventory in FY2024.",
+    "reference": "SELECT net_income, inventories FROM panel WHERE ticker='ABT' AND year='FY2024';",
+    "base_pred": "SELECT ABT, inventories FROM panel WHERE ticker = 'ABT' AND year = 'FY2024'",
+    "ft_pred": "SELECT net_income, inventories FROM panel WHERE ticker='ABT' AND year='FY2024';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What was QCOM's PP&E purchases growth between FY2021 and FY2022?",
+    "reference": "SELECT year, capex FROM panel WHERE ticker='QCOM' AND year IN ('FY2021','FY2022') ORDER BY year;",
+    "base_pred": "SELECT SUM(capex) FROM panel WHERE ticker = 'QCOM' AND year = 'FY2021' AND da IS NOT NULL AND year = 'FY2022'",
+    "ft_pred": "SELECT year, capex FROM panel WHERE ticker='QCOM' AND year IN ('FY2021','FY2022') ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 0,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 0,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Compute minimum total liabilities for FY2020.",
+    "reference": "SELECT MIN(total_liabilities) FROM panel WHERE year='FY2020' AND total_liabilities IS NOT NULL;",
+    "base_pred": "SELECT MIN(total_liabilities) FROM panel WHERE year = 'FY2020'",
+    "ft_pred": "SELECT MIN(total_liabilities) FROM panel WHERE year='FY2020' AND total_liabilities IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Find the interest expense for DIS in FY2023.",
+    "reference": "SELECT interest_expense FROM panel WHERE ticker = 'DIS' AND year = 'FY2023' AND interest_expense IS NOT NULL;",
+    "base_pred": "SELECT interest_expense FROM panel WHERE ticker = 'DIS' AND year = 'FY2023'",
+    "ft_pred": "SELECT interest_expense FROM panel WHERE ticker = 'DIS' AND year = 'FY2023' AND interest_expense IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Show CVX vs COST financial leverage for FY2021.",
+    "reference": "SELECT ticker, debt_to_assets FROM panel WHERE ticker IN ('CVX','COST') AND year='FY2021' ORDER BY debt_to_assets DESC;",
+    "base_pred": "SELECT \n  cvx.current_liabilities, \n  cvx.total_assets, \n  cvx.total_liabilities, \n  cvx.debt_to_assets, \n  cost.total_liabilities, \n  cost.total_assets, \n  cost.total_liabilities / cost.total_assets AS cost_debt_to_assets \nFROM \n  panel cvx \nWHERE \n  cvx.ticker = 'CVX' AND \n  cvx.year = 'FY2021' AND \n  cvx.current_liabilities IS NOT NULL AND \n  cvx.total_assets IS NOT NULL AND \n  cvx.total_liabilities IS NOT NULL",
+    "ft_pred": "SELECT ticker, debt_to_assets FROM panel WHERE ticker IN ('CVX','COST') AND year='FY2021' ORDER BY debt_to_assets DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What was the cash position for Intel in FY2024?",
+    "reference": "SELECT cash FROM panel WHERE ticker = 'INTC' AND year = 'FY2024' AND cash IS NOT NULL;",
+    "base_pred": "SELECT cash FROM panel WHERE ticker = 'INTC' AND year = 'FY2024'",
+    "ft_pred": "SELECT cash FROM panel WHERE ticker = 'INTC' AND year = 'FY2024' AND cash IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Which companies had current ratio below 1 in FY2020?",
+    "reference": "SELECT ticker, current_ratio FROM panel WHERE year='FY2020' AND current_ratio < 1.0 ORDER BY current_ratio DESC;",
+    "base_pred": "SELECT company FROM panel WHERE current_ratio < 1 AND year = 'FY2020'",
+    "ft_pred": "SELECT ticker FROM panel WHERE year = 'FY2020' AND current_ratio < 1;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is the trend of net income for Apple (AAPL) across FY2020 to FY2023?",
+    "reference": "SELECT year, net_income FROM panel WHERE ticker = 'AAPL' AND year IN ('FY2020', 'FY2021', 'FY2022', 'FY2023') AND net_income IS NOT NULL ORDER BY year;",
+    "base_pred": "SELECT year, net_income FROM panel WHERE ticker = 'AAPL' AND year IS NOT NULL",
+    "ft_pred": "SELECT year, net_income FROM panel WHERE ticker = 'AAPL' AND year IN ('FY2020', 'FY2021', 'FY2022', 'FY2023') AND net_income IS NOT NULL ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What has been the trend for operating income of AMGN from FY2020 to FY2024?",
+    "reference": "SELECT year, operating_income FROM panel WHERE ticker = 'AMGN' AND year IN ('FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024') AND operating_income IS NOT NULL;",
+    "base_pred": "SELECT operating_income FROM panel WHERE ticker = 'AMGN' AND year = 'FY2020' AND operating_income IS NOT NULL UNION ALL SELECT operating_income FROM panel WHERE ticker = 'AMGN' AND year = 'FY2021' AND operating_income IS NOT NULL UNION ALL SELECT operating_income FROM panel WHERE ticker = 'AMGN' AND year = 'FY2022' AND operating_income IS NOT NULL UNION ALL SELECT operating_income FROM panel WHERE ticker = 'AMGN' AND year = 'FY2023' AND operating_income IS NOT NULL UNION ALL SELECT operating_income FROM panel WHERE ticker = 'AMGN' AND year = 'FY2024' AND operating_income IS NOT NULL",
+    "ft_pred": "SELECT year, operating_income FROM panel WHERE ticker = 'AMGN' AND year IN ('FY2020', 'FY2021', 'FY2022', 'FY2023', 'FY2024') AND operating_income IS NOT NULL ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Get Qualcomm's D&A and total liabilities for FY2024.",
+    "reference": "SELECT da, total_liabilities FROM panel WHERE ticker='QCOM' AND year='FY2024';",
+    "base_pred": "SELECT da, total_liabilities FROM panel WHERE ticker = 'QCOM' AND year = 'FY2024'",
+    "ft_pred": "SELECT da, total_liabilities FROM panel WHERE ticker='QCOM' AND year='FY2024';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "How does Coca-Cola's liquid assets compare to ExxonMobil's in FY2022?",
+    "reference": "SELECT ticker, current_assets FROM panel WHERE ticker IN ('KO','XOM') AND year='FY2022' ORDER BY current_assets DESC;",
+    "base_pred": "SELECT liquid_assets FROM panel WHERE ticker = 'KO' AND year = 'FY2022' AND liquid_assets IS NOT NULL\nSELECT liquid_assets FROM panel WHERE ticker = 'XOM' AND year = 'FY2022' AND liquid_assets IS NOT NULL",
+    "ft_pred": "SELECT ticker, current_assets FROM panel WHERE ticker IN ('KO','XOM') AND year='FY2022' ORDER BY current_assets DESC;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 0,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 0
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "What is the minimum current liabilities for all companies in FY2023?",
+    "reference": "SELECT MIN(current_liabilities) FROM panel WHERE year = 'FY2023' AND current_liabilities IS NOT NULL;",
+    "base_pred": "SELECT MIN(current_liabilities) FROM panel WHERE year = 'FY2023'",
+    "ft_pred": "SELECT MIN(current_liabilities) FROM panel WHERE year = 'FY2023' AND current_liabilities IS NOT NULL;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Report NVIDIA stock for fiscal 2020.",
+    "reference": "SELECT inventories FROM panel WHERE ticker='NVDA' AND year='FY2020';",
+    "base_pred": "SELECT * FROM panel WHERE ticker = 'NVDA' AND year = 'FY2020'",
+    "ft_pred": "SELECT inventories FROM panel WHERE ticker='NVDA' AND year='FY2020';",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 0,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 1,
+      "exec_ok": 1
+    }
+  },
+  {
+    "question": "Observe the changes in interest expense for BIIB between FY2020 and FY2023.",
+    "reference": "SELECT year, interest_expense FROM panel WHERE ticker = 'BIIB' AND year IN ('FY2020', 'FY2021', 'FY2022', 'FY2023') AND interest_expense IS NOT NULL ORDER BY year;",
+    "base_pred": "SELECT interest_expense FROM panel WHERE ticker = 'BIIB' AND year = 'FY2020' AND interest_expense IS NOT NULL UNION ALL SELECT interest_expense FROM panel WHERE ticker = 'BIIB' AND year = 'FY2023' AND interest_expense IS NOT NULL",
+    "ft_pred": "SELECT year, interest_expense FROM panel WHERE ticker = 'BIIB' AND year IN ('FY2020', 'FY2023') ORDER BY year;",
+    "base_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    },
+    "ft_scores": {
+      "valid_sql": 1,
+      "correct_table": 1,
+      "correct_column": 1,
+      "period_format": 1,
+      "keyword_match": 1,
+      "exact_match": 0,
+      "exec_ok": 1
+    }
+  }
+]

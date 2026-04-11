@@ -1,0 +1,110 @@
+[
+  {
+    "nl": "How many 10-K filings does Apple have?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'AAPL' AND filing_type = '10-K';"
+  },
+  {
+    "nl": "Which companies filed 8-Ks in 2023?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '8-K' AND date LIKE '2023-%';"
+  },
+  {
+    "nl": "List all companies with a 10-Q filed after 2023-06-01",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-Q' AND date > '2023-06-01';"
+  },
+  {
+    "nl": "What was the most recent filing date for TSLA?",
+    "sql": "SELECT MAX(date) FROM filing_metadata WHERE ticker = 'TSLA';"
+  },
+  {
+    "nl": "How many 10-K filings did Microsoft submit?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'MSFT' AND filing_type = '10-K';"
+  },
+  {
+    "nl": "List all companies that submitted 8-K filings during 2022.",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '8-K' AND date LIKE '2022-%';"
+  },
+  {
+    "nl": "How many 10-Q filings does Amazon have in 2023?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'AMZN' AND filing_type = '10-Q' AND date LIKE '2023-%';"
+  },
+  {
+    "nl": "Who filed 10-Ks in 2021?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-K' AND date LIKE '2021-%';"
+  },
+  {
+    "nl": "What is the latest filing date for JPM?",
+    "sql": "SELECT MAX(date) FROM filing_metadata WHERE ticker = 'JPM';"
+  },
+  {
+    "nl": "List companies that filed 10-Qs in the first quarter of 2023.",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-Q' AND date BETWEEN '2023-01-01' AND '2023-03-31';"
+  },
+  {
+    "nl": "How many 10-K filings does Nvidia have?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'NVDA' AND filing_type = '10-K';"
+  },
+  {
+    "nl": "Which companies have filed 8-Ks in the last quarter?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '8-K' AND date >= '2023-10-01';"
+  },
+  {
+    "nl": "How many 10-Q filings does Walmart have in 2023?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'WMT' AND filing_type = '10-Q' AND date LIKE '2023-%';"
+  },
+  {
+    "nl": "Who filed 10-Ks in 2022?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-K' AND date LIKE '2022-%';"
+  },
+  {
+    "nl": "What is the recent filing date for GOOGL?",
+    "sql": "SELECT MAX(date) FROM filing_metadata WHERE ticker = 'GOOGL';"
+  },
+  {
+    "nl": "How many 10-Q filings did Tesla submit in 2022?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'TSLA' AND filing_type = '10-Q' AND date LIKE '2022-%';"
+  },
+  {
+    "nl": "List all companies that submitted 8-K filings in January 2023.",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '8-K' AND date LIKE '2023-01-%';"
+  },
+  {
+    "nl": "How many 10-K filings does Alphabet have?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'GOOGL' AND filing_type = '10-K';"
+  },
+  {
+    "nl": "Which companies filed 10-Qs after March 2023?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-Q' AND date > '2023-03-31';"
+  },
+  {
+    "nl": "List all companies with a 10-K filed in the second half of 2022.",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-K' AND date BETWEEN '2022-07-01' AND '2022-12-31';"
+  },
+  {
+    "nl": "What was the most recent filing date for Nvidia?",
+    "sql": "SELECT MAX(date) FROM filing_metadata WHERE ticker = 'NVDA';"
+  },
+  {
+    "nl": "How many 10-Q filings does Apple have in 2022?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'AAPL' AND filing_type = '10-Q' AND date LIKE '2022-%';"
+  },
+  {
+    "nl": "Who filed 8-Ks in August 2023?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '8-K' AND date LIKE '2023-08-%';"
+  },
+  {
+    "nl": "How many 10-K filings did Microsoft submit in the last two years?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'MSFT' AND filing_type = '10-K' AND date >= '2022-01-01';"
+  },
+  {
+    "nl": "Which companies have filed 10-Qs in the second quarter of 2023?",
+    "sql": "SELECT DISTINCT company FROM filing_metadata WHERE filing_type = '10-Q' AND date BETWEEN '2023-04-01' AND '2023-06-30';"
+  },
+  {
+    "nl": "How many 10-K filings does JPMorgan have since 2020?",
+    "sql": "SELECT COUNT(*) FROM filing_metadata WHERE ticker = 'JPM' AND filing_type = '10-K' AND date >= '2020-01-01';"
+  },
+  {
+    "nl": "What is the most recent filing date for Amazon?",
+    "sql": "SELECT MAX(date) FROM filing_metadata WHERE ticker = 'AMZN';"
+  }
+]

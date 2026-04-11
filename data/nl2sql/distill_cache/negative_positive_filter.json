@@ -1,0 +1,94 @@
+[
+  {
+    "nl": "Which companies had a net loss in 2022?",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = '2022-12' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "What companies reported negative operating income in the last quarter of 2023?",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Operating Income' AND period = '2023-12' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which firms posted a negative net income in Q2 of 2023?",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = '2023-06' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Identify companies with negative cash flow from operations in 2023.",
+    "sql": "SELECT ticker FROM financials WHERE metric LIKE '%Cash Flow from Operations%' AND period = '2023-12' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies had a net income less than zero in the fiscal year 2022?",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = 'F2022' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find companies with positive total revenue growth from 2020 to 2023.",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Total Revenue' AND a.period = '2023-12' AND b.period = '2020-12' AND a.value > b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies reported a doubling in total assets from 2021 to 2023?",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Total Assets' AND a.period = '2023-12' AND b.period = '2021-12' AND a.value >= 2 * b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Find organizations with a decrease in net income from 2022 to 2023.",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Net Income' AND a.period = '2023-12' AND b.period = '2022-12' AND a.value < b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Identify companies with negative net income for the fiscal year 2023.",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = 'F2023' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies experienced a fall in total revenue in Q3 of 2023 compared to Q2?",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Total Revenue' AND a.period = '2023-09' AND b.period = '2023-06' AND a.value < b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "What companies are in the negative territory for their operating cash flow in 2023?",
+    "sql": "SELECT ticker FROM financials WHERE metric LIKE '%Operating Cash Flow%' AND period = '2023-12' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "List the firms that had a net loss in Q1 2023.",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = '2023-03' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find companies that doubled their net income from 2021 to 2024.",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Net Income' AND a.period = 'F2024' AND b.period = 'F2021' AND a.value >= 2 * b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies have reported a negative net profit margin in Q4 2023?",
+    "sql": "SELECT ticker FROM financials WHERE metric LIKE '%Net Profit Margin%' AND period = '2023-12' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Identify companies with negative total equity in 2022.",
+    "sql": "SELECT ticker FROM financials WHERE metric LIKE '%Total Equity%' AND period = 'F2022' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "What companies experienced a dip in net income from 2022 to 2023?",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Net Income' AND a.period = 'F2023' AND b.period = 'F2022' AND a.value < b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "List the firms that had quarterly losses in Q1 of 2023.",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = '2023-03' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies maintained positive cash flow from operations from 2020 to 2023?",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric LIKE '%Cash Flow from Operations%' AND a.period = '2023-12' AND b.period = '2020-12' AND a.value > 0 AND b.value > 0 AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies had a net loss for the fiscal year 2023?",
+    "sql": "SELECT ticker FROM financials WHERE metric = 'Net Income' AND period = 'F2023' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find firms that saw their total revenue decrease in 2023 compared to 2022.",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Total Revenue' AND a.period = 'F2023' AND b.period = 'F2022' AND a.value < b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies reported a drop in earnings per share from 2021 to 2023?",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric LIKE '%Earnings Per Share%' AND a.period = '2023-12' AND b.period = '2021-12' AND a.value < b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  },
+  {
+    "nl": "Identify firms with negative net sales in the fiscal year 2022.",
+    "sql": "SELECT ticker FROM financials WHERE metric LIKE '%Net Sales%' AND period = 'F2022' AND value < 0 AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which companies have increased their total assets over the last three years?",
+    "sql": "SELECT a.ticker FROM financials a JOIN financials b ON a.ticker = b.ticker WHERE a.metric = 'Total Assets' AND a.period = 'F2023' AND b.period = 'F2020' AND a.value > b.value AND a.value IS NOT NULL AND b.value IS NOT NULL"
+  }
+]

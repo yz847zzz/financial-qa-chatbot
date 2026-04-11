@@ -1,0 +1,130 @@
+[
+  {
+    "nl": "How much cash does Apple have?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AAPL' AND period = 'F2023' AND metric LIKE '%Cash%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Is Tesla debt-heavy?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'TSLA' AND period = 'F2023' AND metric LIKE '%Debt%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What's Google's bottom line?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'GOOGL' AND period = 'F2023' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much revenue did Amazon generate last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AMZN' AND period = 'F2023' AND metric = 'Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What are the total assets for Microsoft?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'MSFT' AND period = 'F2023' AND metric = 'Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Is Nvidia profitable?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'NVDA' AND period = 'F2023' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much does JPMorgan have in total liabilities?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'JPM' AND period = 'F2023' AND metric LIKE '%Liabilities%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What's the EPS for Walmart?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'WMT' AND period = 'F2023' AND metric LIKE '%Earnings Per Share%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much cash flow did Apple generate last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AAPL' AND period = 'F2023' AND metric LIKE '%Cash Flow%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the net income for Tesla last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'TSLA' AND period = 'F2023' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much did Google earn in revenue last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'GOOGL' AND period = 'F2023' AND metric = 'Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What are the latest total liabilities for Nvidia?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'NVDA' AND period = 'F2023' AND metric LIKE '%Liabilities%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Is Microsoft showing a good return on equity?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'MSFT' AND period = 'F2023' AND metric LIKE '%Return On Equity%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much were total expenses for Amazon last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AMZN' AND period = 'F2023' AND metric LIKE '%Expenses%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What's the cash ratio of JPMorgan?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'JPM' AND period = 'F2023' AND metric LIKE '%Cash Ratio%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How did Walmart perform in terms of net income last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'WMT' AND period = 'F2023' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Does Nvidia have a high debt-to-equity ratio?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'NVDA' AND period = 'F2023' AND metric LIKE '%Debt To Equity%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the operating income of Microsoft?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'MSFT' AND period = 'F2023' AND metric LIKE '%Operating Income%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much did Amazon make in net income last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AMZN' AND period = 'F2023' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What's the revenue for Tesla this past year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'TSLA' AND period = 'F2023' AND metric = 'Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How liquid is Apple right now?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AAPL' AND period = 'F2023' AND metric LIKE '%Current Ratio%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What are Google's total assets?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'GOOGL' AND period = 'F2023' AND metric = 'Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much debt does Microsoft carry?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'MSFT' AND period = 'F2023' AND metric LIKE '%Debt%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was AMD's earnings per share last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AMD' AND period = 'F2023' AND metric LIKE '%Earnings Per Share%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much cash flow did Walmart generate last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'WMT' AND period = 'F2023' AND metric LIKE '%Cash Flow%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Is Nvidia's profit margin improving?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'NVDA' AND period = 'F2023' AND metric LIKE '%Profit Margin%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What's the revenue growth for Amazon?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'AMZN' AND period = 'F2023' AND metric LIKE '%Revenue Growth%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How diversified is Google's revenue?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'GOOGL' AND period = 'F2023' AND metric LIKE '%Revenue Diversity%' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the latest quarterly net income of JPMorgan?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'JPM' AND period = '2023-09' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much did Walmart earn last quarter?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'WMT' AND period = '2023-09' AND metric = 'Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the total revenue for Nvidia?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'NVDA' AND period = 'F2023' AND metric = 'Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How did Tesla perform in net income last year?",
+    "sql": "SELECT value FROM financials WHERE ticker = 'TSLA' AND period = 'F2023' AND metric = 'Net Income' AND value IS NOT NULL"
+  }
+]

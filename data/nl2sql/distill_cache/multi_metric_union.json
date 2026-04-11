@@ -1,0 +1,122 @@
+[
+  {
+    "nl": "Show Apple's revenue and net income for 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AAPL' AND metric IN ('Total Revenue','Net Income') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get the total assets and liabilities for Microsoft in the first quarter of 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='MSFT' AND metric IN ('Total Assets','Total Liabilities') AND period='2023-03' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were Amazon's total revenue and net income for fiscal year 2022?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AMZN' AND metric IN ('Total Revenue','Net Income') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Google's revenue and cost of revenue for the last quarter of 2022",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='GOOGL' AND metric IN ('Total Revenue','Cost Of Revenue') AND period='2022-12' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find NVIDIA's net income and earnings before tax for fiscal year 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='NVDA' AND metric IN ('Net Income','Earnings Before Tax') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What are Tesla's total revenue and operating income for the last quarter of 2023?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='TSLA' AND metric IN ('Total Revenue','Operating Income') AND period='2023-09' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get JPMorgan's return on assets and total equity for the year 2022",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='JPM' AND metric IN ('Return On Assets','Total Equity') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Walmart's net income and total assets for the first quarter of 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='WMT' AND metric IN ('Net Income','Total Assets') AND period='2023-03' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were the total revenue and net income for Facebook (Meta) in the last fiscal year?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='META' AND metric IN ('Total Revenue','Net Income') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get the total liabilities and cash flow from operations for Apple in the first quarter of 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AAPL' AND metric IN ('Total Liabilities','Cash Flow From Operations') AND period='2023-03' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find Microsoft's total revenue and gross profit for fiscal year 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='MSFT' AND metric IN ('Total Revenue','Gross Profit') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What is Amazon's operating margin and net income for the last quarter of 2022?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AMZN' AND metric IN ('Operating Margin','Net Income') AND period='2022-12' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Google's net income and total equity for fiscal year 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='GOOGL' AND metric IN ('Net Income','Total Equity') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get NVIDIA's total revenue and operating expenses for 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='NVDA' AND metric IN ('Total Revenue','Operating Expenses') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were Tesla's net income and total assets for fiscal year 2022?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='TSLA' AND metric IN ('Net Income','Total Assets') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find JPMorgan's total equity and return on equity for 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='JPM' AND metric IN ('Total Equity','Return On Equity') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get Walmart's earnings before interest and tax and cash flow from operations for Q2 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='WMT' AND metric IN ('Earnings Before Interest And Tax','Cash Flow From Operations') AND period='2023-06' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Meta's total revenue and cost of revenue for fiscal year 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='META' AND metric IN ('Total Revenue','Cost Of Revenue') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were AAPL's net income and return on assets for fiscal year 2020?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AAPL' AND metric IN ('Net Income','Return On Assets') AND period='F2020' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get Microsoft's cash flow from operations and total assets for Q4 2022",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='MSFT' AND metric IN ('Cash Flow From Operations','Total Assets') AND period='2022-09' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What is Amazon's total revenue and operating income for 2022?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AMZN' AND metric IN ('Total Revenue','Operating Income') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Google's earnings before interest and tax and net income for Q3 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='GOOGL' AND metric IN ('Earnings Before Interest And Tax','Net Income') AND period='2023-06' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find NVIDIA's total assets and liabilities for fiscal year 2022",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='NVDA' AND metric IN ('Total Assets','Total Liabilities') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were Tesla's total revenue and operating expenses for 2022?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='TSLA' AND metric IN ('Total Revenue','Operating Expenses') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get JPMorgan's net income and return on assets for 2022",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='JPM' AND metric IN ('Net Income','Return On Assets') AND period='F2022' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Walmart's total revenue and earnings before interest for 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='WMT' AND metric IN ('Total Revenue','Earnings Before Interest') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Find Meta's total assets and total revenue for Q2 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='META' AND metric IN ('Total Assets','Total Revenue') AND period='2023-06' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Get Apple's operating income and cash flow from operations for the last quarter of 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AAPL' AND metric IN ('Operating Income','Cash Flow From Operations') AND period='2023-09' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were Microsoft's return on equity and total revenue for fiscal year 2023?",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='MSFT' AND metric IN ('Return On Equity','Total Revenue') AND period='F2023' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Amazon's earnings before interest and tax and total assets for 2023",
+    "sql": "SELECT metric, value FROM financials WHERE ticker='AMZN' AND metric IN ('Earnings Before Interest And Tax','Total Assets') AND period='F2023' AND value IS NOT NULL"
+  }
+]

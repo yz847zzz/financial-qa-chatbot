@@ -1,0 +1,118 @@
+[
+  {
+    "nl": "Which 5 companies with positive net income had the highest ROA in F2022?",
+    "sql": "SELECT ticker, metric, value FROM financials WHERE metric = 'Return On Assets' AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2022' AND value IS NOT NULL) AND period = 'F2022' AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Find tech companies with gross margin above 50% in F2023, ranked by net income.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Gross Margin%' AND value > 50 AND period = 'F2023' AND ticker IN ('AAPL', 'MSFT', 'GOOGL', 'AMZN', 'NVDA') AND value IS NOT NULL ORDER BY (SELECT value FROM financials WHERE metric = 'Net Income' AND period = 'F2023' AND financials.ticker = ticker AND value IS NOT NULL) DESC;"
+  },
+  {
+    "nl": "Identify the top 5 companies with positive net income and the best return on equity for F2021.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric = 'Return On Equity' AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2021' AND value IS NOT NULL) AND period = 'F2021' AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Which companies in the financial sector had a net profit margin over 30% for 2022?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Net Profit Margin%' AND value > 30 AND period = '2022-12' AND ticker IN ('JPM', 'BAC', 'WFC', 'C', 'GS') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "List the top 5 companies with the highest total assets in F2023, filtered by positive net income.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric = 'Total Assets' AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2023' AND value IS NOT NULL) AND period = 'F2023' AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Which consumer goods companies showed a return on investment higher than 15% in F2022?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Investment%' AND value > 15 AND period = 'F2022' AND ticker IN ('PG', 'WMT', 'KO', 'PEP', 'MO') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Identify the top 3 companies in health care with a debt-to-equity ratio lower than 0.5 for F2023.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Debt To Equity%' AND value < 0.5 AND period = 'F2023' AND ticker IN ('JNJ', 'PFE', 'UNH', 'MRK', 'ABT') AND value IS NOT NULL ORDER BY value ASC LIMIT 3;"
+  },
+  {
+    "nl": "Which 4 companies in technology had total revenue growth over 25% in 2023?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Total Revenue%' AND value > (SELECT value FROM financials WHERE metric LIKE '%Total Revenue%' AND period = '2022-12' AND financials.ticker = ticker AND value IS NOT NULL) * 1.25 AND period = '2023-12' AND ticker IN ('AAPL', 'MSFT', 'GOOGL', 'FB', 'NVDA') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Find the top 5 companies with the highest free cash flow in F2022, with net income greater than zero.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Free Cash Flow%' AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2022' AND value IS NOT NULL) AND period = 'F2022' AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Which companies in the energy sector had a return on assets greater than 10% for F2023?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Assets%' AND value > 10 AND period = 'F2023' AND ticker IN ('XOM', 'CVX', 'SLB', 'BP', 'EOG') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Identify 5 companies that reported an operating margin above 20% in F2023 and had positive net income.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Operating Margin%' AND value > 20 AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2023' AND value IS NOT NULL) AND period = 'F2023' AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Which pharmaceutical companies had total revenue exceeding $15 billion in 2023?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Total Revenue%' AND value > 15000 AND period = '2023-12' AND ticker IN ('PFE', 'JNJ', 'ABT', 'MRK', 'GILD') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Find the top 5 companies by net income in the consumer discretionary sector for F2022.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric = 'Net Income' AND period = 'F2022' AND ticker IN ('AMZN', 'TSLA', 'DIS', 'NKE', 'MCD') AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Identify technology companies with a return on equity above 20% for F2023.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Equity%' AND value > 20 AND period = 'F2023' AND ticker IN ('AAPL', 'MSFT', 'GOOGL', 'FB', 'ADBE') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Which 3 companies had the highest total equity in F2022 and positive net income?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Total Equity%' AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2022' AND value IS NOT NULL) AND period = 'F2022' AND value IS NOT NULL ORDER BY value DESC LIMIT 3;"
+  },
+  {
+    "nl": "Find all companies in the telecommunications sector with a positive cash flow from operations in F2021.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Cash Flow From Operations%' AND value > 0 AND period = 'F2021' AND ticker IN ('T', 'VZ', 'TMUS') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Identify the top 5 companies by total revenue in the utilities sector for F2023.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Total Revenue%' AND period = 'F2023' AND ticker IN ('DUK', 'SO', 'NEE', 'EXC', 'AEP') AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Which companies had a return on equity greater than 15% for F2022 and were in materials?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Equity%' AND value > 15 AND period = 'F2022' AND ticker IN ('NEM', 'FCX', 'LIN', 'DD', 'APD') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Identify the top 3 companies with the highest gross margin in F2023 that reported a positive net income.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Gross Margin%' AND ticker IN (SELECT ticker FROM financials WHERE metric = 'Net Income' AND value > 0 AND period = 'F2023' AND value IS NOT NULL) AND period = 'F2023' AND value IS NOT NULL ORDER BY value DESC LIMIT 3;"
+  },
+  {
+    "nl": "Find the top 5 companies in the energy sector with the highest dividends paid in 2022.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Dividends Paid%' AND period = '2022-12' AND ticker IN ('XOM', 'CVX', 'OXY', 'PSX', 'KMI') AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "List all healthcare companies with operating income greater than $10 billion in F2023.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Operating Income%' AND value > 10000 AND period = 'F2023' AND ticker IN ('UNH', 'JNJ', 'PFE', 'MRK', 'ABT') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Which companies reported a net profit margin above 25% in F2022 and had positive cash flow?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Net Profit Margin%' AND value > 25 AND ticker IN (SELECT ticker FROM financials WHERE metric LIKE '%Cash Flow From Operations%' AND value > 0 AND period = 'F2022' AND value IS NOT NULL) AND period = 'F2022' AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Identify the top 5 companies by return on assets in the financial sector for F2022.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Assets%' AND period = 'F2022' AND ticker IN ('JPM', 'BAC', 'WFC', 'GS', 'C') AND value IS NOT NULL ORDER BY value DESC LIMIT 5;"
+  },
+  {
+    "nl": "Find all companies in consumer staples with a current ratio above 1.5 for F2023.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Current Ratio%' AND value > 1.5 AND period = 'F2023' AND ticker IN ('PG', 'KO', 'PEP', 'WMT', 'CL') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Which automotive companies had a gross profit margin higher than 18% in F2022?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Gross Profit Margin%' AND value > 18 AND period = 'F2022' AND ticker IN ('TSLA', 'GM', 'F', 'HMC', 'RACE') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Identify healthcare companies with a return on equity above 20% in F2022.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Equity%' AND value > 20 AND period = 'F2022' AND ticker IN ('UNH', 'ABT', 'PFE', 'MRK', 'BMY') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Which 3 companies had the highest total revenue growth from 2022 to 2023?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Total Revenue%' AND value > (SELECT value FROM financials WHERE metric LIKE '%Total Revenue%' AND period = '2022-12' AND financials.ticker = ticker AND value IS NOT NULL) * 1.25 AND period = '2023-12' AND value IS NOT NULL ORDER BY value DESC LIMIT 3;"
+  },
+  {
+    "nl": "Find companies in technology that exceeded $5 billion in net income for F2023.",
+    "sql": "SELECT ticker, value FROM financials WHERE metric = 'Net Income' AND value > 5000 AND period = 'F2023' AND ticker IN ('AAPL', 'MSFT', 'GOOGL', 'FB', 'NVDA') AND value IS NOT NULL;"
+  },
+  {
+    "nl": "Which consumer discretionary companies had a return on investment over 30% in 2022?",
+    "sql": "SELECT ticker, value FROM financials WHERE metric LIKE '%Return On Investment%' AND value > 30 AND period = '2022-12' AND ticker IN ('AMZN', 'TSLA', 'NKE', 'DIS', 'MCD') AND value IS NOT NULL;"
+  }
+]

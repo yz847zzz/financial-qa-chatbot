@@ -1,0 +1,138 @@
+[
+  {
+    "nl": "What was Apple's Q3 2023 revenue?",
+    "sql": "SELECT value FROM financials WHERE ticker='AAPL' AND period='2023-09' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show Microsoft's quarterly earnings for all of 2022",
+    "sql": "SELECT period, value FROM financials WHERE ticker='MSFT' AND period LIKE '2022-%' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which quarter in 2023 had the highest revenue for NVDA?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='NVDA' AND period LIKE '2023-%' AND metric='Total Revenue' AND value IS NOT NULL ORDER BY value DESC LIMIT 1"
+  },
+  {
+    "nl": "Can you provide the total assets of JPMorgan for Q1 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='JPM' AND period='2023-03' AND metric='Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were the net income figures for Amazon in Q4 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='AMZN' AND period='2022-12' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show the total revenue for Tesla for the second quarter of 2023.",
+    "sql": "SELECT value FROM financials WHERE ticker='TSLA' AND period='2023-06' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the net income of Google in Q3 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='GOOGL' AND period='2022-09' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Provide the total revenue for Microsoft in Q1 2022.",
+    "sql": "SELECT value FROM financials WHERE ticker='MSFT' AND period='2022-03' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the net income for Apple in Q2 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='AAPL' AND period='2023-06' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Give me the total assets for AMD for Q2 2022.",
+    "sql": "SELECT value FROM financials WHERE ticker='AMD' AND period='2022-06' AND metric='Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was NVIDIA's revenue in Q3 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='NVDA' AND period='2022-09' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show the quarterly earnings for Walmart for all of 2023.",
+    "sql": "SELECT period, value FROM financials WHERE ticker='WMT' AND period LIKE '2023-%' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much was Google's total revenue in Q1 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='GOOGL' AND period='2022-03' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the net income for Tesla in Q4 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='TSLA' AND period='2023-12' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Which quarter had the highest total assets for JPMorgan in 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='JPM' AND period LIKE '2022-%' AND metric='Total Assets' AND value IS NOT NULL ORDER BY value DESC LIMIT 1"
+  },
+  {
+    "nl": "Provide the net income for Amazon for Q2 2023.",
+    "sql": "SELECT value FROM financials WHERE ticker='AMZN' AND period='2023-06' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the total revenue for Microsoft in Q4 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='MSFT' AND period='2022-12' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show the net income for NVIDIA for Q1 2023.",
+    "sql": "SELECT value FROM financials WHERE ticker='NVDA' AND period='2023-03' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the total assets figure for Walmart in Q3 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='WMT' AND period='2022-09' AND metric='Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Can you provide the revenue for Tesla for Q1 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='TSLA' AND period='2022-03' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was Google's net income for Q4 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='GOOGL' AND period='2023-12' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show the total revenue for AMD in Q3 2022.",
+    "sql": "SELECT value FROM financials WHERE ticker='AMD' AND period='2022-09' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were the total assets for Amazon in Q2 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='AMZN' AND period='2023-06' AND metric='Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much did Microsoft earn in Q1 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='MSFT' AND period='2023-03' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the total revenue for JPMorgan in Q2 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='JPM' AND period='2022-06' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Provide the net income for NVDA in Q4 2022.",
+    "sql": "SELECT value FROM financials WHERE ticker='NVDA' AND period='2022-12' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the total revenue for Apple in Q1 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='AAPL' AND period='2022-03' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Show the net income for Tesla for Q3 2023.",
+    "sql": "SELECT value FROM financials WHERE ticker='TSLA' AND period='2023-09' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What were Walmart's revenues for Q1 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='WMT' AND period='2023-03' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "How much was Google's total revenue in Q2 2023?",
+    "sql": "SELECT value FROM financials WHERE ticker='GOOGL' AND period='2023-06' AND metric='Total Revenue' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was NVIDIA's net income in Q2 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='NVDA' AND period='2022-06' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Provide the total assets for Apple for Q4 2023.",
+    "sql": "SELECT value FROM financials WHERE ticker='AAPL' AND period='2023-12' AND metric='Total Assets' AND value IS NOT NULL"
+  },
+  {
+    "nl": "What was the net income for Amazon in Q3 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='AMZN' AND period='2022-09' AND metric='Net Income' AND value IS NOT NULL"
+  },
+  {
+    "nl": "Can you provide the quarterly earnings of Microsoft for Q1 2022?",
+    "sql": "SELECT value FROM financials WHERE ticker='MSFT' AND period='2022-03' AND metric='Net Income' AND value IS NOT NULL"
+  }
+]

@@ -1,0 +1,118 @@
+[
+  {
+    "nl": "What was Apple's revenue growth from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='AAPL' AND metric='Total Revenue' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Can you show me the net income growth for Microsoft between 2021 and 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='MSFT' AND metric='Net Income' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "How did Amazon's total assets change from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='AMZN' AND metric='Total Assets' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the revenue growth for Google from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='GOOGL' AND metric='Total Revenue' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Show me the net income change for Tesla from 2021 to 2022.",
+    "sql": "SELECT period, value FROM financials WHERE ticker='TSLA' AND metric='Net Income' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What is the total asset growth of NVIDIA from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='NVDA' AND metric='Total Assets' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Can you provide the net income growth for JPMorgan from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='JPM' AND metric='Net Income' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was Walmart's revenue change from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='WMT' AND metric='Total Revenue' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Show me how Netflix's total assets have grown from 2021 to 2022.",
+    "sql": "SELECT period, value FROM financials WHERE ticker='NFLX' AND metric='Total Assets' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What is the revenue growth for Home Depot from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='HD' AND metric='Total Revenue' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "How did the net income for Exxon change from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='XOM' AND metric='Net Income' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Can you provide the total revenue growth for PayPal from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='PYPL' AND metric='Total Revenue' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the change in total assets for Intel from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='INTC' AND metric='Total Assets' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "How much has Facebook's net income grown from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='META' AND metric='Net Income' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the change in total revenue for AMD from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='AMD' AND metric='Total Revenue' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Show me the growth in total assets for Salesforce from 2021 to 2022.",
+    "sql": "SELECT period, value FROM financials WHERE ticker='CRM' AND metric='Total Assets' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the revenue growth for Oracle from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='ORCL' AND metric='Total Revenue' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "How did the net income for Citigroup change from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='C' AND metric='Net Income' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Can you provide the total revenue growth for Verizon from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='VZ' AND metric='Total Revenue' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the net income growth of Coca-Cola from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='KO' AND metric='Net Income' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "How much has the total assets for Chevron changed from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='CVX' AND metric='Total Assets' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was Amazon's revenue change from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='AMZN' AND metric='Total Revenue' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Can you show me the growth in net income for Disney from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='DIS' AND metric='Net Income' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "How did the total assets of Merck change from 2020 to 2021?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='MRK' AND metric='Total Assets' AND period IN ('F2020','F2021') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the revenue growth for Adobe from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='ADBE' AND metric='Total Revenue' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What is the change in net income for Goldman Sachs from 2022 to 2023?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='GS' AND metric='Net Income' AND period IN ('F2022','F2023') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Show me the total asset growth for airline companies from 2021 to 2022.",
+    "sql": "SELECT period, value FROM financials WHERE ticker IN ('UAL', 'DAL') AND metric='Total Assets' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "Can you provide the revenue growth for MasterCard between 2021 and 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='MA' AND metric='Total Revenue' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  },
+  {
+    "nl": "What was the net income growth for S&P Global from 2021 to 2022?",
+    "sql": "SELECT period, value FROM financials WHERE ticker='SPGI' AND metric='Net Income' AND period IN ('F2021','F2022') AND value IS NOT NULL ORDER BY period"
+  }
+]
