@@ -1,0 +1,449 @@
+{
+  "_meta": {
+    "purpose": "Canonical mapping from panel column names → XBRL us-gaap concepts + NL synonyms.",
+    "usage": [
+      "data_pipeline/scripts/fetch_xbrl.py  — uses xbrl_concepts fallback list to pull values",
+      "finetune/data_prep/build_nl2sql_dataset.py — uses nl_synonyms to generate diverse question phrasings",
+      "deployment/rag/query_rewriter.py — uses nl_synonyms to recognize financial terms in user questions"
+    ],
+    "xbrl_api": "https://data.sec.gov/api/xbrl/companyfacts/CIK{cik_padded}.json",
+    "xbrl_filter": "fp=FY, form=10-K or 10-K/A, unit=USD (or USD/shares for EPS)",
+    "reliability_scale": "high=works for >90% of companies, medium=works for ~70%, low=works for ~50%",
+    "verified_with": ["AAPL", "MSFT", "ADBE", "JPM", "XOM", "JNJ"],
+    "last_updated": "2026-04-12"
+  },
+
+  "panel_columns": {
+
+    "total_revenue": {
+      "statement": "income_statement",
+      "xbrl_concepts": [
+        "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "Revenues",
+        "SalesRevenueNet",
+        "RevenuesNetOfInterestExpense"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "notes": "Try concepts in order; stop at first with annual FY data. RevenueFromContractWith... is post-ASC606 (2019+), Revenues covers older filings and banks. RevenuesNetOfInterestExpense is bank-specific. Some companies (AAPL) tag sub-segment revenues separately — the primary concept may be ~5% below the consolidated total; acceptable for NL2SQL use.",
+      "nl_synonyms": [
+        "revenue", "total revenue", "net revenue", "net sales", "sales",
+        "top line", "total sales", "annual revenue", "yearly revenue"
+      ],
+      "example_question": "What was Apple's total revenue in FY2023?",
+      "sql_column": "total_revenue"
+    },
+
+    "gross_profit": {
+      "statement": "income_statement",
+      "xbrl_concepts": ["GrossProfit"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Not reported by banks (JPM) or some energy companies (XOM) that don't separate COGS from revenue. NULL for ~30% of companies.",
+      "nl_synonyms": [
+        "gross profit", "gross income", "gross margin dollars"
+      ],
+      "example_question": "What was Apple's gross profit in FY2023?",
+      "sql_column": "gross_profit"
+    },
+
+    "operating_income": {
+      "statement": "income_statement",
+      "xbrl_concepts": ["OperatingIncomeLoss"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Banks and financial companies often do not report operating income as a separate line — NULL for JPM, XOM. Present for tech/consumer companies.",
+      "nl_synonyms": [
+        "operating income", "operating profit", "EBIT", "income from operations",
+        "operating earnings"
+      ],
+      "example_question": "What was Microsoft's operating income in FY2023?",
+      "sql_column": "operating_income"
+    },
+
+    "net_income": {
+      "statement": "income_statement",
+      "xbrl_concepts": [
+        "NetIncomeLoss",
+        "ProfitLoss",
+        "NetIncomeLossAvailableToCommonStockholdersBasic"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "notes": "Most reliable concept — all companies report this. NetIncomeLoss is the standard; ProfitLoss is an IFRS-compat alias used by some US filers.",
+      "nl_synonyms": [
+        "net income", "net profit", "net earnings", "bottom line",
+        "profit", "earnings", "net loss"
+      ],
+      "example_question": "What was Apple's net income in FY2023?",
+      "sql_column": "net_income"
+    },
+
+    "r_and_d": {
+      "statement": "income_statement",
+      "xbrl_concepts": ["ResearchAndDevelopmentExpense"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Present for tech, pharma, industrial companies. Not applicable for banks, retail, energy — NULL expected.",
+      "nl_synonyms": [
+        "R&D", "research and development", "research expense",
+        "R&D expense", "R&D spending", "research spending"
+      ],
+      "example_question": "How much did Microsoft spend on R&D in FY2023?",
+      "sql_column": "r_and_d"
+    },
+
+    "interest_expense": {
+      "statement": "income_statement",
+      "xbrl_concepts": [
+        "InterestExpense",
+        "InterestAndDebtExpense"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Stored as positive value (expense). Some companies net interest income/expense.",
+      "nl_synonyms": [
+        "interest expense", "interest cost", "interest paid on debt",
+        "financing cost", "interest charges"
+      ],
+      "example_question": "What was Apple's interest expense in FY2023?",
+      "sql_column": "interest_expense"
+    },
+
+    "interest_income": {
+      "statement": "income_statement",
+      "xbrl_concepts": [
+        "InvestmentIncomeInterest",
+        "InterestAndDividendIncomeOperating",
+        "InterestIncomeOperating"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Banks report this differently (as revenue). For non-financials use InvestmentIncomeInterest.",
+      "nl_synonyms": [
+        "interest income", "interest earned", "investment income"
+      ],
+      "example_question": "What interest income did Apple earn in FY2023?",
+      "sql_column": "interest_income"
+    },
+
+    "da": {
+      "statement": "cash_flow",
+      "xbrl_concepts": [
+        "DepreciationDepletionAndAmortization",
+        "DepreciationAndAmortization",
+        "Depreciation"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "D&A is reported in the cash flow statement (operating activities add-back), not always separately on the income statement.",
+      "nl_synonyms": [
+        "depreciation", "amortization", "D&A", "depreciation and amortization"
+      ],
+      "example_question": "What was Apple's depreciation and amortization in FY2023?",
+      "sql_column": "da"
+    },
+
+    "cfo": {
+      "statement": "cash_flow",
+      "xbrl_concepts": ["NetCashProvidedByUsedInOperatingActivities"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "notes": "Most reliable cash flow metric — all companies report this. Negative value means cash outflow from operations.",
+      "nl_synonyms": [
+        "operating cash flow", "cash from operations", "CFO",
+        "cash flow from operating activities", "operating cash"
+      ],
+      "example_question": "What was Apple's operating cash flow in FY2023?",
+      "sql_column": "cfo"
+    },
+
+    "capex": {
+      "statement": "cash_flow",
+      "xbrl_concepts": [
+        "PaymentsToAcquirePropertyPlantAndEquipment",
+        "PaymentsToAcquireProductiveAssets",
+        "CapitalExpendituresIncurredButNotYetPaid"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Stored as positive value (cash outflow). Some companies net asset purchases with proceeds from asset sales.",
+      "nl_synonyms": [
+        "capex", "capital expenditures", "capital spending",
+        "PP&E purchases", "property plant and equipment spending", "CapEx"
+      ],
+      "example_question": "How much did Apple spend on capital expenditures in FY2023?",
+      "sql_column": "capex"
+    },
+
+    "buybacks": {
+      "statement": "cash_flow",
+      "xbrl_concepts": ["PaymentsForRepurchaseOfCommonStock"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Stored as positive value. NULL if company did not repurchase shares.",
+      "nl_synonyms": [
+        "buybacks", "share repurchases", "stock buybacks",
+        "share buybacks", "repurchase program"
+      ],
+      "example_question": "How much did Apple spend on share buybacks in FY2023?",
+      "sql_column": "buybacks"
+    },
+
+    "dividends_paid": {
+      "statement": "cash_flow",
+      "xbrl_concepts": [
+        "PaymentsOfDividends",
+        "PaymentsOfDividendsCommonStock"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Stored as positive value. NULL for companies that do not pay dividends (e.g. MSFT shows NULL here but does pay dividends — check PaymentsOfDividendsCommonStock fallback).",
+      "nl_synonyms": [
+        "dividends", "dividends paid", "dividend payments",
+        "total dividends", "cash dividends"
+      ],
+      "example_question": "How much did Apple pay in dividends in FY2023?",
+      "sql_column": "dividends_paid"
+    },
+
+    "cash": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": [
+        "CashAndCashEquivalentsAtCarryingValue",
+        "CashCashEquivalentsAndShortTermInvestments",
+        "Cash"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "notes": "End-of-period balance. First concept is pure cash; second includes short-term investments (larger number). Use first for consistency.",
+      "nl_synonyms": [
+        "cash", "cash and equivalents", "cash position",
+        "cash balance", "cash on hand"
+      ],
+      "example_question": "How much cash did Apple have at the end of FY2023?",
+      "sql_column": "cash"
+    },
+
+    "total_assets": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["Assets"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "notes": "Most reliable balance sheet metric — all companies report this.",
+      "nl_synonyms": [
+        "total assets", "assets", "asset base", "total asset base"
+      ],
+      "example_question": "What were Apple's total assets in FY2023?",
+      "sql_column": "total_assets"
+    },
+
+    "current_assets": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["AssetsCurrent"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "nl_synonyms": ["current assets", "short-term assets"],
+      "example_question": "What were Apple's current assets in FY2023?",
+      "sql_column": "current_assets"
+    },
+
+    "current_liabilities": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["LiabilitiesCurrent"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "nl_synonyms": ["current liabilities", "short-term liabilities"],
+      "example_question": "What were Apple's current liabilities in FY2023?",
+      "sql_column": "current_liabilities"
+    },
+
+    "total_liabilities": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["Liabilities"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "nl_synonyms": [
+        "total liabilities", "liabilities", "total debt and liabilities"
+      ],
+      "example_question": "What were Apple's total liabilities in FY2023?",
+      "sql_column": "total_liabilities"
+    },
+
+    "long_term_debt": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": [
+        "LongTermDebt",
+        "LongTermDebtNoncurrent",
+        "LongTermNotesPayable"
+      ],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Banks (JPM) often do not tag this separately — their 'debt' is deposits. NULL expected for financial companies.",
+      "nl_synonyms": [
+        "long-term debt", "long term debt", "long-term borrowings",
+        "debt", "total debt", "bonds payable"
+      ],
+      "example_question": "What was Apple's long-term debt in FY2023?",
+      "sql_column": "long_term_debt"
+    },
+
+    "goodwill": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["Goodwill"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "Zero or NULL for companies with no acquisitions.",
+      "nl_synonyms": ["goodwill", "goodwill on balance sheet"],
+      "example_question": "What was Microsoft's goodwill in FY2023?",
+      "sql_column": "goodwill"
+    },
+
+    "retained_earnings": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["RetainedEarningsAccumulatedDeficit"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "notes": "Can be negative (accumulated deficit) for companies with large buyback programs (AAPL).",
+      "nl_synonyms": [
+        "retained earnings", "accumulated deficit", "retained profits"
+      ],
+      "example_question": "What were Apple's retained earnings in FY2023?",
+      "sql_column": "retained_earnings"
+    },
+
+    "inventories": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["InventoryNet", "InventoryGross"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "medium",
+      "notes": "NULL for pure software/services companies (MSFT, ADBE) with no physical inventory.",
+      "nl_synonyms": ["inventory", "inventories", "stock on hand"],
+      "example_question": "What was Apple's inventory in FY2023?",
+      "sql_column": "inventories"
+    },
+
+    "accounts_payable": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": ["AccountsPayableCurrent"],
+      "xbrl_unit": "USD",
+      "computed": false,
+      "reliability": "high",
+      "nl_synonyms": [
+        "accounts payable", "payables", "trade payables", "AP"
+      ],
+      "example_question": "What were Apple's accounts payable in FY2023?",
+      "sql_column": "accounts_payable"
+    },
+
+    "eps_diluted": {
+      "statement": "income_statement",
+      "xbrl_concepts": ["EarningsPerShareDiluted"],
+      "xbrl_unit": "USD/shares",
+      "computed": false,
+      "reliability": "high",
+      "notes": "Unit is USD/shares, NOT USD — must query units.USD/shares in the API response, not units.USD.",
+      "nl_synonyms": [
+        "EPS", "earnings per share", "diluted EPS", "diluted earnings per share",
+        "EPS diluted"
+      ],
+      "example_question": "What was Apple's diluted EPS in FY2023?",
+      "sql_column": "eps_diluted"
+    },
+
+    "current_ratio": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": [],
+      "xbrl_unit": "ratio",
+      "computed": true,
+      "formula": "current_assets / current_liabilities",
+      "reliability": "high",
+      "notes": "Not an XBRL concept — computed after fetching current_assets and current_liabilities.",
+      "nl_synonyms": [
+        "current ratio", "liquidity ratio", "short-term liquidity"
+      ],
+      "example_question": "What was Apple's current ratio in FY2023?",
+      "sql_column": "current_ratio"
+    },
+
+    "net_margin": {
+      "statement": "income_statement",
+      "xbrl_concepts": [],
+      "xbrl_unit": "ratio",
+      "computed": true,
+      "formula": "net_income / total_revenue",
+      "reliability": "high",
+      "notes": "Computed after fetching net_income and total_revenue. Stored as decimal (0.25 = 25%).",
+      "nl_synonyms": [
+        "net margin", "profit margin", "net profit margin",
+        "net income margin", "bottom-line margin"
+      ],
+      "example_question": "What was Apple's net profit margin in FY2023?",
+      "sql_column": "net_margin"
+    },
+
+    "roa": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": [],
+      "xbrl_unit": "ratio",
+      "computed": true,
+      "formula": "net_income / total_assets",
+      "reliability": "high",
+      "notes": "Return on Assets. Computed after fetching net_income and total_assets. Stored as decimal.",
+      "nl_synonyms": [
+        "ROA", "return on assets", "asset efficiency",
+        "return on total assets"
+      ],
+      "example_question": "What was Microsoft's return on assets in FY2023?",
+      "sql_column": "roa"
+    },
+
+    "debt_to_assets": {
+      "statement": "balance_sheet",
+      "xbrl_concepts": [],
+      "xbrl_unit": "ratio",
+      "computed": true,
+      "formula": "total_liabilities / total_assets",
+      "reliability": "high",
+      "notes": "Leverage ratio. Stored as decimal (0.85 = 85%).",
+      "nl_synonyms": [
+        "debt to assets", "debt-to-assets ratio", "leverage ratio",
+        "total debt ratio", "liabilities to assets"
+      ],
+      "example_question": "What was Apple's debt-to-assets ratio in FY2023?",
+      "sql_column": "debt_to_assets"
+    }
+  },
+
+  "dropped_columns": {
+    "reason": "Removed from panel — >80% NULL in original pipeline, low analytical value for NL2SQL",
+    "columns": ["land", "operating_leases", "comprehensive_income", "aoci", "apic",
+                "deferred_tax", "other_assets", "other_current_assets", "other_liabilities"]
+  },
+
+  "nl2sql_schema_prompt": {
+    "description": "Exact schema string to embed in NL2SQL system prompt and SFT training examples",
+    "value": "panel (ticker TEXT, year TEXT, total_revenue REAL, gross_profit REAL, operating_income REAL, net_income REAL, r_and_d REAL, interest_expense REAL, interest_income REAL, da REAL, cfo REAL, capex REAL, buybacks REAL, dividends_paid REAL, cash REAL, total_assets REAL, current_assets REAL, current_liabilities REAL, total_liabilities REAL, long_term_debt REAL, goodwill REAL, retained_earnings REAL, inventories REAL, accounts_payable REAL, eps_diluted REAL, current_ratio REAL, net_margin REAL, roa REAL, debt_to_assets REAL)"
+  }
+}
