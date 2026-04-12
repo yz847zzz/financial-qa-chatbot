@@ -1,0 +1,431 @@
+[
+  {
+    "id": 1,
+    "category": "Type1",
+    "question": "What was Apple's total revenue in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's total revenue in FY2023 was $383,285,000,000.0.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.741,
+        "total_s": 7.121,
+        "intent_s": 0.336,
+        "sql_s": 2.215,
+        "answer_s": 2.829,
+        "gpt_latency_s": 2.618
+      }
+    },
+    "gpt": {
+      "answer": "Apple's total revenue for the fiscal year 2023 was $383.93 billion. This information is sourced from Apple's SEC filings, specifically their Form 10-K for the fiscal year ended September 30, 2023.",
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 2.618
+    }
+  },
+  {
+    "id": 2,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2022?",
+    "our": {
+      "answer": "Microsoft's net income in FY2022 was $72.738 billion. \n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.402,
+        "total_s": 6.219,
+        "intent_s": 0.32,
+        "sql_s": 1.93,
+        "answer_s": 2.567,
+        "gpt_latency_s": 1.096
+      }
+    },
+    "gpt": {
+      "answer": "Microsoft's net income for the fiscal year 2022 was $72.7 billion. This information is available in Microsoft's Form 10-K filed with the SEC.",
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.096
+    }
+  },
+  {
+    "id": 3,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2023?",
+    "our": {
+      "answer": "Microsoft's net income in FY2023 was $72.361 billion. \n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.423,
+        "total_s": 6.467,
+        "intent_s": 0.306,
+        "sql_s": 1.819,
+        "answer_s": 2.909,
+        "gpt_latency_s": 1.539
+      }
+    },
+    "gpt": {
+      "answer": "Microsoft's net income for the fiscal year 2023 was $72.36 billion. This information is sourced from Microsoft's Form 10-K filed with the SEC.",
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.539
+    }
+  },
+  {
+    "id": 4,
+    "category": "Type1",
+    "question": "What was Adobe's total revenue in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Adobe's total revenue in FY2023 was $9.233 billion.",
+      "intent_correct": true,
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.441,
+        "total_s": 6.179,
+        "intent_s": 0.317,
+        "sql_s": 2.078,
+        "answer_s": 2.342,
+        "gpt_latency_s": 1.068
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Adobe's fiscal year 2023 had not yet concluded, and therefore, the total revenue for FY2023 was not available. For the most accurate and up-to-date information, please refer to Adobe's latest SEC filings or their official investor relations website.",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 1.068
+    }
+  },
+  {
+    "id": 5,
+    "category": "Type1",
+    "question": "What was Adobe's net income in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Adobe's net income in FY2023 was $4.756 billion.",
+      "intent_correct": true,
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.356,
+        "total_s": 6.402,
+        "intent_s": 0.326,
+        "sql_s": 2.029,
+        "answer_s": 2.69,
+        "gpt_latency_s": 1.065
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Adobe's fiscal year 2023 has not been completed, and therefore, the net income for FY2023 is not available. Adobe's fiscal year typically ends in late November, and the full-year financial results are usually reported shortly thereafter. For the most accurate and up-to-date inf",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 1.065
+    }
+  },
+  {
+    "id": 6,
+    "category": "Type1",
+    "question": "What was Apple's operating income in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's operating income in FY2023 was $114,301,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.456,
+        "total_s": 6.474,
+        "intent_s": 0.401,
+        "sql_s": 1.942,
+        "answer_s": 2.674,
+        "gpt_latency_s": 0.903
+      }
+    },
+    "gpt": {
+      "answer": "Apple's operating income for the fiscal year 2023 was $109.44 billion. This information can be found in Apple's Form 10-K filed with the SEC for the fiscal year ended September 30, 2023.",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 0.903
+    }
+  },
+  {
+    "id": 7,
+    "category": "Type1",
+    "question": "What was Apple's net profit margin in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's net profit margin in FY2023 was 25.30624342643208%.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.589,
+        "total_s": 6.618,
+        "intent_s": 0.413,
+        "sql_s": 1.963,
+        "answer_s": 2.652,
+        "gpt_latency_s": 3.012
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Apple's fiscal year 2023 ended on September 30, 2023. However, the specific net profit margin for FY2023 would be available in their annual report or 10-K filing with the SEC, which is typically released shortly after the fiscal year ends. To find the exact net profit margin, y",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 3.012
+    }
+  },
+  {
+    "id": 8,
+    "category": "Type1",
+    "question": "What was Microsoft's return on assets in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Microsoft's return on assets (ROA) in FY2023 was 17.56437326719038%.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.459,
+        "total_s": 6.808,
+        "intent_s": 0.337,
+        "sql_s": 1.913,
+        "answer_s": 3.098,
+        "gpt_latency_s": 0.88
+      }
+    },
+    "gpt": {
+      "answer": "Microsoft's return on assets (ROA) for the fiscal year 2023 was 15.4%. This figure is calculated by dividing the net income by the average total assets for the period. You can find this information in Microsoft's FY2023 10-K filing with the SEC.",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 0.88
+    }
+  },
+  {
+    "id": 9,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest net income in FY2023?",
+    "our": {
+      "answer": "Based on the financial database panel table, the top 3 companies by net income in FY2023 were:\n\n1. Apple Inc. (AAPL) with a net income of $96,995,000,000\n2. Microsoft Corporation (MSFT) with a net income of $72,361,000,000\n3. Alphabet Inc. (GOOG) with a net income of $40,267,000,000\n\nThese companies",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 3.257,
+        "total_s": 40.075,
+        "intent_s": 0.774,
+        "sql_s": 6.581,
+        "answer_s": 29.463,
+        "gpt_latency_s": 1.344
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, the fiscal year 2023 has not been completed for many companies, and the most recent full-year data available is for FY2022. However, based on historical trends and available data, the companies that typically report the highest net incomes include:\n\n1. **Apple Inc.**\n2. **Saudi",
+      "value_correct": null,
+      "keyword_hit_rate": 0.5,
+      "fluency_score": null,
+      "latency_s": 1.344
+    }
+  },
+  {
+    "id": 10,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest revenue in FY2023?",
+    "our": {
+      "answer": "Based on the provided SQL query results, the top 3 companies by revenue in FY2023 were:\n\n1. Cisco Systems Inc. (CI) with a revenue of $483 billion\n2. Apple Inc. (AAPL) with a revenue of $383 billion\n3. Costco Wholesale Corporation (COST) with a revenue of $237.7 billion",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 3.319,
+        "total_s": 40.464,
+        "intent_s": 0.706,
+        "sql_s": 7.563,
+        "answer_s": 28.876,
+        "gpt_latency_s": 3.793
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, the companies with the highest revenue for FY2023 were:\n\n1. **Walmart Inc.** - Walmart consistently ranks as one of the top companies by revenue. For FY2023, Walmart reported revenue of approximately $611.3 billion. (Source: Walmart's SEC filings)\n\n2. **Amazon.com, Inc.** - Ama",
+      "value_correct": null,
+      "keyword_hit_rate": 0.0,
+      "fluency_score": null,
+      "latency_s": 3.793
+    }
+  },
+  {
+    "id": 11,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Microsoft revenue in FY2023.",
+    "our": {
+      "answer": "According to the financial database, in FY2023, Apple's revenue was $383.29 billion, while Microsoft's revenue was $211.92 billion. Therefore, Apple's revenue was significantly higher than Microsoft's revenue in FY2023.\n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.813,
+        "total_s": 12.073,
+        "intent_s": 0.479,
+        "sql_s": 3.84,
+        "answer_s": 5.94,
+        "gpt_latency_s": 2.222
+      }
+    },
+    "gpt": {
+      "answer": "As of the latest available data for FY2023, Apple's revenue was $383.93 billion, while Microsoft's revenue was $211.92 billion.\n\nSources:\n- Apple's revenue: Apple Inc. Form 10-K for the fiscal year ended September 30, 2023.\n- Microsoft's revenue: Microsoft Corporation Form 10-K for the fiscal year e",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 2.222
+    }
+  },
+  {
+    "id": 12,
+    "category": "Type1-compare",
+    "question": "What were Apple's revenue and net income in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's revenue in FY2023 was $383,285,000,000 and net income was $96,995,000,000.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.584,
+        "total_s": 7.913,
+        "intent_s": 0.309,
+        "sql_s": 2.463,
+        "answer_s": 3.557,
+        "gpt_latency_s": 1.379
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Apple's fiscal year 2023 ended on September 30, 2023. However, the specific revenue and net income figures for FY2023 would be available in Apple's annual report or Form 10-K filed with the SEC after the fiscal year ends. You can access these documents on the SEC's EDGAR databa",
+      "value_correct": null,
+      "keyword_hit_rate": 0.333,
+      "fluency_score": null,
+      "latency_s": 1.379
+    }
+  },
+  {
+    "id": 17,
+    "category": "Type3",
+    "question": "Hello! What can you help me with?",
+    "our": {
+      "answer": "I can assist with various financial-related topics, such as:\n\n- Analyzing SEC filings (10-K, 10-Q, 8-K, etc.) to understand a company's financial performance and operations.\n- Calculating financial metrics (e.g., EPS, ROE, ROA, etc.) and interpreting their significance.\n- Providing insights into com",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 3.385,
+        "total_s": 17.367,
+        "answer_s": 13.981,
+        "gpt_latency_s": 0.919
+      }
+    },
+    "gpt": {
+      "answer": "Hello! I can assist you with questions related to financial analysis, such as interpreting SEC filings, understanding financial statements, analyzing company performance, and providing specific financial figures from recent filings. If you have a particular company or financial topic in mind, feel f",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 0.919
+    }
+  },
+  {
+    "id": 18,
+    "category": "Type3",
+    "question": "Thank you, that was very helpful.",
+    "our": {
+      "answer": "You're welcome. If you have any more questions or need help with a specific company or financial metric, feel free to ask. I'm here to assist you. What's on your mind next?",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 4.362,
+        "total_s": 8.943,
+        "answer_s": 4.581,
+        "gpt_latency_s": 0.998
+      }
+    },
+    "gpt": {
+      "answer": "You're welcome! If you have any more questions or need further assistance, feel free to ask.",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 0.998
+    }
+  },
+  {
+    "id": 19,
+    "category": "Type1+Type2",
+    "question": "What was Apple's revenue in FY2023 and how did they describe their supply chain risks?",
+    "our": {
+      "answer": "Apple's revenue for FY2023 was $383,285,000,000. The company described their supply chain risks as including credit risk on trade accounts receivable, vendor non-trade receivables, and prepayments related to long-term supply agreements. Additionally, they highlighted the potential for supply shortag",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 2.423,
+        "total_s": 28.929,
+        "intent_s": 0.697,
+        "sql_s": 2.372,
+        "retrieve_s": 4.916,
+        "answer_s": 18.52,
+        "gpt_latency_s": 1.561
+      }
+    },
+    "gpt": {
+      "answer": "Apple's revenue for the fiscal year 2023 was $383.93 billion. In their SEC filings, Apple describes their supply chain risks as including potential disruptions due to natural disasters, geopolitical tensions, and public health issues, which could affect the availability and cost of components. They ",
+      "value_correct": false,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.561
+    }
+  },
+  {
+    "id": 20,
+    "category": "Multi-Type1",
+    "question": "What was Apple's revenue in FY2023 and what was Microsoft's net income in FY2023?",
+    "our": {
+      "answer": "In FY2023, Apple's revenue was $383,285,000,000, while Microsoft's net income was $72.361 billion.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 2.908,
+        "total_s": 13.848,
+        "intent_s": 0.645,
+        "sql_s": 4.183,
+        "answer_s": 6.11,
+        "gpt_latency_s": 0.842
+      }
+    },
+    "gpt": {
+      "answer": "Apple's revenue for FY2023 was $383.93 billion. Microsoft's net income for FY2023 was $72.36 billion. These figures are sourced from their respective SEC filings for the fiscal year 2023.",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 0.842
+    }
+  }
+]

@@ -90,6 +90,60 @@
 
 ---
 
+## 2026-04-12
+
+**System-level evaluation — 20 test cases (our pipeline vs GPT-4o)**
+
+Evaluation script: `eval_system.py`. Ground truth values queried from `data/financials.db`.
+Results saved to `eval_results/system_eval_20260412_133921.json`.
+
+Test case breakdown:
+- Type1 (single metric): 8 cases
+- Type1-ranking: 2 cases
+- Type1-compare (multi-ticker/multi-metric): 2 cases
+- Type2 (qualitative RAG): 4 cases
+- Type3 (chat/meta): 2 cases
+- Compound Type1+Type2: 1 case
+- Multi-Type1: 1 case
+
+**Aggregate metrics:**
+
+| Metric | Our Pipeline | GPT-4o |
+|---|---|---|
+| Intent accuracy | **95%** (19/20) | N/A |
+| Value accuracy | **100%** (9/9 applicable) | 55.6% (5/9) |
+| Keyword hit rate | **91.7%** | 77.9% |
+| Avg latency | 14.9s | 1.5s |
+
+**Key findings:**
+
+1. **Type1 SQL is highly accurate** — 100% value accuracy, 100% keyword hit rate across all 12 Type1 cases. Database query gives exact values vs GPT which has knowledge cutoff issues (said "FY2023 not available" for Adobe, wrong ROA for MSFT).
+
+2. **GPT knowledge cutoff is a real problem** — GPT-4o failed on Adobe FY2023 (said data not available), Apple operating income, Apple net margin, MSFT ROA. Our SQL pipeline gets exact DB values.
+
+3. **Type2 RAG is the weak spot** — 3 of 4 Type2 cases had issues:
+   - Case 13 (Apple AI strategy): chunks retrieved were about investment policy/cyber, not AI — topic underrepresented in filings
+   - Case 15 (Apple supply chain + "10-K" in question): **intent misclassified as Type1** — SQL error, keyword hit 0%
+   - Case 16 (Adobe competition): chunks insufficient — Adobe competition coverage sparse
+
+4. **Intent classification: 95% (1 failure)** — Case 15 "How did Apple describe its supply chain risks in its 10-K?" misclassified as Type1. The word "10-K" may have triggered Type1 pattern; need to add this pattern to Type2 examples.
+
+5. **Decomposer false positive on ranking questions** — "Which 3 companies had highest X?" split into 2 sub-questions (adds ~20s latency, answer still correct). Need to add negative examples.
+
+6. **Latency gap: 10x** (14.9s vs 1.5s) — expected for local 3B model vs GPT API. Type1 simple: 6-8s. Type2: 15-25s. Ranking: ~40s (due to false decompose). Path to fix: vLLM batched inference.
+
+**Refactoring done today:**
+- Merged `answer_from_sql` + `answer_from_context` into single `generate_answer(question, context)` — source citation always-on, hardcoded in system prompt, source baked into context string by caller
+- `format_sql_context()` / `format_rag_context()` separate the formatting concern cleanly
+
+**Action items from eval:**
+- [ ] Fix intent classifier: add few-shot example for "describe X in their 10-K" → Type2
+- [ ] Fix decomposer: add negative example — "Which 3 companies had highest X?" should NOT split
+- [ ] Type2 RAG quality: AI strategy chunks not well-represented — consider chunking strategy or query expansion
+- [ ] Format percentage output cleanly (currently outputs raw float "25.30624342643208%")
+
+---
+
 ## 2026-04-11
 
 **Security — repo hygiene**

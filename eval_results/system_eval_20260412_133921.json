@@ -1,0 +1,538 @@
+[
+  {
+    "id": 1,
+    "category": "Type1",
+    "question": "What was Apple's total revenue in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's total revenue in FY2023 was $383,285,000,000.0.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.99,
+        "total_s": 7.186,
+        "intent_s": 0.336,
+        "sql_s": 2.055,
+        "answer_s": 2.805,
+        "gpt_latency_s": 1.405
+      }
+    },
+    "gpt": {
+      "answer": "Apple's total revenue for the fiscal year 2023 was $383.93 billion. This information is sourced from Apple's SEC filings and financial statements.",
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.405
+    }
+  },
+  {
+    "id": 2,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2022?",
+    "our": {
+      "answer": "Microsoft's net income in FY2022 was $72.738 billion. \n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.672,
+        "total_s": 6.623,
+        "intent_s": 0.355,
+        "sql_s": 1.929,
+        "answer_s": 2.666,
+        "gpt_latency_s": 0.707
+      }
+    },
+    "gpt": {
+      "answer": "Microsoft's net income for the fiscal year 2022 was $72.7 billion. This information is available in Microsoft's Form 10-K filed with the SEC.",
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 0.707
+    }
+  },
+  {
+    "id": 3,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2023?",
+    "our": {
+      "answer": "Microsoft's net income in FY2023 was $72.361 billion. \n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.803,
+        "total_s": 7.178,
+        "intent_s": 0.326,
+        "sql_s": 2.123,
+        "answer_s": 2.924,
+        "gpt_latency_s": 1.135
+      }
+    },
+    "gpt": {
+      "answer": "Microsoft's net income for the fiscal year 2023 was $72.36 billion. This information is sourced from Microsoft's 10-K filing with the SEC for the fiscal year ended June 30, 2023.",
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.135
+    }
+  },
+  {
+    "id": 4,
+    "category": "Type1",
+    "question": "What was Adobe's total revenue in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Adobe's total revenue in FY2023 was $9.233 billion.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.843,
+        "total_s": 6.631,
+        "intent_s": 0.359,
+        "sql_s": 2.174,
+        "answer_s": 2.255,
+        "gpt_latency_s": 1.162
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Adobe's fiscal year 2023 had not yet concluded, and therefore, the total revenue for FY2023 was not available. For the most accurate and up-to-date financial information, please refer to Adobe's official SEC filings or their investor relations website.",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 1.162
+    }
+  },
+  {
+    "id": 5,
+    "category": "Type1",
+    "question": "What was Adobe's net income in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Adobe's net income in FY2023 was $4.756 billion.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.516,
+        "total_s": 5.782,
+        "intent_s": 0.331,
+        "sql_s": 1.835,
+        "answer_s": 2.099,
+        "gpt_latency_s": 0.84
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Adobe's fiscal year 2023 has not been completed, and therefore, the net income for FY2023 is not available. For the most accurate and up-to-date financial information, please refer to Adobe's latest SEC filings or their official investor relations website.",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 0.84
+    }
+  },
+  {
+    "id": 6,
+    "category": "Type1",
+    "question": "What was Apple's operating income in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's operating income in FY2023 was $114,301,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.503,
+        "total_s": 6.349,
+        "intent_s": 0.332,
+        "sql_s": 1.971,
+        "answer_s": 2.542,
+        "gpt_latency_s": 0.709
+      }
+    },
+    "gpt": {
+      "answer": "Apple's operating income for the fiscal year 2023 was $109.44 billion. This information can be found in Apple's Form 10-K filed with the SEC for the fiscal year ended September 30, 2023.",
+      "value_correct": true,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 0.709
+    }
+  },
+  {
+    "id": 7,
+    "category": "Type1",
+    "question": "What was Apple's net profit margin in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's net profit margin in FY2023 was 25.30624342643208%.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.446,
+        "total_s": 6.533,
+        "intent_s": 0.328,
+        "sql_s": 1.835,
+        "answer_s": 2.923,
+        "gpt_latency_s": 1.271
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Apple's fiscal year 2023 ended on September 30, 2023. However, the specific net profit margin for FY2023 would be available in their annual report or 10-K filing with the SEC, which is typically released shortly after the fiscal year ends. To find the exact net profit margin, y",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 1.271
+    }
+  },
+  {
+    "id": 8,
+    "category": "Type1",
+    "question": "What was Microsoft's return on assets in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Microsoft's return on assets (ROA) in FY2023 was 17.56437326719038%.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 2.323,
+        "total_s": 7.772,
+        "intent_s": 0.336,
+        "sql_s": 2.08,
+        "answer_s": 3.033,
+        "gpt_latency_s": 0.806
+      }
+    },
+    "gpt": {
+      "answer": "Microsoft's Return on Assets (ROA) for the fiscal year 2023 was 15.4%. This figure is calculated by dividing the net income by the average total assets for the period. You can find this information in Microsoft's FY2023 10-K filing with the SEC.",
+      "value_correct": false,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 0.806
+    }
+  },
+  {
+    "id": 9,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest net income in FY2023?",
+    "our": {
+      "answer": "Based on the financial database panel table, the top 3 companies by net income in FY2023 were:\n\n1. Apple Inc. (AAPL) with a net income of $96,995,000,000\n2. Microsoft Corporation (MSFT) with a net income of $72,361,000,000\n3. Alphabet Inc. (GOOG) with a net income of $40,267,000,000\n\nThese companies",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 3.216,
+        "total_s": 41.181,
+        "intent_s": 0.72,
+        "sql_s": 6.27,
+        "answer_s": 30.974,
+        "gpt_latency_s": 1.834
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, the fiscal year 2023 has not been completed for many companies, and the most recent full-year data available would typically be for FY2022. However, based on historical trends and available data, the companies that often report the highest net incomes include:\n\n1. **Apple Inc.*",
+      "value_correct": null,
+      "keyword_hit_rate": 0.5,
+      "fluency_score": null,
+      "latency_s": 1.834
+    }
+  },
+  {
+    "id": 10,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest revenue in FY2023?",
+    "our": {
+      "answer": "Based on the provided SQL query results, the top 3 companies by revenue in FY2023 were:\n\n1. Cisco Systems Inc. (CI) with a revenue of $483 billion\n2. Apple Inc. (AAPL) with a revenue of $383 billion\n3. Costco Wholesale Corporation (COST) with a revenue of $237.7 billion",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 3.313,
+        "total_s": 39.086,
+        "intent_s": 0.599,
+        "sql_s": 6.684,
+        "answer_s": 28.489,
+        "gpt_latency_s": 1.853
+      }
+    },
+    "gpt": {
+      "answer": "As of the latest available data, the three companies with the highest revenue in FY2023 were:\n\n1. **Walmart Inc.** - Walmart reported revenue of approximately $611.3 billion for the fiscal year ending January 31, 2023. (Source: Walmart's SEC filings)\n\n2. **Amazon.com, Inc.** - Amazon reported revenu",
+      "value_correct": null,
+      "keyword_hit_rate": 0.0,
+      "fluency_score": null,
+      "latency_s": 1.853
+    }
+  },
+  {
+    "id": 11,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Microsoft revenue in FY2023.",
+    "our": {
+      "answer": "According to the financial database, in FY2023, Apple's revenue was $383.29 billion, while Microsoft's revenue was $211.92 billion. Therefore, Apple's revenue was significantly higher than Microsoft's revenue in FY2023.\n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.795,
+        "total_s": 12.113,
+        "intent_s": 0.311,
+        "sql_s": 3.693,
+        "answer_s": 6.314,
+        "gpt_latency_s": 1.745
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, the fiscal year 2023 for Apple and Microsoft had not been completed. However, I can provide you with the most recent available data from their SEC filings.\n\nFor Apple, the fiscal year ends in September. According to Apple's Q3 2023 earnings report, the company reported revenue ",
+      "value_correct": null,
+      "keyword_hit_rate": 0.75,
+      "fluency_score": null,
+      "latency_s": 1.745
+    }
+  },
+  {
+    "id": 12,
+    "category": "Type1-compare",
+    "question": "What were Apple's revenue and net income in FY2023?",
+    "our": {
+      "answer": "According to the financial database, Apple's revenue in FY2023 was $383,285,000,000 and net income was $96,995,000,000.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.609,
+        "total_s": 8.776,
+        "intent_s": 0.359,
+        "sql_s": 2.358,
+        "answer_s": 4.45,
+        "gpt_latency_s": 1.183
+      }
+    },
+    "gpt": {
+      "answer": "As of my last update, Apple's fiscal year 2023 results have not been released. Typically, Apple announces its fiscal year results in late October. For the most accurate and up-to-date information, you should check Apple's official press releases or their filings with the SEC, such as the Form 10-K, ",
+      "value_correct": null,
+      "keyword_hit_rate": 0.333,
+      "fluency_score": null,
+      "latency_s": 1.183
+    }
+  },
+  {
+    "id": 13,
+    "category": "Type2",
+    "question": "How did Apple describe its AI strategy in recent filings?",
+    "our": {
+      "answer": "Unfortunately, the provided context does not mention Apple's AI strategy. The context only discusses Apple's investment policy, competition, and cybersecurity measures. Therefore, I cannot provide an answer based on the provided context.\n\nIf you could provide more context or information about Apple'",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.654,
+        "total_s": 15.055,
+        "intent_s": 0.404,
+        "retrieve_s": 4.808,
+        "answer_s": 8.189,
+        "gpt_latency_s": 1.277
+      }
+    },
+    "gpt": {
+      "answer": "In its recent filings, Apple has described its AI strategy as focused on integrating artificial intelligence and machine learning across its products and services to enhance user experience. The company emphasizes the use of AI to improve features such as Siri, photography, and other functionalities",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.277
+    }
+  },
+  {
+    "id": 14,
+    "category": "Type2",
+    "question": "What risks did Microsoft identify related to its cloud business?",
+    "our": {
+      "answer": "Based on the provided context, Microsoft identifies the following risks related to its cloud business:\n\n1. Security risks: Microsoft plays a central role in protecting the computing environment used by its customers and employees, and supporting the resiliency of its cloud infrastructure and service",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.474,
+        "total_s": 24.424,
+        "intent_s": 0.403,
+        "retrieve_s": 4.621,
+        "answer_s": 17.927,
+        "gpt_latency_s": 2.949
+      }
+    },
+    "gpt": {
+      "answer": "In its SEC filings, Microsoft identifies several risks related to its cloud business. These risks include:\n\n1. **Security and Privacy Concerns**: Microsoft acknowledges the risk of data breaches and cyber-attacks that could compromise customer data, leading to reputational damage and potential legal",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 2.949
+    }
+  },
+  {
+    "id": 15,
+    "category": "Type2",
+    "question": "How did Apple describe its supply chain risks in its 10-K?",
+    "our": {
+      "answer": "SQL error: Only SELECT statements are allowed.",
+      "intent_correct": false,
+      "value_correct": null,
+      "keyword_hit_rate": 0.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 2.132,
+        "total_s": 20.822,
+        "intent_s": 0.331,
+        "sql_s": 18.359,
+        "gpt_latency_s": 2.132
+      }
+    },
+    "gpt": {
+      "answer": "In its 10-K filings, Apple typically describes its supply chain risks as including potential disruptions due to natural disasters, geopolitical tensions, trade restrictions, and public health issues, which could affect the availability and cost of components. Apple also highlights the risks associat",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 2.132
+    }
+  },
+  {
+    "id": 16,
+    "category": "Type2",
+    "question": "What did Adobe say about competition in its most recent annual filing?",
+    "our": {
+      "answer": "Unfortunately, the provided context does not contain enough information about Adobe's most recent annual filing to answer the question about competition. The context only provides information about Adobe's diversity and inclusion strategy, compensation, benefits, and wellbeing, but not about competi",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 1.746,
+        "total_s": 16.412,
+        "intent_s": 0.339,
+        "retrieve_s": 7.524,
+        "answer_s": 6.802,
+        "gpt_latency_s": 3.572
+      }
+    },
+    "gpt": {
+      "answer": "In its most recent annual filing, Adobe typically discusses the competitive landscape by highlighting the presence of strong competition across its various business segments. Adobe often mentions that it faces competition from a range of companies offering similar products and services, including la",
+      "value_correct": null,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": null,
+      "latency_s": 3.572
+    }
+  },
+  {
+    "id": 17,
+    "category": "Type3",
+    "question": "Hello! What can you help me with?",
+    "our": {
+      "answer": "I can assist with various financial-related topics, such as:\n\n- Analyzing SEC filings (10-K, 10-Q, 8-K, etc.) to understand a company's financial performance and operations.\n- Calculating financial metrics (e.g., EPS, ROE, ROA, etc.) and interpreting their significance.\n- Providing insights into com",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 3.531,
+        "total_s": 17.993,
+        "answer_s": 14.462,
+        "gpt_latency_s": 1.02
+      }
+    },
+    "gpt": {
+      "answer": "Hello! I can assist you with questions related to financial analysis, SEC filings, company financial data, and other finance-related inquiries. If you need specific financial figures, insights from recent filings, or explanations of financial concepts, feel free to ask!",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.02
+    }
+  },
+  {
+    "id": 18,
+    "category": "Type3",
+    "question": "Thank you, that was very helpful.",
+    "our": {
+      "answer": "You're welcome. If you have any more questions or need help with a specific company or financial metric, feel free to ask. I'm here to assist you. What's on your mind next?",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 4.639,
+        "total_s": 9.027,
+        "answer_s": 4.388,
+        "gpt_latency_s": 0.526
+      }
+    },
+    "gpt": {
+      "answer": "You're welcome! If you have any more questions or need further assistance, feel free to ask.",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 0.526
+    }
+  },
+  {
+    "id": 19,
+    "category": "Type1+Type2",
+    "question": "What was Apple's revenue in FY2023 and how did they describe their supply chain risks?",
+    "our": {
+      "answer": "Apple's revenue for FY2023 was $383,285,000,000. The company described their supply chain risks as including credit risk on trade accounts receivable, vendor non-trade receivables, and prepayments related to long-term supply agreements. Additionally, they highlighted the potential for supply shortag",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 2.241,
+        "total_s": 25.76,
+        "intent_s": 0.618,
+        "sql_s": 2.205,
+        "retrieve_s": 4.11,
+        "answer_s": 16.586,
+        "gpt_latency_s": 1.996
+      }
+    },
+    "gpt": {
+      "answer": "Apple's revenue for the fiscal year 2023 was $383.93 billion. In their SEC filings, Apple described their supply chain risks as including potential disruptions due to natural disasters, geopolitical tensions, public health issues, and other factors that could affect the availability and cost of comp",
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.996
+    }
+  },
+  {
+    "id": 20,
+    "category": "Multi-Type1",
+    "question": "What was Apple's revenue in FY2023 and what was Microsoft's net income in FY2023?",
+    "our": {
+      "answer": "In FY2023, Apple's revenue was $383,285,000,000, while Microsoft's net income was $72.361 billion.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "timings": {
+        "decompose_s": 2.636,
+        "total_s": 13.104,
+        "intent_s": 0.726,
+        "sql_s": 4.551,
+        "answer_s": 5.19,
+        "gpt_latency_s": 1.185
+      }
+    },
+    "gpt": {
+      "answer": "Apple's revenue for FY2023 was $383.93 billion. Microsoft's net income for FY2023 was $72.36 billion. \n\nSources:\n- Apple's revenue: Apple Inc. Form 10-K for the fiscal year ended September 30, 2023.\n- Microsoft's net income: Microsoft Corporation Form 10-K for the fiscal year ended June 30, 2023.",
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": null,
+      "latency_s": 1.185
+    }
+  }
+]
