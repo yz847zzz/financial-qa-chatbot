@@ -6,10 +6,14 @@ Architecture:
     → decompose_question()           → sub-questions (or [question] if not compound)
     → per sub-question:
         → classify_intent()          → Type1 / Type2 / Type3
-        → Type1: generate_sql() → execute_sql() → answer_from_sql()
-        → Type2: rewrite_query() → retrieve_chunks_multi() → answer_from_context()
+        → Type1: generate_sql() → execute_sql() → generate_answer(context=sql+rows)
+        → Type2: rewrite_query() → retrieve_chunks_multi() → generate_answer(context=chunks)
         → Type3: direct_answer()
     → if multiple sub-questions: synthesize answers
+
+  generate_answer() is a single unified module for both Type1 and Type2.
+  The source is always cited — baked into the context string by the caller,
+  not toggled by the prompt.
 
 All LLM calls are isolated in functions marked [VLLM_SWAP].
 To migrate to vLLM later, replace those functions with OpenAI-style API calls:
@@ -307,27 +311,6 @@ def format_sql_result(rows: list[dict]) -> str:
     return "\n".join(lines)
 
 
-ANSWER_SQL_SYSTEM = (
-    "You are a financial analyst assistant. "
-    "Given a user question and the SQL query result, provide a clear, concise answer. "
-    "State numbers with proper units (dollars, %). "
-    "Do not mention SQL or database internals."
-)
-
-
-def answer_from_sql(question: str, sql: str, sql_result: str, model, tokenizer) -> str:
-    """[VLLM_SWAP] Generate natural language answer from SQL result."""
-    user_msg = (
-        f"Question: {question}\n\n"
-        f"Data retrieved:\n{sql_result}"
-    )
-    messages = [
-        {"role": "system", "content": ANSWER_SQL_SYSTEM},
-        {"role": "user",   "content": user_msg},
-    ]
-    return llm_generate(model, tokenizer, messages, max_new_tokens=300)
-
-
 # ── Step 2b: Type2 — RAG path ─────────────────────────────────────────────────
 
 def retrieve_chunks_multi(
@@ -350,30 +333,46 @@ def retrieve_chunks_multi(
     return retriever.retrieve_multi(queries, rerank_query=original_question, top_n=top_n)
 
 
-def format_context(chunks: list) -> str:
-    """Format RetrievedChunk list as a numbered context block for the LLM."""
+def format_sql_context(sql: str, rows: list[dict]) -> str:
+    """Format SQL result as a sourced context block for generate_answer()."""
+    return (
+        f"Source: financial database (panel table)\n"
+        f"SQL: {sql}\n"
+        f"Result: {format_sql_result(rows)}"
+    )
+
+
+def format_rag_context(chunks: list) -> str:
+    """Format RetrievedChunk list as a numbered, sourced context block for generate_answer()."""
     parts = []
     for i, c in enumerate(chunks, 1):
-        meta = c.metadata
+        meta   = c.metadata
         source = f"{meta.get('ticker','?')} {meta.get('filing_type','?')} {meta.get('date','?')}"
-        parts.append(f"[{i}] ({source})\n{c.text}")
+        parts.append(f"[{i}] Source: {source}\n{c.text}")
     return "\n\n".join(parts)
 
 
-ANSWER_RAG_SYSTEM = (
+ANSWER_SYSTEM = (
     "You are a financial analyst assistant. "
-    "Answer the user question based ONLY on the provided filing excerpts. "
-    "Cite the source number [1], [2], etc. when referencing specific information. "
-    "If the excerpts do not contain enough information, say so clearly."
+    "Answer the question based ONLY on the provided context. "
+    "Always cite the source at the end of your answer. "
+    "For filing excerpts, use the source label e.g. [1], [2]. "
+    "For database results, cite 'financial database'. "
+    "If the context does not contain enough information, say so clearly."
 )
 
 
-def answer_from_context(question: str, context: str, model, tokenizer) -> str:
-    """[VLLM_SWAP] Generate answer from RAG context."""
-    user_msg = f"Question: {question}\n\nFiling excerpts:\n{context}"
+def generate_answer(question: str, context: str, model, tokenizer) -> str:
+    """
+    [VLLM_SWAP] Single unified answer module for Type1 and Type2.
+
+    The caller is responsible for formatting context with the source included:
+      Type1 → format_sql_context(sql, rows)   e.g. "Source: financial database\\nSQL: ...\\nResult: ..."
+      Type2 → format_rag_context(chunks)       e.g. "[1] Source: AAPL 10-K 2023-09-30\\n..."
+    """
     messages = [
-        {"role": "system", "content": ANSWER_RAG_SYSTEM},
-        {"role": "user",   "content": user_msg},
+        {"role": "system", "content": ANSWER_SYSTEM},
+        {"role": "user",   "content": f"Question: {question}\n\nContext:\n{context}"},
     ]
     return llm_generate(model, tokenizer, messages, max_new_tokens=500)
 
@@ -428,9 +427,8 @@ def _answer_single(sub_q: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
             result["answer"] = f"I generated a SQL query but couldn't execute it: {error}"
             return result
 
-        sql_result_str = format_sql_result(rows)
-        result["answer"] = answer_from_sql(sub_q, repaired_sql, sql_result_str,
-                                           base_model, base_tok)
+        context = format_sql_context(repaired_sql, rows)
+        result["answer"] = generate_answer(sub_q, context, base_model, base_tok)
 
     elif intent == "Type2":
         if retriever is None:
@@ -445,8 +443,8 @@ def _answer_single(sub_q: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
         from rag.query_rewriter import rewrite_query
         queries = rewrite_query(sub_q, base_model, base_tok)
         chunks  = retrieve_chunks_multi(sub_q, queries, retriever, top_n=3)
-        context = format_context(chunks)
-        result["answer"] = answer_from_context(sub_q, context, base_model, base_tok)
+        context = format_rag_context(chunks)
+        result["answer"] = generate_answer(sub_q, context, base_model, base_tok)
 
     else:  # Type3
         result["answer"] = direct_answer(sub_q, base_model, base_tok)
