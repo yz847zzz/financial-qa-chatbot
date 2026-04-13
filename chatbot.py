@@ -16,9 +16,18 @@ Architecture:
   not toggled by the prompt.
 
 All LLM calls are isolated in functions marked [VLLM_SWAP].
-To migrate to vLLM later, replace those functions with OpenAI-style API calls:
-    client = openai.OpenAI(base_url="http://localhost:8001/v1", api_key="none")
-    client.chat.completions.create(model="llama3", messages=..., ...)
+To migrate to vLLM (Linux/WSL2 only):
+    1. Start the server:  bash deployment/scripts/start_server.sh
+    2. Add 3 lines near the top of this file:
+           from deployment.api.client import VLLMClient as _C
+           _vllm = _C()
+           llm_generate = _vllm.llm_generate
+    3. In generate_sql(), change:
+           return llm_generate(model, tokenizer, messages, max_new_tokens=200)
+       to:
+           return _vllm.generate_sql_vllm(messages)
+    That's it. All other call sites use llm_generate() unchanged.
+    The server handles adapter routing (SGMV batching) transparently.
 
 Usage:
     python chatbot.py                        # interactive REPL
