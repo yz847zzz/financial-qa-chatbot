@@ -1,30 +1,20 @@
-# ── Model weights (too large for git) ─────────────────────────────────────────
-models/llama/
-models/gemma/
-models/nl2sql/checkpoint-*/
-models/nl2sql/optimizer.pt
-models/nl2sql/*.png
-models/*/snapshots/
-# Keep adapter weights (small ~47MB) and eval results
+# ── Model weights & tokenizer (not tracked — download via HuggingFace) ────────
+models/
+# Exception: keep small config/metadata files that describe the adapter
+!models/nl2sql/
 !models/nl2sql/adapter_config.json
-!models/nl2sql/adapter_model.safetensors
-!models/nl2sql/tokenizer.json
-!models/nl2sql/tokenizer_config.json
 !models/nl2sql/chat_template.jinja
 !models/nl2sql/run_metadata.json
 !models/nl2sql/eval_results.json
-!models/nl2sql/exec_accuracy.json
+# Explicitly exclude all binary weights and large tokenizer vocab
+models/nl2sql/adapter_model.safetensors
+models/nl2sql/tokenizer.json
+models/nl2sql/tokenizer_config.json
 
-# ── Raw data (large binary / proprietary filings) ─────────────────────────────
-data/filings/
-data/vectordb/
-data/financials.db
-data/analysis/
-data/panel.csv
-# Keep dataset files (JSONL, small)
-!data/nl2sql/
-!data/intent/
-!data/rewriter/
+# ── Raw data (large/proprietary — not tracked) ────────────────────────────────
+data/
+# Exception: keep the schema summary doc
+!data/DATABASE_SUMMARY.md
 
 # ── Python ────────────────────────────────────────────────────────────────────
 __pycache__/

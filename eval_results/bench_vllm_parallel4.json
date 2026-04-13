@@ -1,0 +1,912 @@
+{
+  "mode": "vllm",
+  "timestamp": "2026-04-12T23:07:28",
+  "n_cases": 52,
+  "cases": [
+    {
+      "id": 1,
+      "category": "Type1",
+      "question": "What was Apple's total revenue in FY2023?",
+      "answer": "According to the financial database, Apple's total revenue in FY2023 was $383,285,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 2.459,
+        "total_s": 5.58,
+        "intent_s": 2.256,
+        "sql_s": 0.497,
+        "answer_s": 0.366
+      }
+    },
+    {
+      "id": 2,
+      "category": "Type1",
+      "question": "What was Microsoft's net income in FY2022?",
+      "answer": "According to the financial database, Microsoft's net income in FY2022 was $72,738,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 2.437,
+        "total_s": 5.51,
+        "intent_s": 2.209,
+        "sql_s": 0.509,
+        "answer_s": 0.353
+      }
+    },
+    {
+      "id": 3,
+      "category": "Type1",
+      "question": "What was Microsoft's net income in FY2023?",
+      "answer": "According to the financial database, Microsoft's net income in FY2023 was $72,361,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 2.437,
+        "total_s": 5.547,
+        "intent_s": 2.276,
+        "sql_s": 0.468,
+        "answer_s": 0.366
+      }
+    },
+    {
+      "id": 4,
+      "category": "Type1",
+      "question": "What was Adobe's total revenue in FY2023?",
+      "answer": "According to the financial database, Adobe's total revenue in FY2023 was $19,409,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 2.432,
+        "total_s": 5.576,
+        "intent_s": 2.276,
+        "sql_s": 0.498,
+        "answer_s": 0.369
+      }
+    },
+    {
+      "id": 5,
+      "category": "Type1",
+      "question": "What was Adobe's net income in FY2023?",
+      "answer": "According to the financial database, Adobe's net income in FY2023 was $5,428,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.179,
+        "total_s": 1.04,
+        "intent_s": 0.113,
+        "sql_s": 0.381,
+        "answer_s": 0.366
+      }
+    },
+    {
+      "id": 6,
+      "category": "Type1",
+      "question": "What was Apple's operating income in FY2023?",
+      "answer": "According to the financial database, Apple's operating income in FY2023 was $114,301,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.174,
+        "total_s": 1.031,
+        "intent_s": 0.107,
+        "sql_s": 0.378,
+        "answer_s": 0.371
+      }
+    },
+    {
+      "id": 7,
+      "category": "Type1",
+      "question": "What was Apple's net profit margin in FY2023?",
+      "answer": "According to the financial database, Apple's net profit margin in FY2023 was 25.31%.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.19,
+        "total_s": 1.029,
+        "intent_s": 0.114,
+        "sql_s": 0.385,
+        "answer_s": 0.339
+      }
+    },
+    {
+      "id": 8,
+      "category": "Type1",
+      "question": "What was Microsoft's return on assets in FY2023?",
+      "answer": "According to the financial database, Microsoft's return on assets (ROA) for FY2023 was 0.1756.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.189,
+        "total_s": 1.075,
+        "intent_s": 0.115,
+        "sql_s": 0.382,
+        "answer_s": 0.388
+      }
+    },
+    {
+      "id": 9,
+      "category": "Type1-ranking",
+      "question": "Which 3 companies had the highest net income in FY2023?",
+      "answer": "Based on the provided context, I was unable to find the net income of the three companies with the highest net income in FY2023. The provided excerpts are from the 10-K reports of Southern Company and Pfizer Inc. for FY2023, but they do not contain the information about the top three companies with ",
+      "intent_correct": false,
+      "value_correct": null,
+      "keyword_hit_rate": 0.0,
+      "fluency_score": 2,
+      "timings": {
+        "decompose_s": 0.243,
+        "total_s": 9.537,
+        "intent_s": 0.115,
+        "retrieve_s": 7.775,
+        "answer_s": 1.404
+      }
+    },
+    {
+      "id": 10,
+      "category": "Type1-ranking",
+      "question": "Which 3 companies had the highest revenue in FY2023?",
+      "answer": "Based on the provided SQL query result, the top 3 companies with the highest revenue in FY2023 are:\n\n1. Walmart Inc. (WMT) - $605,881,000,000\n2. Amazon.com Inc. (AMZN) - $574,785,000,000\n3. Apple Inc. (AAPL) - $383,285,000,000\n\n[1] financial database",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.75,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.227,
+        "total_s": 1.962,
+        "intent_s": 0.118,
+        "sql_s": 0.493,
+        "answer_s": 1.123
+      }
+    },
+    {
+      "id": 11,
+      "category": "Type1-compare",
+      "question": "Compare Apple and Microsoft revenue in FY2023.",
+      "answer": "Based on the provided context, here's the comparison of Apple and Microsoft revenue in FY2023:\n\nApple's revenue in FY2023 was $383,285,000,000, while Microsoft's revenue in FY2023 was $211,915,000,000. \n\nTherefore, Apple had a significantly higher revenue than Microsoft in FY2023.\n\n[1] financial dat",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.173,
+        "total_s": 1.809,
+        "intent_s": 0.116,
+        "sql_s": 0.506,
+        "answer_s": 1.014
+      }
+    },
+    {
+      "id": 12,
+      "category": "Type1-compare",
+      "question": "What were Apple's revenue and net income in FY2023?",
+      "answer": "Apple's revenue and net income for FY2023 were $383,285,000,000 and $96,995,000,000, respectively.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.326,
+        "total_s": 2.197,
+        "intent_s": 0.231,
+        "sql_s": 0.803,
+        "answer_s": 0.835
+      }
+    },
+    {
+      "id": 13,
+      "category": "Type2",
+      "question": "How did Apple describe its AI strategy in recent filings?",
+      "answer": "I couldn't find any information in the provided context about Apple's AI strategy. The context only discusses Apple's investment policy and strategy, its competitive strategy, and cybersecurity threats, but does not mention AI.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.255,
+        "total_s": 11.154,
+        "intent_s": 0.182,
+        "retrieve_s": 8.209,
+        "answer_s": 2.509
+      }
+    },
+    {
+      "id": 14,
+      "category": "Type2",
+      "question": "What risks did Microsoft identify related to its cloud business?",
+      "answer": "Based on the provided context, Microsoft identified the following risks related to its cloud business:\n\n1. Determined adversaries (BERSECURITY RISK MANAGEMENT AND STRATEGY) - This suggests that Microsoft is concerned about the security risks posed by malicious actors targeting its cloud infrastructu",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 2,
+      "timings": {
+        "decompose_s": 0.259,
+        "total_s": 10.547,
+        "intent_s": 0.183,
+        "retrieve_s": 8.037,
+        "answer_s": 2.068
+      }
+    },
+    {
+      "id": 15,
+      "category": "Type2",
+      "question": "How did Apple describe its supply chain risks in its 10-K?",
+      "answer": "According to Apple's 10-K filings, the company described its supply chain risks as follows:\n\n- Credit risk on trade accounts receivable, vendor non-trade receivables, and prepayments related to long-term supply agreements, which is heightened during economic downturns.\n- Supply shortages and price i",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.303,
+        "total_s": 12.722,
+        "intent_s": 0.502,
+        "retrieve_s": 8.325,
+        "answer_s": 3.591
+      }
+    },
+    {
+      "id": 16,
+      "category": "Type2",
+      "question": "What did Adobe say about competition in its most recent annual filing?",
+      "answer": "Unfortunately, the provided context does not contain enough information to answer the question about what Adobe said about competition in its most recent annual filing. The most recent annual filing mentioned is ADBE 10-K 2024-01-17, but the context does not provide any specific quotes or statements",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 2.473,
+        "total_s": 11.452,
+        "intent_s": 2.158,
+        "retrieve_s": 4.556,
+        "answer_s": 2.265
+      }
+    },
+    {
+      "id": 17,
+      "category": "Type3",
+      "question": "Hello! What can you help me with?",
+      "answer": "I can assist with various financial-related topics, such as analyzing company performance, understanding SEC filings, and providing insights into financial metrics. Are you looking for help with a specific company or industry? Or perhaps you'd like to know more about a particular financial concept? ",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.403,
+        "total_s": 1.162,
+        "answer_s": 0.759
+      }
+    },
+    {
+      "id": 18,
+      "category": "Type3",
+      "question": "Thank you, that was very helpful.",
+      "answer": "You're welcome. If you have any more questions or need help with a specific company or financial topic, feel free to ask. What's on your mind today?",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 4,
+      "timings": {
+        "decompose_s": 0.412,
+        "total_s": 0.874,
+        "answer_s": 0.463
+      }
+    },
+    {
+      "id": 19,
+      "category": "Type1+Type2",
+      "question": "What was Apple's revenue in FY2023 and how did they describe their supply chain risks?",
+      "answer": "Apple's revenue in FY2023 was $383,285,000,000. The company identified several supply chain risks, including:\n\n- Credit risk on trade accounts receivable, vendor non-trade receivables, and prepayments related to long-term supply agreements.\n- Supply shortages and price increases that can materially ",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.269,
+        "total_s": 6.892,
+        "intent_s": 0.288,
+        "sql_s": 0.428,
+        "retrieve_s": 3.807,
+        "answer_s": 2.099
+      }
+    },
+    {
+      "id": 20,
+      "category": "Multi-Type1",
+      "question": "What was Apple's revenue in FY2023 and what was Microsoft's net income in FY2023?",
+      "answer": "Apple's revenue in FY2023 was $383,285,000,000. Microsoft's net income in FY2023 was $72,361,000,000.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 2.612,
+        "total_s": 4.915,
+        "intent_s": 0.377,
+        "sql_s": 0.926,
+        "answer_s": 0.788
+      }
+    },
+    {
+      "id": 21,
+      "category": "Type1",
+      "question": "What was Amazon's total revenue in FY2023?",
+      "answer": "According to the financial database, Amazon's total revenue in FY2023 was $574,785,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.254,
+        "total_s": 1.432,
+        "intent_s": 0.174,
+        "sql_s": 0.571,
+        "answer_s": 0.428
+      }
+    },
+    {
+      "id": 22,
+      "category": "Type1",
+      "question": "What was Google's net income in FY2023?",
+      "answer": "According to the financial database, Google's net income in FY2023 was $73,795,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.264,
+        "total_s": 1.381,
+        "intent_s": 0.232,
+        "sql_s": 0.431,
+        "answer_s": 0.453
+      }
+    },
+    {
+      "id": 23,
+      "category": "Type1",
+      "question": "What was NVIDIA's total revenue in FY2023?",
+      "answer": "NVIDIA's total revenue in FY2023 was $26,974,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.331,
+        "total_s": 1.114,
+        "intent_s": 0.144,
+        "sql_s": 0.376,
+        "answer_s": 0.262
+      }
+    },
+    {
+      "id": 24,
+      "category": "Type1",
+      "question": "What was NVIDIA's total revenue in FY2024?",
+      "answer": "NVIDIA's total revenue in FY2024 was $60,922,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.152,
+        "total_s": 0.923,
+        "intent_s": 0.101,
+        "sql_s": 0.362,
+        "answer_s": 0.308
+      }
+    },
+    {
+      "id": 25,
+      "category": "Type1",
+      "question": "What was Tesla's total revenue in FY2023?",
+      "answer": "According to the financial database, Tesla's total revenue in FY2023 was $96,773,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.168,
+        "total_s": 0.993,
+        "intent_s": 0.101,
+        "sql_s": 0.39,
+        "answer_s": 0.333
+      }
+    },
+    {
+      "id": 26,
+      "category": "Type1",
+      "question": "What was Tesla's diluted EPS in FY2023?",
+      "answer": "According to the financial database, Tesla's diluted EPS in FY2023 was 4.3.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.163,
+        "total_s": 1.042,
+        "intent_s": 0.106,
+        "sql_s": 0.443,
+        "answer_s": 0.33
+      }
+    },
+    {
+      "id": 27,
+      "category": "Type1",
+      "question": "What was Microsoft's diluted earnings per share in FY2023?",
+      "answer": "According to the financial database, Microsoft's diluted earnings per share (EPS) in FY2023 was $9.68.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 4,
+      "timings": {
+        "decompose_s": 0.212,
+        "total_s": 1.142,
+        "intent_s": 0.125,
+        "sql_s": 0.431,
+        "answer_s": 0.373
+      }
+    },
+    {
+      "id": 28,
+      "category": "Type1",
+      "question": "What was Apple's diluted EPS in FY2023?",
+      "answer": "According to the financial database, Apple's diluted EPS in FY2023 was $6.13.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.186,
+        "total_s": 1.021,
+        "intent_s": 0.122,
+        "sql_s": 0.406,
+        "answer_s": 0.305
+      }
+    },
+    {
+      "id": 29,
+      "category": "Type1",
+      "question": "How much did Apple spend on share buybacks in FY2023?",
+      "answer": "According to the financial database, Apple spent $77,550,000,000 on share buybacks in FY2023.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.232,
+        "total_s": 1.074,
+        "intent_s": 0.105,
+        "sql_s": 0.352,
+        "answer_s": 0.385
+      }
+    },
+    {
+      "id": 30,
+      "category": "Type1",
+      "question": "What was Microsoft's R&D expense in FY2023?",
+      "answer": "According to the financial database, Microsoft's R&D expense in FY2023 was $27,195,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.184,
+        "total_s": 1.069,
+        "intent_s": 0.111,
+        "sql_s": 0.388,
+        "answer_s": 0.385
+      }
+    },
+    {
+      "id": 31,
+      "category": "Type1",
+      "question": "What was Google's research and development expense in FY2023?",
+      "answer": "Google's research and development expense in FY2023 was $45,427,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.195,
+        "total_s": 1.037,
+        "intent_s": 0.108,
+        "sql_s": 0.412,
+        "answer_s": 0.322
+      }
+    },
+    {
+      "id": 32,
+      "category": "Type1",
+      "question": "What was Amazon's net income in FY2022?",
+      "answer": "According to the financial database, Amazon's net income in FY2022 was -$2,722,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.185,
+        "total_s": 1.024,
+        "intent_s": 0.107,
+        "sql_s": 0.361,
+        "answer_s": 0.37
+      }
+    },
+    {
+      "id": 33,
+      "category": "Type1",
+      "question": "What was Google's net profit margin in FY2023?",
+      "answer": "According to the financial database, Google's net profit margin in FY2023 was 24.01%.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 2.196,
+        "total_s": 3.051,
+        "intent_s": 0.1,
+        "sql_s": 0.388,
+        "answer_s": 0.366
+      }
+    },
+    {
+      "id": 34,
+      "category": "Type1",
+      "question": "What was Microsoft's operating cash flow in FY2023?",
+      "answer": "According to the financial database, Microsoft's operating cash flow for FY2023 was $87,582,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.189,
+        "total_s": 0.928,
+        "intent_s": 0.113,
+        "sql_s": 0.246,
+        "answer_s": 0.38
+      }
+    },
+    {
+      "id": 35,
+      "category": "Type1",
+      "question": "What was Tesla's capital expenditure in FY2023?",
+      "answer": "According to the financial database, Tesla's capital expenditure in FY2023 was $8,898,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 0.667,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.178,
+        "total_s": 0.898,
+        "intent_s": 0.109,
+        "sql_s": 0.262,
+        "answer_s": 0.349
+      }
+    },
+    {
+      "id": 36,
+      "category": "Type1",
+      "question": "What was Apple's total revenue in FY2022?",
+      "answer": "According to the financial database, Apple's total revenue in FY2022 was $394,328,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.179,
+        "total_s": 1.025,
+        "intent_s": 0.114,
+        "sql_s": 0.37,
+        "answer_s": 0.359
+      }
+    },
+    {
+      "id": 37,
+      "category": "Type1",
+      "question": "What was Microsoft's total revenue in FY2022?",
+      "answer": "According to the financial database, Microsoft's total revenue in FY2022 was $198,270,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.166,
+        "total_s": 1.005,
+        "intent_s": 0.117,
+        "sql_s": 0.367,
+        "answer_s": 0.355
+      }
+    },
+    {
+      "id": 38,
+      "category": "Type1",
+      "question": "What was NVIDIA's net income in FY2024?",
+      "answer": "According to the financial database, NVIDIA's net income in FY2024 was $29,760,000,000.",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.18,
+        "total_s": 1.015,
+        "intent_s": 0.111,
+        "sql_s": 0.345,
+        "answer_s": 0.378
+      }
+    },
+    {
+      "id": 39,
+      "category": "Type1-ranking",
+      "question": "Which 3 companies spent the most on R&D in FY2023?",
+      "answer": "Based on the provided context, it is not possible to determine which 3 companies spent the most on R&D in FY2023. The information provided in the sources only mentions the R&D spending of one company, Intel (INTC), and mentions that the company spent 6.9% of sales on R&D in 2023, but does not provid",
+      "intent_correct": false,
+      "value_correct": null,
+      "keyword_hit_rate": 0.0,
+      "fluency_score": 2,
+      "timings": {
+        "decompose_s": 0.231,
+        "total_s": 7.524,
+        "intent_s": 0.119,
+        "retrieve_s": 4.919,
+        "answer_s": 2.256
+      }
+    },
+    {
+      "id": 40,
+      "category": "Type1-ranking",
+      "question": "Which 3 companies had the highest capital expenditure in FY2023?",
+      "answer": "Based on the provided SQL query result, the three companies with the highest capital expenditure in FY2023 are:\n\n1. Amazon (AMZN) with a capital expenditure of $52,729,000,000\n2. Alphabet (GOOG) with a capital expenditure of $32,251,000,000\n3. Microsoft (MSFT) with a capital expenditure of $28,107,0",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.8,
+      "fluency_score": 2,
+      "timings": {
+        "decompose_s": 0.23,
+        "total_s": 1.925,
+        "intent_s": 0.103,
+        "sql_s": 0.42,
+        "answer_s": 1.169
+      }
+    },
+    {
+      "id": 41,
+      "category": "Type1-compare",
+      "question": "Compare Amazon and Microsoft total revenue in FY2023.",
+      "answer": "Based on the provided context, Amazon's total revenue in FY2023 was $574,785,000,000, while Microsoft's total revenue in FY2023 was $211,915,000,000.\n\nAmazon's revenue is significantly higher than Microsoft's, with a difference of approximately $362,870,000,000.\n\n[1] financial database (panel table)",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 2,
+      "timings": {
+        "decompose_s": 0.194,
+        "total_s": 1.674,
+        "intent_s": 0.117,
+        "sql_s": 0.421,
+        "answer_s": 0.941
+      }
+    },
+    {
+      "id": 42,
+      "category": "Type1-compare",
+      "question": "How did NVIDIA's revenue change from FY2023 to FY2024?",
+      "answer": "NVIDIA's revenue increased from FY2023 to FY2024 by $33,948,000,000.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 0.333,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.238,
+        "total_s": 1.628,
+        "intent_s": 0.132,
+        "sql_s": 0.91,
+        "answer_s": 0.347
+      }
+    },
+    {
+      "id": 43,
+      "category": "Type1-compare",
+      "question": "What were Walmart's revenue and net income in FY2023?",
+      "answer": "Walmart's financial performance for FY2023 was as follows:\n\nWalmart's revenue in FY2023 was $605,881,000,000. \n\nAs a result, Walmart's net income in FY2023 was $11,680,000,000.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 4,
+      "timings": {
+        "decompose_s": 0.329,
+        "total_s": 2.246,
+        "intent_s": 0.322,
+        "sql_s": 0.878,
+        "answer_s": 0.698
+      }
+    },
+    {
+      "id": 44,
+      "category": "Type2",
+      "question": "How did NVIDIA describe its data center and AI chip strategy in recent filings?",
+      "answer": "NVIDIA described its data center and AI chip strategy in recent filings as a comprehensive approach to accelerating compute-intensive workloads. \n\nIn terms of its data center strategy, NVIDIA focuses on delivering significantly better performance and power efficiency relative to conventional CPU-onl",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.311,
+        "total_s": 15.56,
+        "intent_s": 0.462,
+        "retrieve_s": 10.167,
+        "answer_s": 4.62
+      }
+    },
+    {
+      "id": 45,
+      "category": "Type2",
+      "question": "What risks did Tesla identify related to autonomous driving in its 10-K?",
+      "answer": "Based on the provided context, Tesla identified the following risks related to autonomous driving in its 10-K filings:\n\n1. Regulatory constraints: Tesla is subject to regulatory constraints over which it has no control, which may impact its ability to achieve its goal of a fully autonomously-driven ",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.267,
+        "total_s": 11.281,
+        "intent_s": 0.065,
+        "retrieve_s": 9.031,
+        "answer_s": 1.919
+      }
+    },
+    {
+      "id": 46,
+      "category": "Type2",
+      "question": "How did Amazon describe AWS and its competitive position in cloud?",
+      "answer": "Amazon describes AWS as a separate segment of its business, reflecting how the company evaluates its business performance and manages its operations. However, the exact description of AWS is not provided in the given excerpts. AWS is one of the three segments, along with North America and Internatio",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 2,
+      "timings": {
+        "decompose_s": 0.253,
+        "total_s": 18.268,
+        "intent_s": 0.241,
+        "retrieve_s": 12.837,
+        "answer_s": 4.937
+      }
+    },
+    {
+      "id": 47,
+      "category": "Type2",
+      "question": "What regulatory and antitrust risks did Google disclose in its annual filing?",
+      "answer": "Based on publicly available information, in its 2022 annual filing, Alphabet Inc. (Google's parent company) disclosed several regulatory and antitrust risks. \n\n**Regulatory Risks:**\n\n1. **Data Protection and Privacy Regulations**: Alphabet Inc. mentioned the evolving regulatory landscape for data pr",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.3,
+        "total_s": 17.141,
+        "intent_s": 0.367,
+        "retrieve_s": 11.484,
+        "answer_s": 4.989
+      }
+    },
+    {
+      "id": 48,
+      "category": "Type2",
+      "question": "How did Microsoft describe its partnership with OpenAI in its 10-K?",
+      "answer": "Based on the provided context, I was unable to find any information about Microsoft's partnership with OpenAI in its 10-K filing. The provided excerpts appear to be related to Microsoft's Restricted Trading Window Policy, General Insider Trading Policy, and the incorporation of the definitive Proxy ",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.277,
+        "total_s": 11.158,
+        "intent_s": 0.143,
+        "retrieve_s": 7.891,
+        "answer_s": 2.847
+      }
+    },
+    {
+      "id": 49,
+      "category": "Type3",
+      "question": "What companies do you have financial data on?",
+      "answer": "I have access to financial data for publicly traded companies listed on the New York Stock Exchange (NYSE), NASDAQ, and the OTC Markets Group. This includes companies from various industries such as technology, healthcare, finance, retail, and more.\n\nSome examples of companies I have financial data ",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 1.457,
+        "total_s": 6.306,
+        "intent_s": 2.206,
+        "answer_s": 2.643
+      }
+    },
+    {
+      "id": 50,
+      "category": "Type3",
+      "question": "Can you explain what return on assets means?",
+      "answer": "Return on Assets (ROA) is a financial metric that measures a company's profitability relative to its total assets. It's calculated by dividing net income by total assets.\n\nROA = Net Income / Total Assets\n\nIn simpler terms, it shows how efficiently a company is using its assets to generate profits. A",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.142,
+        "total_s": 2.406,
+        "intent_s": 0.12,
+        "answer_s": 2.145
+      }
+    },
+    {
+      "id": 51,
+      "category": "Type1+Type2",
+      "question": "What was NVIDIA's revenue in FY2024 and how did they describe their AI chip strategy?",
+      "answer": "NVIDIA's revenue in FY2024 was $60,922,000,000. The company's AI chip strategy is centered around its accelerated computing platform, which significantly increases computer and data center performance and power efficiency compared to conventional CPU-only approaches. This platform accelerates both d",
+      "intent_correct": true,
+      "value_correct": true,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 5,
+      "timings": {
+        "decompose_s": 0.28,
+        "total_s": 7.371,
+        "intent_s": 0.219,
+        "sql_s": 0.412,
+        "retrieve_s": 4.594,
+        "answer_s": 1.866
+      }
+    },
+    {
+      "id": 52,
+      "category": "Multi-Type1",
+      "question": "What was Amazon's revenue in FY2023 and what was Google's net income in FY2023?",
+      "answer": "Amazon's revenue in FY2023 was $574,785,000,000. Google's net income in FY2023 was $73,795,000,000.",
+      "intent_correct": true,
+      "value_correct": null,
+      "keyword_hit_rate": 1.0,
+      "fluency_score": 3,
+      "timings": {
+        "decompose_s": 0.28,
+        "total_s": 2.001,
+        "intent_s": 0.226,
+        "sql_s": 0.804,
+        "answer_s": 0.689
+      }
+    }
+  ],
+  "aggregate": {
+    "intent_accuracy": 0.962,
+    "value_accuracy": 1.0,
+    "keyword_hit_rate": 0.902,
+    "fluency_mean": 3.365,
+    "latency": {
+      "total_mean": 4.409,
+      "total_p50": 1.925,
+      "total_p95": 15.56,
+      "total_p99": 18.268,
+      "decompose_s_mean": 0.555,
+      "intent_s_mean": 0.416,
+      "sql_s_mean": 0.47,
+      "retrieve_s_mean": 7.818,
+      "answer_s_mean": 1.16
+    }
+  },
+  "throughput": {
+    "n_concurrent": 5,
+    "total_elapsed_s": 5.388,
+    "qps": 0.928,
+    "latency_p50": 5.364,
+    "latency_p95": 5.379,
+    "latency_mean": 4.915
+  }
+}

@@ -48,6 +48,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).parent
 
+# ── vLLM client (used by llm_generate and generate_sql for remote inference) ──
+# Requires: bash deployment/scripts/start_server.sh (inside WSL2)
+from deployment.api.client import VLLMClient as _C
+_vllm = _C()
+
 # ── Paths ─────────────────────────────────────────────────────────────────────
 DB_PATH      = ROOT / "data" / "financials.db"
 VECTORDB_DIR = ROOT / "data" / "vectordb"
@@ -143,40 +148,27 @@ def load_vectordb():
 
 def llm_generate(model, tokenizer, messages: list[dict], max_new_tokens: int = 256) -> str:
     """
-    [VLLM_SWAP] Run a chat-format prompt through the local model.
-    messages: list of {"role": "system"|"user"|"assistant", "content": "..."}
-
-    Two-step tokenisation (apply_chat_template → string, then tokenizer → tensor)
-    is more robust across transformers versions than passing return_tensors="pt"
-    directly to apply_chat_template, which returns different types in different versions.
+    LLM generation — routes to vLLM server if reachable, else falls back to local model.
+    model/tokenizer are ignored when vLLM is active (kept for call-site compat).
     """
+    if _vllm.health():
+        return _vllm.generate(messages, role="base", max_new_tokens=max_new_tokens)
+
+    # Local fallback (requires model/tokenizer to be loaded)
     import torch
-
-    # Step 1: render messages to a prompt string
     prompt = tokenizer.apply_chat_template(
-        messages,
-        add_generation_prompt=True,
-        tokenize=False,
+        messages, add_generation_prompt=True, tokenize=False,
     )
-
-    # Step 2: tokenise to tensor
     enc = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
     input_ids      = enc["input_ids"].to(model.device)
     attention_mask = enc["attention_mask"].to(model.device)
     prompt_len     = input_ids.shape[1]
-
     with torch.no_grad():
         output_ids = model.generate(
-            input_ids,
-            attention_mask=attention_mask,
-            max_new_tokens=max_new_tokens,
-            do_sample=False,
-            temperature=None,
-            top_p=None,
-            pad_token_id=tokenizer.eos_token_id,
+            input_ids, attention_mask=attention_mask,
+            max_new_tokens=max_new_tokens, do_sample=False,
+            temperature=None, top_p=None, pad_token_id=tokenizer.eos_token_id,
         )
-
-    # Decode only the newly generated tokens
     new_tokens = output_ids[0][prompt_len:]
     return tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
 
@@ -191,6 +183,25 @@ INTENT_SYSTEM = (
     "Type3 = casual chat, greeting, or meta question\n"
     "Output only the label. Do not explain."
 )
+
+# Few-shot examples for intent classification
+_INTENT_EXAMPLES = [
+    ("What was Apple's total revenue in FY2023?",                         "Type1"),
+    ("How did Apple describe their AI strategy in their 10-K?",           "Type2"),
+    ("Describe Microsoft's supply chain risks in their latest 10-K",      "Type2"),
+    ("What is Amazon's current ratio for FY2022?",                        "Type1"),
+    ("How does Tesla discuss competition in the EV market?",              "Type2"),
+    ("Hello, what can you help me with?",                                 "Type3"),
+    ("What were Microsoft's earnings per share in fiscal 2023?",          "Type1"),
+    ("Explain Google's risk factors related to regulation in their 10-K", "Type2"),
+    # Ranking / comparison — still Type1 (answered by SQL ORDER BY / IN)
+    ("Which 3 companies had the highest net income in FY2023?",           "Type1"),
+    ("Compare Apple and Microsoft revenue in FY2023.",                    "Type1"),
+    ("Which company spent the most on R&D in FY2023?",                   "Type1"),
+    # Meta explanation — Type3, not Type2
+    ("Can you explain what return on assets means?",                      "Type3"),
+    ("What does net margin tell you about a company?",                    "Type3"),
+]
 
 # Fast keyword-based pre-filter to avoid an LLM call for obvious cases
 _TYPE3_PATTERNS = re.compile(
@@ -215,11 +226,12 @@ def classify_intent(question: str, model, tokenizer) -> str:
     if _TYPE3_PATTERNS.match(question):
         return "Type3"
 
-    # [VLLM_SWAP] call classify via LLM
-    messages = [
-        {"role": "system", "content": INTENT_SYSTEM},
-        {"role": "user",   "content": question},
-    ]
+    # [VLLM_SWAP] call classify via LLM (few-shot)
+    messages = [{"role": "system", "content": INTENT_SYSTEM}]
+    for ex_q, ex_label in _INTENT_EXAMPLES:
+        messages.append({"role": "user",      "content": ex_q})
+        messages.append({"role": "assistant", "content": ex_label})
+    messages.append({"role": "user", "content": question})
     raw = llm_generate(model, tokenizer, messages, max_new_tokens=5)
 
     # Extract first occurrence of Type1/Type2/Type3
@@ -271,7 +283,7 @@ def generate_sql(question: str, model, tokenizer) -> str:
         {"role": "system", "content": NL2SQL_SYSTEM},
         {"role": "user",   "content": question},
     ]
-    return llm_generate(model, tokenizer, messages, max_new_tokens=200)
+    return _vllm.generate_sql_vllm(messages)
 
 
 def postprocess_sql(sql: str) -> tuple[str, list[str]]:
@@ -312,15 +324,24 @@ def execute_sql(sql: str) -> tuple[list[dict] | None, str]:
         return None, str(e)
 
 
+def _fmt_value(v) -> str:
+    """Format a SQL result value: large floats as comma-separated integers."""
+    if isinstance(v, float):
+        if v == int(v):
+            return f"{int(v):,}"
+        return f"{v:,.4f}".rstrip("0").rstrip(".")
+    return str(v)
+
+
 def format_sql_result(rows: list[dict]) -> str:
     """Format SQL result rows as a readable string for the answer LLM."""
     if not rows:
         return "No data found."
     if len(rows) == 1:
-        return ", ".join(f"{k}: {v}" for k, v in rows[0].items() if v is not None)
+        return ", ".join(f"{k}: {_fmt_value(v)}" for k, v in rows[0].items() if v is not None)
     # Multiple rows: simple table
     headers = list(rows[0].keys())
-    lines = [" | ".join(str(r.get(h, "")) for h in headers) for r in rows]
+    lines = [" | ".join(_fmt_value(r.get(h, "")) for h in headers) for r in rows]
     return "\n".join(lines)
 
 
@@ -496,13 +517,23 @@ def answer(question: str, base_model, base_tok, nl2sql_model, nl2sql_tok,
         res["question"] = question  # restore original phrasing
         return res
 
-    # Compound question — route each sub-question independently
-    print(f"[Decomposed into {len(sub_questions)} sub-questions]", flush=True)
-    partial_results = []
-    for i, sub_q in enumerate(sub_questions, 1):
+    # Compound question — route each sub-question in parallel (vLLM batches them)
+    from concurrent.futures import ThreadPoolExecutor, as_completed
+    print(f"[Decomposed into {len(sub_questions)} sub-questions — running in parallel]",
+          flush=True)
+
+    def _run_sub(args):
+        i, sub_q = args
         print(f"\n--- Sub-question {i}/{len(sub_questions)}: {sub_q} ---", flush=True)
-        partial_results.append(_answer_single(sub_q, base_model, base_tok,
-                                              nl2sql_model, nl2sql_tok, retriever))
+        return i, _answer_single(sub_q, base_model, base_tok,
+                                 nl2sql_model, nl2sql_tok, retriever)
+
+    with ThreadPoolExecutor(max_workers=len(sub_questions)) as ex:
+        futures = [ex.submit(_run_sub, (i, sq))
+                   for i, sq in enumerate(sub_questions, 1)]
+        # Preserve original ordering (by sub-question index, not completion order)
+        indexed = sorted([f.result() for f in futures], key=lambda x: x[0])
+    partial_results = [r for _, r in indexed]
 
     # Synthesize partial answers
     combined_answer = _synthesize_answers(question, partial_results, base_model, base_tok)
@@ -551,12 +582,17 @@ def main():
                         help="Print SQL and intent info even in interactive mode")
     args = parser.parse_args()
 
-    # Load models
-    base_model, base_tok = load_base_model()
-    if args.no_nl2sql_adapter:
-        nl2sql_model, nl2sql_tok = base_model, base_tok
+    # Load models — skip if vLLM server is reachable (inference runs remotely)
+    if _vllm.health():
+        print("vLLM server detected — skipping local model load.", flush=True)
+        base_model = base_tok = nl2sql_model = nl2sql_tok = None
     else:
-        nl2sql_model, nl2sql_tok = load_nl2sql_model(base_model, base_tok)
+        print("[WARN] vLLM server not reachable — falling back to local model.", flush=True)
+        base_model, base_tok = load_base_model()
+        if args.no_nl2sql_adapter:
+            nl2sql_model, nl2sql_tok = base_model, base_tok
+        else:
+            nl2sql_model, nl2sql_tok = load_nl2sql_model(base_model, base_tok)
     retriever = load_vectordb()
 
     print("\n=== Financial QA Chatbot ready ===")

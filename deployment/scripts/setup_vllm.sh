@@ -50,9 +50,12 @@ echo "Python: $PYTHON_VER"
 
 # ── Create / activate virtualenv ─────────────────────────────────────────────
 VENV_DIR="${HOME}/venvs/finqa-vllm"
-if [[ ! -d "$VENV_DIR" ]]; then
-    echo "Creating virtualenv at $VENV_DIR ..."
-    "$PYTHON" -m venv "$VENV_DIR"
+echo "Creating virtualenv at $VENV_DIR ..."
+mkdir -p "${HOME}/venvs"
+python3 -m venv "$VENV_DIR"
+if [[ ! -f "$VENV_DIR/bin/activate" ]]; then
+    echo "ERROR: venv creation failed."
+    exit 1
 fi
 source "$VENV_DIR/bin/activate"
 echo "Activated: $VENV_DIR"

@@ -19,15 +19,14 @@ PANEL_COLUMNS = {
     # keys: actual column names in the panel table
     "ticker", "year",
     # monetary
+    "total_revenue", "gross_profit", "operating_income", "net_income",
+    "r_and_d", "interest_expense", "interest_income", "da",
+    "cfo", "capex", "buybacks", "dividends_paid",
     "cash", "total_assets", "current_assets", "current_liabilities",
-    "total_liabilities", "goodwill", "deferred_tax", "accounts_payable",
-    "retained_earnings", "long_term_debt", "inventories", "aoci", "apic",
-    "land", "other_assets", "other_current_assets", "other_liabilities",
-    "total_revenue", "net_income", "operating_income", "interest_expense",
-    "interest_income", "da", "comprehensive_income", "cfo", "capex",
-    "operating_leases",
+    "total_liabilities", "long_term_debt", "goodwill", "retained_earnings",
+    "inventories", "accounts_payable", "eps_diluted",
     # ratios (computed)
-    "current_ratio", "debt_to_assets", "net_margin", "roa",
+    "current_ratio", "net_margin", "roa", "debt_to_assets",
 }
 
 FILING_META_COLUMNS = {
@@ -136,6 +135,21 @@ SYNONYM_MAP: dict[str, str] = {
     "d_and_a":                 "da",
     "d&a":                     "da",
 
+    # new panel columns — aliases
+    "gross_margin_dollars":    "gross_profit",
+    "rd":                      "r_and_d",
+    "r_and_d_expense":         "r_and_d",
+    "research_and_development": "r_and_d",
+    "research_expense":        "r_and_d",
+    "share_repurchases":       "buybacks",
+    "stock_buybacks":          "buybacks",
+    "repurchases":             "buybacks",
+    "dividends":               "dividends_paid",
+    "dividend_payments":       "dividends_paid",
+    "eps":                     "eps_diluted",
+    "diluted_eps":             "eps_diluted",
+    "earnings_per_share":      "eps_diluted",
+
     # ratio aliases
     "net_profit_margin":       "net_margin",
     "profit_margin":           "net_margin",
@@ -155,6 +169,16 @@ SYNONYM_MAP: dict[str, str] = {
 
 # Pre-compute lowercase key lookup
 _SYNONYM_LOWER: dict[str, str] = {k.lower(): v for k, v in SYNONYM_MAP.items()}
+
+# ── Ticker alias repair ────────────────────────────────────────────────────────
+# Map common alternate ticker symbols to the canonical ones stored in the DB.
+# Applied inside string literals (WHERE ticker = 'GOOGL' → 'GOOG').
+TICKER_ALIASES: dict[str, str] = {
+    "GOOGL": "GOOG",    # Alphabet class A — DB uses GOOG (class C)
+    "META":  "META",    # already correct — placeholder if needed later
+    "BRK.B": "BRK-B",  # Berkshire Hathaway class B dash variant
+    "BRK/B": "BRK-B",
+}
 
 
 # ── Core repair function ───────────────────────────────────────────────────────
@@ -224,7 +248,19 @@ def repair_sql(sql: str) -> tuple[str, list[str]]:
             repaired = re.sub(r'\b[A-Za-z_][A-Za-z0-9_]*\b', replace_token, part)
             result_parts.append(repaired)
 
-    return "".join(result_parts), repairs
+    repaired_sql = "".join(result_parts)
+
+    # Step 2: ticker alias repair inside string literals
+    for alias, canonical in TICKER_ALIASES.items():
+        if alias == canonical:
+            continue
+        # Match the alias as a quoted string value (case-sensitive ticker symbols)
+        pattern = rf"(?<=['\"]){re.escape(alias)}(?=['\"])"
+        if re.search(pattern, repaired_sql):
+            repaired_sql = re.sub(pattern, canonical, repaired_sql)
+            repairs.append(f"ticker {alias} -> {canonical}")
+
+    return repaired_sql, repairs
 
 
 def validate_sql(sql: str, db_path: str | None = None) -> tuple[bool, str]:

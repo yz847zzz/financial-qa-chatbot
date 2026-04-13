@@ -81,15 +81,15 @@ TEST_CASES = [
         "id": 4, "category": "Type1",
         "question": "What was Adobe's total revenue in FY2023?",
         "expected_intent": "Type1",
-        "expected_value": 9_233_000_000.0,            # $9.233B
-        "expected_keywords": ["9", "adobe", "revenue"],
+        "expected_value": 19_409_000_000.0,           # $19.409B (verified from DB)
+        "expected_keywords": ["19", "adobe", "revenue"],
     },
     {
         "id": 5, "category": "Type1",
         "question": "What was Adobe's net income in FY2023?",
         "expected_intent": "Type1",
-        "expected_value": 4_756_000_000.0,            # $4.756B
-        "expected_keywords": ["4", "adobe", "net income"],
+        "expected_value": 5_428_000_000.0,            # $5.428B (verified from DB)
+        "expected_keywords": ["5", "adobe", "net income"],
     },
     {
         "id": 6, "category": "Type1",
@@ -216,6 +216,252 @@ TEST_CASES = [
         "expected_keywords": ["383", "72", "apple", "microsoft"],
         "expected_sub_intents": ["Type1", "Type1"],
     },
+
+    # ── Type1: additional single metrics ───────────────────────────────────────
+    {
+        "id": 21, "category": "Type1",
+        "question": "What was Amazon's total revenue in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 574_785_000_000.0,          # $574.785B
+        "expected_keywords": ["574", "amazon", "revenue"],
+    },
+    {
+        "id": 22, "category": "Type1",
+        "question": "What was Google's net income in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 73_795_000_000.0,           # $73.795B
+        "expected_keywords": ["73", "google", "net income"],
+    },
+    {
+        "id": 23, "category": "Type1",
+        "question": "What was NVIDIA's total revenue in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 26_974_000_000.0,           # $26.974B
+        "expected_keywords": ["26", "nvidia", "revenue"],
+    },
+    {
+        "id": 24, "category": "Type1",
+        "question": "What was NVIDIA's total revenue in FY2024?",
+        "expected_intent": "Type1",
+        "expected_value": 60_922_000_000.0,           # $60.922B
+        "expected_keywords": ["60", "nvidia", "revenue"],
+    },
+    {
+        "id": 25, "category": "Type1",
+        "question": "What was Tesla's total revenue in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 96_773_000_000.0,           # $96.773B
+        "expected_keywords": ["96", "tesla", "revenue"],
+    },
+    {
+        "id": 26, "category": "Type1",
+        "question": "What was Tesla's diluted EPS in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 4.30,                       # $4.30/share
+        "expected_keywords": ["4", "tesla", "eps"],
+    },
+    {
+        "id": 27, "category": "Type1",
+        "question": "What was Microsoft's diluted earnings per share in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 9.68,                       # $9.68/share
+        "expected_keywords": ["9", "microsoft", "eps"],
+    },
+    {
+        "id": 28, "category": "Type1",
+        "question": "What was Apple's diluted EPS in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 6.13,                       # $6.13/share
+        "expected_keywords": ["6", "apple", "eps"],
+    },
+    {
+        "id": 29, "category": "Type1",
+        "question": "How much did Apple spend on share buybacks in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 77_550_000_000.0,           # $77.55B
+        "expected_keywords": ["77", "apple", "buyback"],
+    },
+    {
+        "id": 30, "category": "Type1",
+        "question": "What was Microsoft's R&D expense in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 27_195_000_000.0,           # $27.195B
+        "expected_keywords": ["27", "microsoft", "research"],
+    },
+    {
+        "id": 31, "category": "Type1",
+        "question": "What was Google's research and development expense in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 45_427_000_000.0,           # $45.427B
+        "expected_keywords": ["45", "google", "research"],
+    },
+    {
+        "id": 32, "category": "Type1",
+        "question": "What was Amazon's net income in FY2022?",
+        "expected_intent": "Type1",
+        "expected_value": -2_722_000_000.0,           # -$2.722B (net loss)
+        "expected_keywords": ["amazon", "loss", "2022"],
+    },
+    {
+        "id": 33, "category": "Type1",
+        "question": "What was Google's net profit margin in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 0.24007,                    # 24.0%
+        "expected_keywords": ["24", "google", "margin"],
+    },
+    {
+        "id": 34, "category": "Type1",
+        "question": "What was Microsoft's operating cash flow in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 87_582_000_000.0,           # $87.582B
+        "expected_keywords": ["87", "microsoft", "cash"],
+    },
+    {
+        "id": 35, "category": "Type1",
+        "question": "What was Tesla's capital expenditure in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": 8_898_000_000.0,            # $8.898B
+        "expected_keywords": ["8", "tesla", "capex"],
+    },
+
+    # ── Type1: year-over-year ──────────────────────────────────────────────────
+    {
+        "id": 36, "category": "Type1",
+        "question": "What was Apple's total revenue in FY2022?",
+        "expected_intent": "Type1",
+        "expected_value": 394_328_000_000.0,          # $394.328B
+        "expected_keywords": ["394", "apple", "revenue"],
+    },
+    {
+        "id": 37, "category": "Type1",
+        "question": "What was Microsoft's total revenue in FY2022?",
+        "expected_intent": "Type1",
+        "expected_value": 198_270_000_000.0,          # $198.270B
+        "expected_keywords": ["198", "microsoft", "revenue"],
+    },
+    {
+        "id": 38, "category": "Type1",
+        "question": "What was NVIDIA's net income in FY2024?",
+        "expected_intent": "Type1",
+        "expected_value": 29_760_000_000.0,           # $29.760B
+        "expected_keywords": ["29", "nvidia", "net income"],
+    },
+
+    # ── Type1: additional ranking ──────────────────────────────────────────────
+    {
+        "id": 39, "category": "Type1-ranking",
+        "question": "Which 3 companies spent the most on R&D in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": None,
+        "expected_keywords": ["google", "goog", "merck", "apple", "aapl"],
+    },
+    {
+        "id": 40, "category": "Type1-ranking",
+        "question": "Which 3 companies had the highest capital expenditure in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": None,
+        "expected_keywords": ["amazon", "amzn", "google", "goog", "microsoft"],
+    },
+
+    # ── Type1: multi-ticker compare ────────────────────────────────────────────
+    {
+        "id": 41, "category": "Type1-compare",
+        "question": "Compare Amazon and Microsoft total revenue in FY2023.",
+        "expected_intent": "Type1",
+        "expected_value": None,
+        "expected_keywords": ["574", "211", "amazon", "microsoft"],
+    },
+    {
+        "id": 42, "category": "Type1-compare",
+        "question": "How did NVIDIA's revenue change from FY2023 to FY2024?",
+        "expected_intent": "Type1",
+        "expected_value": None,
+        "expected_keywords": ["26", "60", "nvidia"],
+    },
+    {
+        "id": 43, "category": "Type1-compare",
+        "question": "What were Walmart's revenue and net income in FY2023?",
+        "expected_intent": "Type1",
+        "expected_value": None,
+        "expected_keywords": ["605", "11", "walmart"],
+    },
+
+    # ── Type2: additional qualitative / RAG ────────────────────────────────────
+    {
+        "id": 44, "category": "Type2",
+        "question": "How did NVIDIA describe its data center and AI chip strategy in recent filings?",
+        "expected_intent": "Type2",
+        "expected_value": None,
+        "expected_keywords": ["nvidia", "data center", "gpu"],
+    },
+    {
+        "id": 45, "category": "Type2",
+        "question": "What risks did Tesla identify related to autonomous driving in its 10-K?",
+        "expected_intent": "Type2",
+        "expected_value": None,
+        "expected_keywords": ["tesla", "autonomous", "risk"],
+    },
+    {
+        "id": 46, "category": "Type2",
+        "question": "How did Amazon describe AWS and its competitive position in cloud?",
+        "expected_intent": "Type2",
+        "expected_value": None,
+        "expected_keywords": ["amazon", "aws", "cloud"],
+    },
+    {
+        "id": 47, "category": "Type2",
+        "question": "What regulatory and antitrust risks did Google disclose in its annual filing?",
+        "expected_intent": "Type2",
+        "expected_value": None,
+        "expected_keywords": ["google", "regulatory", "antitrust"],
+    },
+    {
+        "id": 48, "category": "Type2",
+        "question": "How did Microsoft describe its partnership with OpenAI in its 10-K?",
+        "expected_intent": "Type2",
+        "expected_value": None,
+        "expected_keywords": ["microsoft", "openai", "ai"],
+    },
+
+    # ── Type3: additional chat / meta ──────────────────────────────────────────
+    {
+        "id": 49, "category": "Type3",
+        "question": "What companies do you have financial data on?",
+        "expected_intent": "Type3",
+        "expected_value": None,
+        "expected_keywords": [],
+    },
+    {
+        "id": 50, "category": "Type3",
+        "question": "Can you explain what return on assets means?",
+        "expected_intent": "Type3",
+        "expected_value": None,
+        "expected_keywords": ["assets", "return", "profit"],
+    },
+
+    # ── Compound: additional ───────────────────────────────────────────────────
+    {
+        "id": 51, "category": "Type1+Type2",
+        "question": (
+            "What was NVIDIA's revenue in FY2024 and "
+            "how did they describe their AI chip strategy?"
+        ),
+        "expected_intent": None,
+        "expected_value": 60_922_000_000.0,
+        "expected_keywords": ["60", "nvidia", "ai", "data center"],
+        "expected_sub_intents": ["Type1", "Type2"],
+    },
+    {
+        "id": 52, "category": "Multi-Type1",
+        "question": (
+            "What was Amazon's revenue in FY2023 and "
+            "what was Google's net income in FY2023?"
+        ),
+        "expected_intent": None,
+        "expected_value": None,
+        "expected_keywords": ["574", "73", "amazon", "google"],
+        "expected_sub_intents": ["Type1", "Type1"],
+    },
 ]
 
 
@@ -243,23 +489,59 @@ def value_correct(answer: str, expected: float | None, tol: float = 0.05) -> boo
     """
     Check if expected numeric value appears in the answer within tol tolerance.
     Returns None if expected is None (no numeric check needed).
-    Handles raw ($383,285,000,000), scaled (383.285B / 383.29 billion), and percent (25.31%).
-    Tries ALL numbers in the answer (not just first) to avoid matching year digits first.
+    Handles:
+      - Raw integers:   $383,285,000,000
+      - Scaled values:  383.285B / 383.29 billion
+      - Percentages:    25.31% (for expected < 1, e.g. 0.2531)
+      - Raw ratios:     0.1756 (also accepted for expected < 1, e.g. ROA)
+      - Negative values: -$2,722,000,000 (net loss)
     """
     if expected is None:
         return None
 
-    # For percentages (values < 1): look for percentage representation
-    if abs(expected) < 1:
-        pct = expected * 100
+    abs_exp = abs(expected)
+    negative = expected < 0
+
+    # ── Ratio / percentage values (|expected| < 1) ────────────────────────────
+    if abs_exp < 1:
+        pct = abs_exp * 100
+        # Accept percentage form (e.g. "25.31%")
         for m in re.finditer(r"(\d+(?:\.\d+)?)\s*%", answer):
             found = float(m.group(1))
             if abs(found - pct) / (abs(pct) + 1e-9) <= tol:
                 return True
+        # Also accept raw decimal form (e.g. "0.1756" for ROA)
+        for m in re.finditer(r"\b(0\.\d+)\b", answer):
+            found = float(m.group(1))
+            if abs(found - abs_exp) / (abs_exp + 1e-9) <= tol:
+                return True
         return False
 
-    # For large values: raw digit match first (fast path)
-    raw_str = str(int(expected))[:6]  # first 6 significant digits
+    # ── Negative large values (e.g. net loss) ────────────────────────────────
+    if negative:
+        # Look for loss/negative indicators with the magnitude present
+        loss_words = re.search(r"\b(loss|negative|deficit)\b", answer, re.I)
+        # Check magnitude in answer (ignore sign — presence of loss keyword + value is enough)
+        mag_str = str(int(abs_exp))[:6]
+        answer_stripped = answer.replace(",", "").replace(" ", "")
+        if mag_str in answer_stripped:
+            # Accept if it looks like a loss (negative sign or loss keyword)
+            if "-" in answer_stripped or loss_words:
+                return True
+        # Also try scaled match
+        for m in re.finditer(r"(\d+(?:\.\d+)?)\s*([BbMmTt]?)\b", answer):
+            val = float(m.group(1))
+            suffix = m.group(2).upper()
+            multiplier = {"B": 1e9, "M": 1e6, "T": 1e12}.get(suffix, 0)
+            if multiplier:
+                if abs(val * multiplier - abs_exp) / abs_exp <= tol:
+                    if "-" in answer or loss_words:
+                        return True
+        return False
+
+    # ── Large positive values ─────────────────────────────────────────────────
+    # Fast path: first 6 significant digits as a substring
+    raw_str = str(int(expected))[:6]
     if raw_str in answer.replace(",", "").replace(" ", ""):
         return True
 
@@ -274,7 +556,6 @@ def value_correct(answer: str, expected: float | None, tol: float = 0.05) -> boo
         elif suffix == "T":
             val *= 1e12
         else:
-            # Try common scale interpretations
             for multiplier in [1e9, 1e6, 1e3, 1]:
                 scaled = val * multiplier
                 if abs(scaled - expected) / (abs(expected) + 1e-9) <= tol:

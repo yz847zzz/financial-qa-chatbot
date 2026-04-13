@@ -26,6 +26,14 @@ so relevance judgement stays anchored to what the user actually asked.
 
 import json
 import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+sys.path.insert(0, str(ROOT))
+
+from deployment.api.client import VLLMClient as _C
+_vllm = _C()
 
 
 # ── System prompts ─────────────────────────────────────────────────────────────
@@ -91,32 +99,23 @@ _DECOMPOSE_EXAMPLES = [
         "Explain Google's revenue growth and also their capital expenditure plans",
         '["What drove Google revenue growth?", "What are Google capital expenditure plans?"]',
     ),
+    # Negative example: ranking/comparison queries are a single question, do NOT split
+    (
+        "Which 3 companies had the highest revenue in FY2023?",
+        '["Which 3 companies had the highest revenue in FY2023?"]',
+    ),
+    (
+        "Compare Apple and Microsoft net income in FY2022",
+        '["Compare Apple and Microsoft net income in FY2022"]',
+    ),
 ]
 
 
 # ── LLM helper ─────────────────────────────────────────────────────────────────
 
 def _call_llm(messages: list[dict], model, tokenizer, max_new_tokens: int = 128) -> str:
-    """Two-step tokenisation matching chatbot.py to avoid apply_chat_template tensor issues."""
-    prompt = tokenizer.apply_chat_template(
-        messages,
-        add_generation_prompt=True,
-        tokenize=False,
-    )
-    enc = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
-    input_ids = enc["input_ids"].to(model.device)
-    attention_mask = enc["attention_mask"].to(model.device)
-
-    output = model.generate(
-        input_ids,
-        attention_mask=attention_mask,
-        max_new_tokens=max_new_tokens,
-        do_sample=False,
-        temperature=1.0,
-        pad_token_id=tokenizer.eos_token_id,
-    )
-    new_tokens = output[0][input_ids.shape[1]:]
-    return tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+    """Route through vLLM base model. model/tokenizer args kept for signature compat."""
+    return _vllm.generate(messages, role="base", max_new_tokens=max_new_tokens)
 
 
 def _parse_json_list(raw: str) -> list[str] | None:

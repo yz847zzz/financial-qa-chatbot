@@ -57,9 +57,10 @@ while [[ $# -gt 0 ]]; do
 done
 
 # ── Find Llama snapshot (HF cache layout) ────────────────────────────────────
-SNAPSHOT=$(find "$MODEL_BASE" -type d -name "snapshots" 2>/dev/null | head -1)
-if [[ -n "$SNAPSHOT" ]]; then
-    MODEL_PATH=$(find "$SNAPSHOT" -mindepth 1 -maxdepth 1 -type d | sort | tail -1)
+LLAMA_SNAPSHOTS="$MODEL_BASE/models--meta-llama--Llama-3.2-3B-Instruct/snapshots"
+if [[ -d "$LLAMA_SNAPSHOTS" ]]; then
+    MODEL_PATH=$(ls -1 "$LLAMA_SNAPSHOTS" | sort | tail -1)
+    MODEL_PATH="$LLAMA_SNAPSHOTS/$MODEL_PATH"
 else
     MODEL_PATH="$MODEL_BASE"
 fi
@@ -128,5 +129,4 @@ exec vllm serve "$MODEL_PATH" \
     --max-num-seqs "$MAX_NUM_SEQS" \
     --gpu-memory-utilization "$GPU_UTIL" \
     --served-model-name "base" \
-    --trust-remote-code \
-    --disable-log-requests
+    --trust-remote-code
