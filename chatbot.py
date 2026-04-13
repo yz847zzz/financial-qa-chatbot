@@ -228,15 +228,19 @@ def classify_intent(question: str, model, tokenizer) -> str:
 
 NL2SQL_SYSTEM = """You have access to a SQLite database with these tables:
 
-panel (ticker TEXT, year TEXT, cash REAL, total_assets REAL, current_assets REAL,
-       current_liabilities REAL, total_liabilities REAL, goodwill REAL, long_term_debt REAL,
-       accounts_payable REAL, inventories REAL, deferred_tax REAL, retained_earnings REAL,
-       other_assets REAL, total_revenue REAL, net_income REAL, operating_income REAL,
-       interest_expense REAL, interest_income REAL, da REAL, cfo REAL, capex REAL,
-       current_ratio REAL, debt_to_assets REAL, roa REAL, net_margin REAL)
+panel (ticker TEXT, year TEXT, total_revenue REAL, gross_profit REAL,
+       operating_income REAL, net_income REAL, r_and_d REAL,
+       interest_expense REAL, interest_income REAL, da REAL,
+       cfo REAL, capex REAL, buybacks REAL, dividends_paid REAL,
+       cash REAL, total_assets REAL, current_assets REAL,
+       current_liabilities REAL, total_liabilities REAL, long_term_debt REAL,
+       goodwill REAL, retained_earnings REAL, inventories REAL,
+       accounts_payable REAL, eps_diluted REAL,
+       current_ratio REAL, net_margin REAL, roa REAL, debt_to_assets REAL)
   - ticker: stock symbol e.g. 'AAPL', 'MSFT'
   - year: fiscal year string e.g. 'FY2023'
-  - all monetary columns are in USD
+  - all monetary columns are in USD; eps_diluted is USD per share
+  - buybacks and dividends_paid are stored as positive values
 
 filing_metadata (ticker TEXT, company TEXT, filing_type TEXT, date TEXT, accession_number TEXT)
   - filing_type: '10-K' or '8-K'

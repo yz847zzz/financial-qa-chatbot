@@ -26,15 +26,19 @@ OUT_DIR.mkdir(parents=True, exist_ok=True)
 # ── Schema context (system prompt for all examples) ───────────────────────────
 SYSTEM_PROMPT = """You have access to a SQLite database with these tables:
 
-panel (ticker TEXT, year TEXT, cash REAL, total_assets REAL, current_assets REAL,
-       current_liabilities REAL, total_liabilities REAL, goodwill REAL, long_term_debt REAL,
-       accounts_payable REAL, inventories REAL, deferred_tax REAL, retained_earnings REAL,
-       other_assets REAL, total_revenue REAL, net_income REAL, operating_income REAL,
-       interest_expense REAL, interest_income REAL, da REAL, cfo REAL, capex REAL,
-       current_ratio REAL, debt_to_assets REAL, roa REAL, net_margin REAL)
+panel (ticker TEXT, year TEXT, total_revenue REAL, gross_profit REAL,
+       operating_income REAL, net_income REAL, r_and_d REAL,
+       interest_expense REAL, interest_income REAL, da REAL,
+       cfo REAL, capex REAL, buybacks REAL, dividends_paid REAL,
+       cash REAL, total_assets REAL, current_assets REAL,
+       current_liabilities REAL, total_liabilities REAL, long_term_debt REAL,
+       goodwill REAL, retained_earnings REAL, inventories REAL,
+       accounts_payable REAL, eps_diluted REAL,
+       current_ratio REAL, net_margin REAL, roa REAL, debt_to_assets REAL)
   - ticker: stock symbol e.g. 'AAPL', 'MSFT'
   - year: fiscal year string e.g. 'FY2023'
-  - all monetary columns are in USD
+  - all monetary columns are in USD; eps_diluted is USD per share
+  - buybacks and dividends_paid are stored as positive values
 
 filing_metadata (ticker TEXT, company TEXT, filing_type TEXT, date TEXT, accession_number TEXT)
   - filing_type: '10-K' or '8-K'
@@ -63,15 +67,29 @@ YEARS = ["FY2020", "FY2021", "FY2022", "FY2023", "FY2024"]
 COLS = {
     "total_revenue":      ["revenue", "revenues", "total revenue", "net sales", "sales",
                            "top line", "turnover", "total sales", "gross sales"],
+    "gross_profit":       ["gross profit", "gross income", "gross margin dollars",
+                           "gross earnings", "profit after COGS"],
     "net_income":         ["net income", "profit", "profits", "net profit", "net earnings",
                            "earnings", "bottom line", "income", "after-tax profit",
                            "profit after tax", "take-home profit"],
     "operating_income":   ["operating income", "operating profit", "EBIT",
                            "income from operations", "op income", "operating earnings"],
+    "r_and_d":            ["R&D", "research and development", "research expense",
+                           "R&D expense", "R&D spending", "research spending"],
+    "interest_expense":   ["interest expense", "interest cost", "borrowing cost",
+                           "finance cost", "cost of debt", "interest paid"],
+    "interest_income":    ["interest income", "interest earned", "investment income",
+                           "income from cash", "interest received"],
+    "da":                 ["depreciation and amortization", "D&A", "depreciation",
+                           "non-cash charges", "amortization"],
     "cfo":                ["operating cash flow", "cash from operations", "CFO",
                            "cash generated from operations", "cash from operating activities"],
     "capex":              ["capital expenditures", "capex", "CapEx",
                            "capital spending", "PP&E purchases"],
+    "buybacks":           ["buybacks", "share repurchases", "stock buybacks",
+                           "share buybacks", "repurchase program"],
+    "dividends_paid":     ["dividends", "dividends paid", "dividend payments",
+                           "total dividends", "cash dividends"],
     "cash":               ["cash", "cash balance", "cash on hand", "cash and cash equivalents",
                            "liquidity", "cash holdings", "available cash", "cash position"],
     "total_assets":       ["total assets", "assets", "asset base", "book assets"],
@@ -82,14 +100,12 @@ COLS = {
     "goodwill":           ["goodwill", "acquisition goodwill"],
     "long_term_debt":     ["long-term debt", "long term debt", "LTD",
                            "long-term borrowings", "debt", "borrowings"],
+    "retained_earnings":  ["retained earnings", "accumulated earnings", "retained profits"],
+    "inventories":        ["inventories", "inventory", "stock", "goods on hand"],
     "accounts_payable":   ["accounts payable", "AP", "payables",
                            "trade payables", "vendor payables"],
-    "inventories":        ["inventories", "inventory", "stock", "goods on hand"],
-    "retained_earnings":  ["retained earnings", "accumulated earnings", "retained profits"],
-    "interest_expense":   ["interest expense", "interest cost", "borrowing cost",
-                           "finance cost", "cost of debt"],
-    "da":                 ["depreciation and amortization", "D&A", "depreciation",
-                           "non-cash charges"],
+    "eps_diluted":        ["EPS", "earnings per share", "diluted EPS",
+                           "diluted earnings per share", "EPS diluted"],
     "current_ratio":      ["current ratio", "liquidity ratio", "working capital ratio"],
     "debt_to_assets":     ["debt-to-assets ratio", "debt to assets", "debt ratio",
                            "leverage ratio"],
@@ -151,7 +167,7 @@ def generate_handcrafted() -> list[dict]:
 
     # Pattern 3: Ranking / top N (20)
     for _ in range(20):
-        y, col = rnd(YEARS), rnd(["net_income","total_assets","roa","cfo","operating_income"])
+        y, col = rnd(YEARS), rnd(["net_income","total_assets","roa","cfo","operating_income","gross_profit","eps_diluted"])
         n = rnd([3, 5, 10])
         add(
             f"Which {n} companies had the highest {col_nl(col)} in {y}?",
@@ -170,11 +186,15 @@ def generate_handcrafted() -> list[dict]:
     for _ in range(20):
         y = rnd(YEARS)
         col, op, val = rnd([
-            ("current_ratio", ">", 2.0),
-            ("debt_to_assets", ">", 0.5),
-            ("roa", ">", 0.1),
-            ("net_margin", ">", 0.15),
-            ("long_term_debt", "<", 5e10),
+            ("current_ratio",  ">",  2.0),
+            ("debt_to_assets", ">",  0.5),
+            ("roa",            ">",  0.1),
+            ("net_margin",     ">",  0.15),
+            ("long_term_debt", "<",  5e10),
+            ("gross_profit",   ">",  2e10),
+            ("r_and_d",        ">",  1e9),
+            ("eps_diluted",    ">",  5.0),
+            ("buybacks",       ">",  5e9),
         ])
         label = col_nl(col)
         add(
@@ -184,7 +204,7 @@ def generate_handcrafted() -> list[dict]:
 
     # Pattern 6: Aggregation across tickers (15)
     for _ in range(15):
-        y, col = rnd(YEARS), rnd(["net_income","total_assets","roa","net_margin"])
+        y, col = rnd(YEARS), rnd(["net_income","total_assets","roa","net_margin","gross_profit","eps_diluted"])
         agg = rnd(["AVG", "MAX", "MIN"])
         add(
             f"What was the {agg.lower()} {col_nl(col)} across all companies in {y}?",
@@ -193,7 +213,7 @@ def generate_handcrafted() -> list[dict]:
 
     # Pattern 7: YoY change (15)
     for _ in range(15):
-        t, col = rnd(TICKERS), rnd(["net_income","total_assets","cfo","operating_income"])
+        t, col = rnd(TICKERS), rnd(["net_income","total_assets","cfo","operating_income","gross_profit","r_and_d"])
         y1, y2 = "FY2022", "FY2023"
         add(
             f"How did {name(t)}'s {col_nl(col)} change from {y1} to {y2}?",
@@ -213,7 +233,7 @@ WHERE a.ticker='{t}' AND a.year='{y2}' AND b.year='{y1}'""",
     # Pattern 9: Multi-metric (10)
     for _ in range(10):
         t, y = rnd(TICKERS), rnd(YEARS)
-        c1, c2 = rnd(["net_income","operating_income","cfo"]), rnd(["total_assets","long_term_debt","current_ratio"])
+        c1, c2 = rnd(["net_income","operating_income","cfo","gross_profit","buybacks","dividends_paid"]), rnd(["total_assets","long_term_debt","current_ratio","eps_diluted","r_and_d"])
         add(
             f"Get {name(t)} {col_nl(c1)} and {col_nl(c2)} for {y}.",
             f"SELECT {c1}, {c2} FROM panel WHERE ticker='{t}' AND year='{y}'",

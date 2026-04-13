@@ -22,15 +22,19 @@ random.seed(99)
 # ── Shared with build_nl2sql_dataset.py — must stay in sync ──────────────────
 SYSTEM_PROMPT = """You have access to a SQLite database with these tables:
 
-panel (ticker TEXT, year TEXT, cash REAL, total_assets REAL, current_assets REAL,
-       current_liabilities REAL, total_liabilities REAL, goodwill REAL, long_term_debt REAL,
-       accounts_payable REAL, inventories REAL, deferred_tax REAL, retained_earnings REAL,
-       other_assets REAL, total_revenue REAL, net_income REAL, operating_income REAL,
-       interest_expense REAL, interest_income REAL, da REAL, cfo REAL, capex REAL,
-       current_ratio REAL, debt_to_assets REAL, roa REAL, net_margin REAL)
+panel (ticker TEXT, year TEXT, total_revenue REAL, gross_profit REAL,
+       operating_income REAL, net_income REAL, r_and_d REAL,
+       interest_expense REAL, interest_income REAL, da REAL,
+       cfo REAL, capex REAL, buybacks REAL, dividends_paid REAL,
+       cash REAL, total_assets REAL, current_assets REAL,
+       current_liabilities REAL, total_liabilities REAL, long_term_debt REAL,
+       goodwill REAL, retained_earnings REAL, inventories REAL,
+       accounts_payable REAL, eps_diluted REAL,
+       current_ratio REAL, net_margin REAL, roa REAL, debt_to_assets REAL)
   - ticker: stock symbol e.g. 'AAPL', 'MSFT'
   - year: fiscal year string e.g. 'FY2023'
-  - all monetary columns are in USD
+  - all monetary columns are in USD; eps_diluted is USD per share
+  - buybacks and dividends_paid are stored as positive values
 
 filing_metadata (ticker TEXT, company TEXT, filing_type TEXT, date TEXT, accession_number TEXT)
   - filing_type: '10-K' or '8-K'
@@ -73,6 +77,10 @@ COLS = {
         "top line", "turnover", "total sales", "gross sales",
         "net revenue", "total net sales",
     ],
+    "gross_profit": [
+        "gross profit", "gross income", "gross margin dollars",
+        "gross earnings", "profit after COGS",
+    ],
     "net_income": [
         "net income", "profit", "profits", "net profit", "net earnings",
         "earnings", "bottom line", "income", "after-tax profit",
@@ -82,6 +90,11 @@ COLS = {
         "operating income", "operating profit", "EBIT",
         "income from operations", "op income", "operating earnings",
         "operating result", "profit before interest and taxes",
+    ],
+    "r_and_d": [
+        "R&D", "research and development", "research expense",
+        "R&D expense", "R&D spending", "research spending",
+        "research and development expense",
     ],
     "cfo": [
         "operating cash flow", "cash from operations", "CFO",
@@ -93,6 +106,14 @@ COLS = {
         "capital spending", "PP&E purchases",
         "investment in property and equipment",
         "infrastructure spending",
+    ],
+    "buybacks": [
+        "buybacks", "share repurchases", "stock buybacks",
+        "share buybacks", "repurchase program", "stock repurchases",
+    ],
+    "dividends_paid": [
+        "dividends", "dividends paid", "dividend payments",
+        "total dividends", "cash dividends", "dividends to shareholders",
     ],
     "cash": [
         "cash", "cash balance", "cash on hand", "cash and cash equivalents",
@@ -145,6 +166,10 @@ COLS = {
         "depreciation and amortization", "D&A", "depreciation",
         "amortization", "D and A", "non-cash charges",
     ],
+    "eps_diluted": [
+        "EPS", "earnings per share", "diluted EPS",
+        "diluted earnings per share", "EPS diluted", "per-share earnings",
+    ],
     "net_margin": [
         "net profit margin", "net margin", "profit margin",
         "margin", "net income margin", "return on sales",
@@ -165,12 +190,14 @@ COLS = {
     ],
 }
 
-FLOW_COLS = ["total_revenue", "net_income", "operating_income", "cfo", "capex",
+FLOW_COLS = ["total_revenue", "gross_profit", "net_income", "operating_income",
+             "r_and_d", "cfo", "capex", "buybacks", "dividends_paid",
              "interest_expense", "da"]
 BALANCE_COLS = ["cash", "total_assets", "current_assets", "current_liabilities",
                 "total_liabilities", "goodwill", "long_term_debt", "inventories",
                 "accounts_payable", "retained_earnings"]
 RATIO_COLS = ["net_margin", "roa", "current_ratio", "debt_to_assets"]
+EPS_COLS   = ["eps_diluted"]
 
 
 def rc() -> tuple[str, str]:
@@ -449,24 +476,97 @@ def gen_best_in_class(n: int) -> list[dict]:
     return out
 
 
+def gen_eps_lookup(n: int) -> list[dict]:
+    """EPS-specific lookups — treated separately because unit is USD/share."""
+    out = []
+    for _ in range(n):
+        ticker, company = rc()
+        year = ry()
+        ref = rname(ticker, company)
+        nl = random.choice([
+            f"What was {ref}'s {rnl('eps_diluted')} in {year}?",
+            f"Report {ref} {rnl('eps_diluted')} for {year}.",
+            f"Show {ref}'s {rnl('eps_diluted')} in fiscal year {year[-4:]}.",
+            f"How much did {ref} earn per share (diluted) in {year}?",
+        ])
+        sql = f"SELECT eps_diluted FROM panel WHERE ticker='{ticker}' AND year='{year}'"
+        out.append(example(nl, sql))
+    return out
+
+
+def gen_shareholder_returns(n: int) -> list[dict]:
+    """Buybacks + dividends — capital return questions."""
+    out = []
+    for _ in range(n):
+        ticker, company = rc()
+        year = ry()
+        ref = rname(ticker, company)
+        pattern = random.randint(0, 3)
+        if pattern == 0:
+            col = "buybacks"
+            nl = random.choice([
+                f"How much did {ref} spend on {rnl(col)} in {year}?",
+                f"What were {ref}'s {rnl(col)} in {year}?",
+            ])
+            sql = f"SELECT buybacks FROM panel WHERE ticker='{ticker}' AND year='{year}'"
+        elif pattern == 1:
+            col = "dividends_paid"
+            nl = random.choice([
+                f"How much did {ref} pay in {rnl(col)} in {year}?",
+                f"What were {ref}'s {rnl(col)} in {year}?",
+            ])
+            sql = f"SELECT dividends_paid FROM panel WHERE ticker='{ticker}' AND year='{year}'"
+        elif pattern == 2:
+            nl = (f"Show {ref}'s total capital return (buybacks + dividends) in {year}.")
+            sql = (f"SELECT buybacks, dividends_paid FROM panel "
+                   f"WHERE ticker='{ticker}' AND year='{year}'")
+        else:
+            nl = f"Which companies had the highest {rnl('buybacks')} in {year}?"
+            sql = (f"SELECT ticker, buybacks FROM panel "
+                   f"WHERE year='{year}' AND buybacks IS NOT NULL "
+                   f"ORDER BY buybacks DESC LIMIT 5")
+        out.append(example(nl, sql))
+    return out
+
+
+def gen_rd_lookup(n: int) -> list[dict]:
+    """R&D expense lookups."""
+    out = []
+    for _ in range(n):
+        ticker, company = rc()
+        year = ry()
+        ref = rname(ticker, company)
+        nl = random.choice([
+            f"How much did {ref} spend on {rnl('r_and_d')} in {year}?",
+            f"What was {ref}'s {rnl('r_and_d')} in {year}?",
+            f"Report {ref}'s {rnl('r_and_d')} for {year}.",
+        ])
+        sql = f"SELECT r_and_d FROM panel WHERE ticker='{ticker}' AND year='{year}'"
+        out.append(example(nl, sql))
+    return out
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 
 def main() -> None:
     all_examples: list[dict] = []
 
     generators = [
-        (gen_single_lookup,  250),
-        (gen_multi_col,       80),
-        (gen_ranking,         80),
-        (gen_trend,          100),
-        (gen_comparison,     100),
-        (gen_filter,          80),
-        (gen_yoy_change,      60),
-        (gen_aggregate,       60),
-        (gen_multi_year_all,  50),
-        (gen_filing_metadata, 80),
-        (gen_ratio_lookup,    60),
-        (gen_best_in_class,   50),
+        (gen_single_lookup,       250),
+        (gen_multi_col,            80),
+        (gen_ranking,              80),
+        (gen_trend,               100),
+        (gen_comparison,          100),
+        (gen_filter,               80),
+        (gen_yoy_change,           60),
+        (gen_aggregate,            60),
+        (gen_multi_year_all,       50),
+        (gen_filing_metadata,      80),
+        (gen_ratio_lookup,         60),
+        (gen_best_in_class,        50),
+        (gen_eps_lookup,           60),
+        (gen_shareholder_returns,  60),
+        (gen_rd_lookup,            50),
     ]
 
     for fn, n in generators:
