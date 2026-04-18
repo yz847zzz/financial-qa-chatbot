@@ -1,6 +1,6 @@
 """
 ChromaDB-backed vector store for semantic search over filing text chunks.
-Ported from pintrade/data/pipeline/vector_store.py with extended metadata.
+Extended metadata fields added for financial filing provenance.
 """
 
 from __future__ import annotations

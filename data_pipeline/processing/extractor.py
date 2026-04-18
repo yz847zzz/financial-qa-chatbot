@@ -1,8 +1,7 @@
 """
 Extract text and tables from SEC EDGAR HTML and PDF filings.
 
-Ported from pintrade/data/pipeline/pdf_extractor.py and extended with
-the section-splitting logic baked in (HtmlExtractor.extract_sections).
+Includes section-splitting logic baked in (HtmlExtractor.extract_sections).
 
 Factory: make_extractor(path) → HtmlExtractor | PdfExtractor
 """

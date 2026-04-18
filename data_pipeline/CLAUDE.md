@@ -216,7 +216,7 @@ def parse_financial_tables(text: str, ticker: str,
 
 ### `storage/vector_store.py`
 
-Port from pintrade's VectorStore with extended metadata fields.
+ChromaDB-backed vector store with extended metadata fields for financial filing provenance.
 
 ```python
 class VectorStore:
@@ -240,7 +240,7 @@ class VectorStore:
 
 ### `storage/sql_store.py`
 
-Port from pintrade's SQLStore with the two-table schema.
+SQLite store implementing the two-table schema (financials + filing_metadata).
 
 ```python
 class SQLStore:

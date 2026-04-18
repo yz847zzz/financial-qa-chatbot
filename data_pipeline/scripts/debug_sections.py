@@ -5,7 +5,9 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
 from data_pipeline.processing.extractor import make_extractor
 
-path = Path("E:/emo/workspace/pintrade/data/filings/AAPL/10-K/2023-11-03_000032019323000106/aapl-20230930.htm")
+import os, sys
+_default = "data/filings/AAPL/10-K/2023-11-03_000032019323000106/aapl-20230930.htm"
+path = Path(sys.argv[1] if len(sys.argv) > 1 else os.environ.get("DEBUG_FILING_PATH", _default))
 ext = make_extractor(path)
 sections = ext.extract_sections()
 

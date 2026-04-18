@@ -1,7 +1,7 @@
 """
 SQLite store for structured financial data.
 
-Ported from pintrade/data/pipeline/sql_store.py with additions:
+Additions over the base design:
   - filing_metadata table
   - canonical_metrics table (populated by run_metric_analysis.py)
   - upsert_filing_metadata()

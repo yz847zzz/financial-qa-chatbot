@@ -23,13 +23,7 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
-# ── Windows → WSL2 path translation ──────────────────────────────────────────
-# If models/ is on E: drive, map it to /mnt/e/ inside WSL2
-if [[ -d "/mnt/e/emo/workspace/financial-qa-chatbot/models" ]]; then
-    MODELS_DIR="/mnt/e/emo/workspace/financial-qa-chatbot/models"
-else
-    MODELS_DIR="$ROOT/models"
-fi
+MODELS_DIR="$ROOT/models"
 
 MODEL_BASE="$MODELS_DIR/llama"
 ADAPTER_NL2SQL="$MODELS_DIR/nl2sql"

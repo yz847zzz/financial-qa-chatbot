@@ -100,11 +100,11 @@ curl -X POST http://localhost:8000/chat \
   -d '{"session_id": "s1", "message": "What was Apple revenue in 2023?"}'
 ```
 
-## Port from pintrade
+## Ported Modules
 
-The following files in `E:/emo/workspace/pintrade/` are direct port templates:
+The following files were adapted from a prior internal project:
 
-| pintrade file | New file |
+| Original module | New file |
 |---|---|
 | (pipeline VectorStore) | `data_pipeline/storage/vector_store.py` |
 | (pipeline SQLStore) | `data_pipeline/storage/sql_store.py` |

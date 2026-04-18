@@ -1,7 +1,6 @@
 """
 Split document text into overlapping chunks for embedding.
 
-Ported from pintrade/data/pipeline/chunker.py.
 TextChunk is defined in metadata/models.py — this module just provides
 the splitting logic.
 """

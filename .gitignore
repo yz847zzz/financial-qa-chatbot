@@ -57,6 +57,9 @@ Thumbs.db
 .ipynb_checkpoints/
 *.ipynb
 
+# ── Evaluation results (generated — not tracked) ─────────────────────────────
+eval_results/
+
 # ── HuggingFace cache ─────────────────────────────────────────────────────────
 .cache/
 hf_home/

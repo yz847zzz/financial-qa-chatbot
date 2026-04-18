@@ -4,7 +4,7 @@ Download SEC EDGAR filings (10-K, 10-Q, 8-K) for a list of tickers.
 *** DO NOT EXECUTE IN THE CHATBOT PIPELINE — for initial data acquisition only ***
 
 Filings are already downloaded to:
-    E:/emo/workspace/pintrade/data/filings/
+    data/filings/
 
 Run this script only if you need to add more tickers or refresh filings.
 
@@ -19,7 +19,6 @@ Usage:
         --end 2024-12-31 \
         --out data/filings
 
-Ported from pintrade/data/ingestion/sec_downloader.py.
 """
 
 from __future__ import annotations

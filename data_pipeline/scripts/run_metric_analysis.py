@@ -21,7 +21,7 @@ before running the heavier full ingest.
 Usage:
     cd financial-qa-chatbot
     python -m data_pipeline.scripts.run_metric_analysis \
-        --filings-dir E:/emo/workspace/pintrade/data/filings \
+        --filings-dir data/filings \
         --db-path     data/financials.db \
         --output-dir  data/analysis \
         --threshold   0.30 \
@@ -161,7 +161,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--filings-dir",
-        default="E:/emo/workspace/pintrade/data/filings",
+        default="data/filings",
         help="Root directory of downloaded SEC filings",
     )
     parser.add_argument(

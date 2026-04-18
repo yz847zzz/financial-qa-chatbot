@@ -26,7 +26,7 @@ Usage:
 
     # Quick test — one ticker
     python -m data_pipeline.scripts.run_ingest \
-        --filings-dir E:/emo/workspace/pintrade/data/filings \
+        --filings-dir data/filings \
         --db-path     data/financials.db \
         --vectordb-dir data/vectordb \
         --canonical   data/analysis/canonical_metrics.json \
@@ -35,7 +35,7 @@ Usage:
 
     # Full SP500 run (96 tickers, all forms)
     python -m data_pipeline.scripts.run_ingest \
-        --filings-dir E:/emo/workspace/pintrade/data/filings \
+        --filings-dir data/filings \
         --db-path     data/financials.db \
         --vectordb-dir data/vectordb \
         --canonical   data/analysis/canonical_metrics.json \
@@ -246,7 +246,7 @@ def main() -> None:
     parser = argparse.ArgumentParser(description="Full SEC filing ingest (Pass 2)")
     parser.add_argument(
         "--filings-dir",
-        default="E:/emo/workspace/pintrade/data/filings",
+        default="data/filings",
     )
     parser.add_argument("--db-path",      default="data/financials.db")
     parser.add_argument("--vectordb-dir", default="data/vectordb")

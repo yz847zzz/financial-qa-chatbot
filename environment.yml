@@ -1,0 +1,43 @@
+name: finqa
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.11
+  - pip
+
+  # ── PyTorch (CUDA 12.4) ───────────────────────────────────────────────────
+  - pytorch>=2.3
+  - torchvision
+  - pytorch-cuda=12.4
+
+  # ── pip packages ─────────────────────────────────────────────────────────
+  - pip:
+    # --- data_pipeline ---
+    - beautifulsoup4>=4.12
+    - lxml>=5.0
+    - pdfplumber>=0.10
+    - chromadb>=0.5
+    - sentence-transformers>=3.0
+    - matplotlib>=3.8
+    - seaborn>=0.13
+
+    # --- finetune ---
+    - transformers>=4.41
+    - peft>=0.11
+    - trl>=0.9
+    - bitsandbytes>=0.43
+    - accelerate>=0.30
+    - datasets>=2.19
+    - rouge-score>=0.1
+    - pyyaml>=6.0
+
+    # --- shared ---
+    - loguru>=0.7
+    - pandas>=2.0
+    - numpy>=1.26
+    - requests>=2.31
+    - pytest>=8.0

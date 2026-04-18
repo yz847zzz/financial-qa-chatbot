@@ -14,7 +14,8 @@ from data_pipeline.processing.chunker import chunk_by_section
 from data_pipeline.processing.metric_heatmap import MetricAnalyzer, _normalise_metric_key
 from data_pipeline.metadata.models import FilingMetadata
 
-FILINGS_DIR = Path("E:/emo/workspace/pintrade/data/filings")
+import os
+FILINGS_DIR = Path(os.environ.get("FILINGS_DIR", "data/filings"))
 TEST_TICKERS = ["AAPL", "MSFT", "NVDA", "GOOGL", "AMZN"]
 
 

@@ -1,0 +1,79 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.backends.legacy:build"
+
+[project]
+name = "financial-qa-chatbot"
+version = "0.1.0"
+description = "Local-first Financial QA chatbot with RAG over SEC EDGAR filings, served via vLLM + LoRA adapters"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+keywords = ["llm", "rag", "finance", "vllm", "lora", "sec", "edgar"]
+
+dependencies = [
+    # Core LLM / serving
+    "transformers>=4.50",
+    "peft>=0.14",
+    "torch>=2.3",
+    "accelerate>=1.0",
+    # vLLM (install separately — GPU build required)
+    # pip install vllm
+    # Data / retrieval
+    "chromadb>=0.5",
+    "sentence-transformers>=3.0",
+    "rank-bm25>=0.2",
+    # Database
+    "pandas>=2.0",
+    "numpy>=1.26",
+    # API
+    "httpx>=0.27",
+    "loguru>=0.7",
+    "python-dotenv>=1.0",
+    # Evaluation
+    "matplotlib>=3.8",
+    "tqdm>=4.66",
+]
+
+[project.optional-dependencies]
+data-pipeline = [
+    "beautifulsoup4>=4.12",
+    "lxml>=5.0",
+    "pdfplumber>=0.10",
+    "requests>=2.31",
+    "seaborn>=0.13",
+]
+finetune = [
+    "trl>=0.9",
+    "bitsandbytes>=0.43",
+    "datasets>=2.19",
+    "pyyaml>=6.0",
+    "rouge-score>=0.1",
+]
+quantize = [
+    "llmcompressor>=0.10",
+]
+api = [
+    "fastapi>=0.111",
+    "uvicorn[standard]>=0.30",
+    "pydantic>=2.7",
+]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.23",
+]
+all = [
+    "financial-qa-chatbot[data-pipeline,finetune,quantize,api,dev]",
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["data_pipeline*", "finetune*", "deployment*"]
+
+[tool.pytest.ini_options]
+testpaths = ["data_pipeline/tests", "finetune/tests", "deployment/tests"]
+addopts = "-v --tb=short"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
