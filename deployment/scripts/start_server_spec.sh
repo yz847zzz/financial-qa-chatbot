@@ -2,41 +2,50 @@
 # ─────────────────────────────────────────────────────────────────────────────
 # start_server_spec.sh — vLLM with speculative decoding
 #
-# Combines quantization selection with a Llama-3.2-1B-Instruct draft model.
-# The draft model generates K candidate tokens; the 3B target verifies them
-# all in one forward pass — same output quality, lower latency.
+# Supports two speculation modes:
+#   1B model draft  — Llama-3.2-1B generates K candidates, 3B verifies
+#                     Best for: fp16 large models (70B+). For 3B AWQ4 the
+#                     draft overhead outweighs acceptance benefit.
+#   ngram           — Prompt look-up (zero extra VRAM, no draft model)
+#                     Best for: any size; free ~5-15% speedup on repetitive text
 #
 # Usage (from project root, inside WSL2):
-#   bash deployment/scripts/start_server_spec.sh [quant] [K]
+#   bash deployment/scripts/start_server_spec.sh [quant] [K] [mode]
 #
 # Arguments:
-#   quant   fp16 | int8 | awq4  (default: awq4)
-#   K       speculative tokens per step: 1–8  (default: 4)
+#   quant   fp16 | int8 | awq4   (default: awq4)
+#   K       speculative tokens:  1–8  (default: 4)
+#   mode    1b | ngram           (default: ngram)
 #
 # Examples:
-#   bash deployment/scripts/start_server_spec.sh awq4 4   # recommended
-#   bash deployment/scripts/start_server_spec.sh fp16 3
+#   bash deployment/scripts/start_server_spec.sh awq4 5 ngram   # recommended
+#   bash deployment/scripts/start_server_spec.sh fp16 4 1b
 #
 # Prerequisites:
 #   - Base model:  python scripts/download_model.py
-#   - Draft model: python scripts/download_model.py --model-id meta-llama/Llama-3.2-1B-Instruct
+#   - 1B model:    python scripts/download_model.py --model-id meta-llama/Llama-3.2-1B-Instruct
 #   - For awq4:    python quantize_awq.py  (run once, ~5 min)
 #
 # After server is ready, run the sweep:
-#   python eval_speculative.py --quant awq4 --spec-tokens 1 2 3 4 5
+#   python eval_speculative.py --quant awq4 --spec-tokens 3 4 5 6
 # ─────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
 
 QUANT="${1:-awq4}"
 K="${2:-4}"
+MODE="${3:-ngram}"   # ngram (default) or 1b
 
 # ── Validate args ─────────────────────────────────────────────────────────────
 if [[ ! "$QUANT" =~ ^(fp16|int8|awq4)$ ]]; then
-    echo "Usage: $0 <fp16|int8|awq4> [K]"
+    echo "Usage: $0 <fp16|int8|awq4> [K] [ngram|1b]"
     exit 1
 fi
 if ! [[ "$K" =~ ^[1-9]$ ]]; then
     echo "K must be 1–9 (got: $K)"
+    exit 1
+fi
+if [[ ! "$MODE" =~ ^(ngram|1b)$ ]]; then
+    echo "mode must be 'ngram' or '1b' (got: $MODE)"
     exit 1
 fi
 
@@ -125,7 +134,7 @@ echo "┌───────────────────────�
 echo "│  vLLM Speculative Decoding Server                           │"
 echo "├─────────────────────────────────────────────────────────────┤"
 printf "│  %-20s %-39s │\n" "target model:"   "$TARGET_PATH"
-printf "│  %-20s %-39s │\n" "draft model:"    "$DRAFT_PATH"
+printf "│  %-20s %-39s │\n" "spec mode:"      "$MODE"
 printf "│  %-20s %-39s │\n" "spec tokens K:"  "$K"
 printf "│  %-20s %-39s │\n" "quantization:"   "$QUANT"
 printf "│  %-20s %-39s │\n" "dtype:"          "$DTYPE"
@@ -139,7 +148,15 @@ echo "  python eval_speculative.py --quant $QUANT --spec-tokens 1 2 3 4 5"
 echo ""
 
 # ── Speculative config JSON (vLLM 0.6+ uses --speculative-config) ─────────────
-SPEC_CONFIG="{\"model\": \"$DRAFT_PATH\", \"num_speculative_tokens\": $K}"
+if [[ "$MODE" == "ngram" ]]; then
+    # Prompt look-up: zero extra VRAM, no draft model required
+    SPEC_CONFIG="{\"method\": \"ngram\", \"num_speculative_tokens\": $K, \"prompt_lookup_max\": $K, \"prompt_lookup_min\": 1}"
+    echo "[spec] mode=ngram  K=$K  (no draft model — uses prompt context)"
+else
+    # 1B draft model
+    SPEC_CONFIG="{\"model\": \"$DRAFT_PATH\", \"num_speculative_tokens\": $K}"
+    echo "[spec] mode=1b-draft  K=$K  draft=$DRAFT_PATH"
+fi
 
 # ── Launch vLLM ───────────────────────────────────────────────────────────────
 CMD=(
