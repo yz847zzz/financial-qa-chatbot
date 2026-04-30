@@ -138,14 +138,16 @@ echo "After server is ready, benchmark speculative decoding:"
 echo "  python eval_speculative.py --quant $QUANT --spec-tokens 1 2 3 4 5"
 echo ""
 
+# ── Speculative config JSON (vLLM 0.6+ uses --speculative-config) ─────────────
+SPEC_CONFIG="{\"model\": \"$DRAFT_PATH\", \"num_speculative_tokens\": $K}"
+
 # ── Launch vLLM ───────────────────────────────────────────────────────────────
 CMD=(
     vllm serve "$TARGET_PATH"
     --host "$HOST"
     --port "$PORT"
     --dtype "$DTYPE"
-    --speculative-model "$DRAFT_PATH"
-    --num-speculative-tokens "$K"
+    --speculative-config "$SPEC_CONFIG"
     --enable-lora
     --max-lora-rank "$MAX_LORA_RANK"
     --max-cpu-loras "$MAX_CPU_LORAS"
