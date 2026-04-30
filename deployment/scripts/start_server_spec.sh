@@ -148,6 +148,7 @@ CMD=(
     --port "$PORT"
     --dtype "$DTYPE"
     --speculative-config "$SPEC_CONFIG"
+    --max-model-len 8192
     --enable-lora
     --max-lora-rank "$MAX_LORA_RANK"
     --max-cpu-loras "$MAX_CPU_LORAS"
