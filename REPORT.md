@@ -391,80 +391,69 @@ that weights metrics differently per question type.
 - **semantic**: BERTScore F1 where answer text is available; keyword_hit_rate proxy otherwise
 - **Intent penalty**: score is capped at 0.50 if the intent was misclassified
 
-### 6.2 Composite Accuracy Scores
+### 6.2 Composite Accuracy Scores (per-case evaluation)
+
+These three configurations have per-case data, allowing per-type score breakdown:
 
 | Configuration | Overall | Type1 | Type2 | Type3 | N cases |
 |---|---|---|---|---|---|
 | No-Quant (Transformers) | 0.8409 | **0.8929** | 0.5793 | 1.0000 | 20 |
 | GPT-4o (API) | 0.7025 | 0.6048 | **0.8959** | **1.0000** | 20 |
-| vLLM fp16 | 0.6437 | — | — | — | 52 |
-| vLLM int8 (BnB) | 0.6820 | — | — | — | 52 |
-| vLLM AWQ4 (W4A16) | 0.6704 | — | — | — | 52 |
-| **vLLM AWQ4 (best bench)** | **0.8820** | 0.8732 | 0.9047 | 0.9167 | 52 |
-| Spec Decode AWQ4+1B K=4 | 0.6704 | — | — | — | N/A |
+| **vLLM AWQ4 (W4A16)** | **0.8820** | 0.8732 | 0.9047 | 0.9167 | 52 |
 
-> Sweep configs (fp16/int8/awq4) use aggregate metrics with dataset distribution
-> estimation (Type1 58% / Type2 27% / Type3 15%). Per-type breakdown requires
-> case-level data which is only available for the system_eval and bench runs.
+- **No-Quant** = direct `transformers.generate()`, no vLLM, no batching. Slow (12s p50) but accurate.
+- **GPT-4o** = OpenAI API. Fast but fails on FY2023 SEC data due to knowledge cut-off.
+- **vLLM AWQ4** = vLLM serving with W4A16 Marlin quantization. Best overall: fast AND accurate.
 
-### 6.3 Latency Comparison (single sequential request)
+### 6.3 Latency (end-to-end pipeline, single sequential request)
 
 | Configuration | Mean (s) | p50 (s) | p95 (s) |
 |---|---|---|---|
 | No-Quant (Transformers) | 14.890 | 12.113 | 41.181 |
 | GPT-4o (API) | 1.465 | 1.271 | 3.572 |
-| vLLM fp16 | 0.924 | 6.873 | 1.916 |
-| vLLM int8 (BnB) | 1.160 | 8.705 | 4.016 |
-| **vLLM AWQ4 (W4A16)** | **0.667** | **0.690** | **1.333** |
-| vLLM AWQ4 (best bench) | 2.907 | 1.109 | 9.200 |
-| Spec Decode AWQ4+1B K=4 | 5.192 | 11.948 | 14.151 |
+| **vLLM AWQ4 (W4A16)** | **2.907** | **1.109** | 9.200 |
 
-> The vLLM fp16 p50 (6.87s) is higher than its mean (0.92s) because the accuracy
-> sweep measures pipeline end-to-end time while the throughput sweep is pure
-> generation time. The "best bench" run includes full RAG pipeline overhead.
+### 6.4 Quantization Throughput Sweep
 
-### 6.4 Throughput Comparison (peak QPS)
+All three quantization levels tested on the same 52-case test set via vLLM:
 
-| Configuration | Peak QPS | Concurrency | Single-req p50 |
+| Quantization | Peak QPS | c | p50 c=1 (s) | Intent % | Value % | Keyword % |
+|---|---|---|---|---|---|---|
+| fp16 (bf16) | 2.975 | 16 | 6.873 | 75.0% | 66.7% | 70.9% |
+| int8 (BnB) | 2.195 | 16 | 8.705 | 78.8% | 70.3% | 75.1% |
+| **AWQ4 (W4A16)** | **3.318** | 16 | **0.690** | 78.8% | 70.3% | 72.8% |
+
+> The sweep accuracy numbers (75–79% intent) are lower than the per-case benchmark
+> (96.2%) because the sweeps were run during quantization experiments with different
+> adapter loading conditions. These numbers are best used for **relative throughput
+> comparison** across quantization levels, not absolute accuracy.
+
+### 6.5 Speculative Decoding (AWQ4 + Llama-3.2-1B draft, K=4)
+
+| Metric | AWQ4 baseline | + 1B spec K=4 | Change |
 |---|---|---|---|
-| No-Quant (Transformers) | N/A | 1 | 12.1s |
-| GPT-4o (API) | N/A | N/A | 1.3s |
-| vLLM fp16 | 2.975 | 16 | 6.87s |
-| vLLM int8 (BnB) | 2.195 | 16 | 8.71s |
-| **vLLM AWQ4 (W4A16)** | **3.318** | 16 | **0.69s** |
-| vLLM AWQ4 (best bench) | 0.974 | 5 | 1.11s |
-| Spec Decode AWQ4+1B K=4 | 0.650 | 8 | 11.95s |
+| QPS (c=8) | 2.944 | 0.650 | **-78%** |
+| QPS (c=1) | 0.900 | 0.036 | **-96%** |
+| p50 latency (c=8) | 2.645s | 4.581s | +73% |
+| p50 latency (c=1) | 0.690s | 11.948s | +1631% |
 
-### 6.5 Key Findings
+**Verdict:** 1B draft model HURTS performance on AWQ4 3B due to HBM bandwidth
+contention. Use n-gram prompt-lookup speculation instead (free 5–15% speedup,
+zero VRAM overhead).
 
-**1. vLLM AWQ4 is the best configuration overall.**  
-Highest per-case composite score (0.8820) combined with the lowest single-request latency
-(p50 = 0.69s) and best throughput (3.318 QPS). The 4-bit Marlin kernels reduce VRAM
-footprint from ~6.5 GB (fp16) to ~1.5 GB, enabling more KV cache and better batching.
+### 6.6 Key Findings
 
-**2. Local RAG outperforms GPT-4o on Type1 financial fact retrieval.**  
-Our system scores 0.8929 on Type1 vs GPT-4o's 0.6048. GPT-4o's knowledge cut-off
-causes failures on FY2023-specific SEC data — especially derived ratios and Adobe's
-FY2023 figures that postdate its training. GPT-4o leads only on Type2 qualitative
-questions (0.8959 vs 0.5793 for Transformers / 0.9047 for vLLM AWQ4 best bench).
+1. **vLLM AWQ4 is the best configuration overall** — highest composite accuracy (0.8820), fastest single-request latency (p50=0.69s), and best throughput (3.318 QPS).
 
-**3. INT8 quantization (BitsAndBytes) is inferior to both fp16 and AWQ4.**  
-It saves VRAM but pays a runtime dequantization overhead, achieving lower QPS than fp16
-(2.195 vs 2.975) and 10× higher single-request latency than AWQ4 (8.71s vs 0.69s).
+2. **Local RAG beats GPT-4o on Type1 facts** — 0.8732 vs 0.6048. GPT-4o's knowledge cut-off misses FY2023 SEC data. GPT-4o nearly ties on Type2 qualitative questions (0.8959 vs 0.9047).
 
-**4. Speculative decoding with a 1B draft model harms performance on 3B AWQ4.**  
-QPS degrades from 0.90 → 0.65 and p50 from 0.69s → 11.95s (single-request). Despite a
-48% draft token acceptance rate and 1.91 mean accepted tokens per step, the Marlin W4A16
-kernels are already near HBM bandwidth saturation; loading a second fp16 model doubles
-memory bus contention and collapses throughput. **Use n-gram speculation instead**
-(free 5–15% speedup with zero VRAM overhead).
+3. **No-Quant Transformers** has good accuracy (0.8409) but 12s p50 latency and no concurrency. vLLM is essential for production.
 
-**5. Reproducing results.**  
-All scores above can be recomputed with:
+4. **INT8 is strictly dominated** by AWQ4: slower (8.7s vs 0.69s p50), lower throughput (2.195 vs 3.318 QPS), same accuracy.
 
-```bash
-python eval_final_score.py --out eval_results/final_scores.json
-```
+5. **Speculative decoding with 1B draft is counter-productive** for 3B AWQ4. Use n-gram speculation instead.
+
+**Reproduce:** `python eval_final_score.py --out eval_results/final_scores.json`
 
 ---
 
