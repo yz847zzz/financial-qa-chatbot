@@ -312,6 +312,46 @@ python eval_plot.py
 
 ---
 
+## Speculative Decoding Experiments
+
+We evaluated two speculative decoding strategies on top of AWQ4, using
+[`eval_speculative.py`](eval_speculative.py) and [`deployment/scripts/start_server_spec.sh`](deployment/scripts/start_server_spec.sh).
+
+### Strategy 1 — Llama-3.2-1B-Instruct draft model (K=4)
+
+| Configuration | c=1 QPS | c=1 p50 | c=8 QPS | c=8 p50 | vs baseline |
+|---|:---:|:---:|:---:|:---:|:---:|
+| AWQ4 baseline | **0.90** | **0.69s** | **2.94** | **2.65s** | 1.00× |
+| AWQ4 + 1B draft (K=4) | 0.04 | 11.95s | 0.65 | 4.58s | **0.04×** ❌ |
+
+**Draft acceptance rate:** 48% (1.91 tokens accepted per step on average).
+
+Despite a reasonable acceptance rate, the 1B draft model makes performance **25× worse** at c=1. Root cause: Marlin INT4 kernels already run the 3B model near HBM memory bandwidth saturation. Adding a 1B fp16 draft model forces two models to compete for the same memory bus — the drafting overhead dominates.
+
+> **Lesson:** Speculative decoding with a separate draft model only helps when the target is large (13B+) and each forward pass is genuinely expensive. For a fast small model like 3B AWQ4, it is counterproductive.
+
+### Strategy 2 — N-gram prompt look-up (recommended)
+
+Zero extra VRAM, no draft model. vLLM scans the prompt and recent output for repeating n-gram patterns and proposes them as candidate tokens.
+
+```bash
+bash deployment/scripts/start_server_spec.sh awq4 5 ngram
+```
+
+Financial filings contain highly repetitive text (company names, metric labels, date ranges, citation patterns) — ideal for n-gram matching. Expected gain: **5–15% latency reduction** at zero cost.
+
+### Server usage
+
+```bash
+# N-gram speculation (default, recommended for AWQ4)
+bash deployment/scripts/start_server_spec.sh awq4 5 ngram
+
+# 1B draft model (only beneficial for fp16 on larger targets)
+bash deployment/scripts/start_server_spec.sh fp16 4 1b
+```
+
+---
+
 ## Benchmark vs GPT-4o (52 cases)
 
 Full benchmark using [`eval_benchmark.py`](eval_benchmark.py):
