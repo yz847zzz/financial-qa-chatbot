@@ -396,8 +396,9 @@ class CrossEncoderReranker:
         except ImportError:
             raise ImportError("pip install sentence-transformers")
 
-        print(f"Loading cross-encoder: {model_name} ...", flush=True)
-        self._model = CrossEncoder(model_name, max_length=512)
+        device = "cpu"  # Force CPU to avoid GPU contention with vLLM
+        print(f"Loading cross-encoder: {model_name} (device={device}) ...", flush=True)
+        self._model = CrossEncoder(model_name, max_length=512, device=device)
         print("Cross-encoder ready.", flush=True)
 
     def rerank(self, query: str, chunks: list[RetrievedChunk]) -> list[RetrievedChunk]:
@@ -566,6 +567,7 @@ class HybridRetriever:
         reranker_model: str = "cross-encoder/ms-marco-MiniLM-L-6-v2",
         mmr_lambda: float = 0.7,
         mmr_overlap_threshold: float = 0.85,
+        rerank_top_n: int = 50,
     ):
         """
         Args:
@@ -576,11 +578,14 @@ class HybridRetriever:
             mmr_lambda:            λ for MMR — 0.7 means 70% relevance, 30% diversity
             mmr_overlap_threshold: hard dedup cutoff — chunks with Jaccard > this are
                                    skipped entirely (catches adjacent-chunk copies)
+            rerank_top_n:          max candidates (by RRF score) sent to cross-encoder;
+                                   caps GPU work and prevents contention with vLLM
         """
         self._collection = collection
         self._recall_k = recall_k
         self._mmr_lambda = mmr_lambda
         self._mmr_overlap_threshold = mmr_overlap_threshold
+        self._rerank_top_n = rerank_top_n
         self._embed = EmbeddingModel(embed_model)
         self._bm25 = BM25Index(collection)
         self._reranker = CrossEncoderReranker(reranker_model)
@@ -611,6 +616,8 @@ class HybridRetriever:
         dense_hits  = _dense_recall(query, self._collection, self._embed, self._recall_k, filters)
         sparse_hits = _sparse_recall(query, self._bm25, self._recall_k, self._collection, filters)
         candidates  = _reciprocal_rank_fusion(dense_hits, sparse_hits)
+        # Cap candidates before cross-encoder to limit GPU work
+        candidates  = candidates[: self._rerank_top_n]
         reranked    = self._reranker.rerank(query, candidates)
         selected    = mmr_select(reranked, top_n,
                                  lambda_param=self._mmr_lambda,
@@ -660,6 +667,8 @@ class HybridRetriever:
                     merged[chunk.chunk_id] = chunk
 
         candidates = sorted(merged.values(), key=lambda c: c.rrf_score, reverse=True)
+        # Cap candidates before cross-encoder to limit GPU work
+        candidates = candidates[: self._rerank_top_n]
 
         # Rerank with original question, not sub-queries
         rerank_q = rerank_query or queries[0]
@@ -682,6 +691,9 @@ class HybridRetriever:
         dense_hits  = _dense_recall(query, self._collection, self._embed, self._recall_k, filters)
         sparse_hits = _sparse_recall(query, self._bm25, self._recall_k, self._collection, filters)
         candidates  = _reciprocal_rank_fusion(dense_hits, sparse_hits)
+        full_pool   = len(candidates)
+        # Cap candidates before cross-encoder to limit GPU work
+        candidates  = candidates[: self._rerank_top_n]
         reranked    = self._reranker.rerank(query, candidates)
         selected    = mmr_select(reranked, top_n,
                                  lambda_param=self._mmr_lambda,
@@ -692,7 +704,8 @@ class HybridRetriever:
             "filters":              filters,
             "dense_recall_count":   len(dense_hits),
             "sparse_recall_count":  len(sparse_hits),
-            "candidate_pool_size":  len(candidates),
+            "candidate_pool_size":  full_pool,
+            "rerank_input_size":    len(candidates),
             "after_rerank":         reranked,
             "top_n":                selected,   # MMR-selected final output
         }

@@ -332,7 +332,32 @@ def compute_aggregate(records: list) -> dict:
 # ---------------------------------------------------------------------------
 def setup_local():
     from eval_benchmark import setup_local as _setup
-    return _setup(no_nl2sql_adapter=False)
+    result = _setup(no_nl2sql_adapter=False)
+
+    # Fix dual module-path patching issue:
+    # eval_benchmark patches `deployment.rag.query_rewriter._vllm` but
+    # timed_answer imports from `rag.query_rewriter` (different sys.modules entry).
+    # We must patch ALL module aliases that reference query_rewriter._vllm.
+    import sys as _sys
+    import chatbot
+    fake_vllm = chatbot._vllm  # already patched by setup_local -> _FakeVLLM
+
+    for mod_name, mod in list(_sys.modules.items()):
+        if mod is None:
+            continue
+        if "query_rewriter" in mod_name and hasattr(mod, "_vllm"):
+            mod._vllm = fake_vllm
+            print(f"[Patch] {mod_name}._vllm -> _FakeVLLM", flush=True)
+
+    # Also force-import the variant timed_answer will use and patch it
+    try:
+        from rag import query_rewriter as qr_alt
+        qr_alt._vllm = fake_vllm
+        print(f"[Patch] rag.query_rewriter._vllm -> _FakeVLLM", flush=True)
+    except ImportError:
+        pass
+
+    return result
 
 
 def setup_vllm():

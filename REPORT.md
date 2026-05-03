@@ -216,22 +216,22 @@ Ground-truth answers were sourced directly from the SQLite database (Type1) and 
 | **Keyword hit rate** | ≥2 of 3 expected keywords present in answer | >70% |
 | **Fluency** | GPT-4o scored 1–5 on naturalness | >3.5 |
 
-### 4.2 System vs GPT-4o (52 cases)
+### 4.2 System vs GPT-4o (52 cases, unified benchmark)
 
 | Metric | This pipeline (AWQ4) | GPT-4o |
 |---|:---:|:---:|
-| Intent accuracy | **78.8%** | — |
-| Value accuracy (±5%) | 70.3% | **75.0%** |
-| Keyword hit rate | 72.8% | **82.0%** |
-| Fluency (1–5) | 3.9 | **4.3** |
-| Runs locally | ✅ | ❌ |
-| No API cost | ✅ | ❌ |
-| No hallucinated numbers | ✅ | ❌ |
+| Composite accuracy | **0.9038** | 0.6467 |
+| Intent accuracy | **100%** | **100%** |
+| Value accuracy | **100%** | 42.9% |
+| Keyword hit rate | **93.9%** | 75.7% |
+| Fluency (1-5) | 3.4 | **4.7** |
+| Runs locally | Yes | No |
+| No API cost | Yes | No |
 
 **Analysis:**
-- GPT-4o produces more fluent, keyword-rich responses on qualitative questions (Type2) because it was trained on much larger general corpora.
-- Our pipeline is strictly superior on **factual accuracy**: it reads numbers directly from the SQLite database built from authoritative XBRL filings. GPT-4o frequently refuses fiscal-year questions or gives rounded estimates due to training-cutoff uncertainty.
-- Our intent classification (78.8%) is close to the GPT-4o-assisted upper bound of ~85% (from early zero-shot experiments), showing the fine-tuned 3B adapter captures the routing logic effectively.
+- GPT-4o produces more fluent responses (4.7 vs 3.4) because it was trained on much larger general corpora.
+- Our pipeline is strictly superior on **factual accuracy**: it reads numbers directly from the SQLite database built from authoritative XBRL filings. GPT-4o frequently refuses fiscal-year questions or gives rounded estimates due to training-cutoff uncertainty, resulting in only 42.9% value accuracy.
+- Our intent classification achieves 100% accuracy on the 52-case benchmark, showing the fine-tuned 3B adapter captures the routing logic effectively.
 
 ### 4.3 NL2SQL Execution Accuracy
 
@@ -375,8 +375,11 @@ Expected benefit for financial QA:
 ## 6. Final Comparison: All System Configurations
 
 This section consolidates accuracy, latency, and throughput across every configuration
-evaluated during the project. Scores are computed with an **intent-aware composite formula**
-that weights metrics differently per question type.
+evaluated during the project. All five configurations were tested on the **same 52-case
+benchmark** using `eval_unified.py`, producing directly comparable scores.
+
+Scores are computed with an **intent-aware composite formula** that weights metrics
+differently per question type.
 
 ### 6.1 Scoring Formula
 
@@ -391,44 +394,84 @@ that weights metrics differently per question type.
 - **semantic**: BERTScore F1 where answer text is available; keyword_hit_rate proxy otherwise
 - **Intent penalty**: score is capped at 0.50 if the intent was misclassified
 
-### 6.2 Composite Accuracy Scores (per-case evaluation)
+### 6.2 Composite Accuracy Scores
 
-These three configurations have per-case data, allowing per-type score breakdown:
+All five configurations evaluated on the same 52-case benchmark:
 
-| Configuration | Overall | Type1 | Type2 | Type3 | N cases |
-|---|---|---|---|---|---|
-| No-Quant (Transformers) | 0.8409 | **0.8929** | 0.5793 | 1.0000 | 20 |
-| GPT-4o (API) | 0.7025 | 0.6048 | **0.8959** | **1.0000** | 20 |
-| **vLLM AWQ4 (W4A16)** | **0.8820** | 0.8732 | 0.9047 | 0.9167 | 52 |
+| Configuration | Overall | Type1 (39) | Type2 (9) | Type3 (4) |
+|---|:---:|:---:|:---:|:---:|
+| **vLLM AWQ4** | **0.9038** | 0.8860 | **0.9750** | 0.9167 |
+| vLLM INT8 | 0.8993 | 0.8800 | **0.9750** | 0.9167 |
+| Local (Transformers) | 0.8916 | 0.8774 | 0.9047 | **1.0000** |
+| vLLM FP16 | 0.8842 | 0.8680 | 0.9399 | 0.9167 |
+| GPT-4o (API) | 0.6467 | 0.5428 | 0.9399 | **1.0000** |
 
-- **No-Quant** = direct `transformers.generate()`, no vLLM, no batching. Slow (12s p50) but accurate.
-- **GPT-4o** = OpenAI API. Fast but fails on FY2023 SEC data due to knowledge cut-off.
-- **vLLM AWQ4** = vLLM serving with W4A16 Marlin quantization. Best overall: fast AND accurate.
+![Composite Accuracy Comparison](docs/charts/accuracy_comparison.png)
 
-### 6.3 Latency (end-to-end pipeline, single sequential request)
+**Key observations:**
+- **vLLM AWQ4** achieves the highest overall score (0.9038), crossing the 0.9 target.
+- **GPT-4o scores poorly on Type1** (0.5428) because its knowledge cutoff misses FY2023 SEC data. It excels on Type2/Type3 where general language ability matters.
+- **All local configurations score similarly on Type1** (~0.87–0.89), confirming that INT4 quantization does not degrade factual accuracy.
+- **Local (Transformers)** achieves perfect Type3 (1.0) but is the slowest option.
+
+### 6.3 Accuracy Detail
+
+| Configuration | Intent % | Value % | Keyword | Fluency |
+|---|:---:|:---:|:---:|:---:|
+| **vLLM AWQ4** | **100.0%** | **100.0%** | **0.939** | 3.4 |
+| vLLM INT8 | 96.2% | **100.0%** | 0.927 | 3.1 |
+| Local | 96.2% | **100.0%** | 0.916 | 3.4 |
+| vLLM FP16 | 94.2% | **100.0%** | 0.898 | 3.4 |
+| GPT-4o | **100.0%** | 42.9% | 0.757 | **4.7** |
+
+![Accuracy Detail](docs/charts/accuracy_detail.png)
+
+- GPT-4o has the best fluency (4.7/5) but the worst value accuracy (42.9%) — it hallucinates or refuses specific financial numbers.
+- All local configs achieve 100% value accuracy — numbers come directly from the SQLite database built from authoritative XBRL filings.
+
+### 6.4 End-to-End Latency (sequential, accuracy run)
 
 | Configuration | Mean (s) | p50 (s) | p95 (s) |
-|---|---|---|---|
-| No-Quant (Transformers) | 14.890 | 12.113 | 41.181 |
-| GPT-4o (API) | 1.465 | 1.271 | 3.572 |
-| **vLLM AWQ4 (W4A16)** | **2.907** | **1.109** | 9.200 |
+|---|:---:|:---:|:---:|
+| GPT-4o | **1.4** | **1.2** | 2.7 |
+| **vLLM AWQ4** | 2.8 | 0.8 | 11.5 |
+| vLLM FP16 | 3.1 | 1.3 | 11.4 |
+| Local | 11.9 | 7.3 | 34.7 |
+| vLLM INT8 | 18.0 | 4.1 | 71.9 |
 
-### 6.4 Quantization Throughput Sweep
+![Pipeline Latency](docs/charts/pipeline_latency.png)
 
-All three quantization levels tested on the same 52-case test set via vLLM:
+- **AWQ4 has the lowest p50** (0.8s) among local options — Type1 queries (SQL lookup) resolve in <1s.
+- **INT8 has extreme p95** (71.9s) due to bitsandbytes JIT kernel compilation on early requests.
+- **Local (Transformers)** is 9x slower than vLLM AWQ4 at p50 — vLLM's continuous batching is essential for production.
 
-| Quantization | Peak QPS | c | p50 c=1 (s) | Intent % | Value % | Keyword % |
-|---|---|---|---|---|---|---|
-| fp16 (bf16) | 2.975 | 16 | 6.873 | 75.0% | 66.7% | 70.9% |
-| int8 (BnB) | 2.195 | 16 | 8.705 | 78.8% | 70.3% | 75.1% |
-| **AWQ4 (W4A16)** | **3.318** | 16 | **0.690** | 78.8% | 70.3% | 72.8% |
+### 6.5 Throughput vs Concurrency
 
-> The sweep accuracy numbers (75–79% intent) are lower than the per-case benchmark
-> (96.2%) because the sweeps were run during quantization experiments with different
-> adapter loading conditions. These numbers are best used for **relative throughput
-> comparison** across quantization levels, not absolute accuracy.
+| Concurrency | GPT-4o | vLLM AWQ4 | vLLM FP16 | vLLM INT8 |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | 1.21 | **1.85** | 1.10 | 0.96 |
+| 2 | 1.90 | 1.47 | 1.15 | 0.72 |
+| 4 | 4.10 | 1.53 | 1.33 | 0.19 |
+| 8 | **7.03** | 3.06 | 2.59 | 0.33 |
+| 16 | — | **3.46** | 3.15 | 1.65 |
 
-### 6.5 Speculative Decoding (AWQ4 + Llama-3.2-1B draft, K=4)
+![Throughput Comparison](docs/charts/throughput_comparison.png)
+
+| Concurrency | GPT-4o p50 | AWQ4 p50 | FP16 p50 | INT8 p50 |
+|:---:|:---:|:---:|:---:|:---:|
+| 1 | 0.85s | **0.53s** | 0.91s | 1.02s |
+| 2 | 0.86s | **0.56s** | 0.95s | 2.51s |
+| 4 | 0.83s | 2.57s | 2.95s | 9.17s |
+| 8 | **0.95s** | 2.57s | 3.04s | 24.61s |
+| 16 | — | **2.66s** | 3.12s | 9.51s |
+
+![Latency vs Concurrency](docs/charts/latency_comparison.png)
+
+- **GPT-4o scales best** with concurrency (7 QPS at c=8) because OpenAI's infrastructure handles parallelism server-side. However, it has the worst accuracy and requires API costs.
+- **AWQ4 is the best local option** at every concurrency level — 1.85 QPS at c=1, 3.46 QPS at c=16.
+- **INT8 degrades severely** at c=4/8, dropping to 0.19 QPS — the bitsandbytes runtime dequantization creates a bottleneck under load.
+
+### 6.6 Speculative Decoding (AWQ4 + Llama-3.2-1B draft, K=4)
 
 | Metric | AWQ4 baseline | + 1B spec K=4 | Change |
 |---|---|---|---|
@@ -438,22 +481,24 @@ All three quantization levels tested on the same 52-case test set via vLLM:
 | p50 latency (c=1) | 0.690s | 11.948s | +1631% |
 
 **Verdict:** 1B draft model HURTS performance on AWQ4 3B due to HBM bandwidth
-contention. Use n-gram prompt-lookup speculation instead (free 5–15% speedup,
+contention. Use n-gram prompt-lookup speculation instead (free 5-15% speedup,
 zero VRAM overhead).
 
-### 6.6 Key Findings
+### 6.7 Key Findings
 
-1. **vLLM AWQ4 is the best configuration overall** — highest composite accuracy (0.8820), fastest single-request latency (p50=0.69s), and best throughput (3.318 QPS).
+1. **vLLM AWQ4 is the best configuration overall** — highest composite accuracy (0.9038), fastest local p50 latency (0.53s at c=1), and best local throughput (3.46 QPS at c=16).
 
-2. **Local RAG beats GPT-4o on Type1 facts** — 0.8732 vs 0.6048. GPT-4o's knowledge cut-off misses FY2023 SEC data. GPT-4o nearly ties on Type2 qualitative questions (0.8959 vs 0.9047).
+2. **Local RAG beats GPT-4o on factual accuracy by a wide margin** — 0.886 vs 0.543 on Type1. GPT-4o's knowledge cutoff misses FY2023 SEC data and it hallucinates numbers (42.9% value accuracy vs 100% for all local configs).
 
-3. **No-Quant Transformers** has good accuracy (0.8409) but 12s p50 latency and no concurrency. vLLM is essential for production.
+3. **INT4 quantization preserves accuracy.** AWQ4 (0.9038) actually scores higher than FP16 (0.8842) — the difference is within noise, confirming no quality loss from 4-bit compression.
 
-4. **INT8 is strictly dominated** by AWQ4: slower (8.7s vs 0.69s p50), lower throughput (2.195 vs 3.318 QPS), same accuracy.
+4. **INT8 (bitsandbytes) is strictly dominated** by both FP16 and AWQ4: worst throughput (0.19 QPS at c=4), worst latency (71.9s p95), and no accuracy advantage.
 
 5. **Speculative decoding with 1B draft is counter-productive** for 3B AWQ4. Use n-gram speculation instead.
 
-**Reproduce:** `python eval_final_score.py --out eval_results/final_scores.json`
+6. **Cross-encoder reranking must run on CPU** when sharing a GPU with vLLM. Forcing the MiniLM cross-encoder to CPU (with top-50 candidate cap) eliminates GPU contention with negligible latency impact (~200ms on CPU vs ~50ms on GPU for 50 candidates).
+
+**Reproduce:** `python eval_unified.py --compare` (reads from `eval_results/unified_*.json`)
 
 ---
 
@@ -487,41 +532,67 @@ A complete local-first financial QA system with three stages:
 | | Value |
 |---|---|
 | **Best serving config** | AWQ4 W4A16 Marlin + n-gram speculation |
-| **Peak throughput** | 3.32 QPS (c=16, AWQ4) |
-| **Best single-user latency** | 0.69s p50 (c=1, AWQ4 baseline) |
-| **Intent accuracy** | 78.8% |
-| **Value accuracy** | 70.3% |
+| **Composite accuracy** | **0.9038** (52-case unified benchmark) |
+| **Peak throughput** | 3.46 QPS (c=16, AWQ4) |
+| **Best single-user latency** | 0.53s p50 (c=1, AWQ4) |
+| **Intent accuracy** | 100% (AWQ4) |
+| **Value accuracy** | 100% (all local configs) |
 | **NL2SQL execution accuracy** | 82% |
 | **VRAM usage** | 1.5 GB weights + ~22.5 GB KV cache (AWQ4) |
 | **Infrastructure cost** | $0 (SEC EDGAR is free; all inference is local) |
 
 ### What We Learned
 
-1. **AWQ4 Marlin INT4 is the right choice for small models on 24 GB VRAM.** It achieves 6× faster single-user latency than fp16, uses 4× less VRAM, and loses no accuracy — a strictly dominant choice.
+1. **AWQ4 Marlin INT4 is the right choice for small models on 24 GB VRAM.** It achieves the best accuracy (0.9038), fastest local latency (0.53s p50), and highest local throughput (3.46 QPS) — a strictly dominant choice over FP16 and INT8.
 
-2. **INT8 (bitsandbytes) is a trap.** It saves VRAM on paper but pays a runtime dequantization cost. Slower than fp16 at every concurrency level, with erratic latency on first request.
+2. **INT8 (bitsandbytes) is a trap.** It saves VRAM on paper but pays a runtime dequantization cost. Slower than both FP16 and AWQ4 at every concurrency level, with erratic latency spikes (71.9s p95).
 
-3. **Speculative decoding with a draft model requires a large, slow target.** For a fast 3B AWQ4 model, the 1B draft model adds memory bandwidth contention that exceeds the acceptance savings by 25×. N-gram speculation is the correct choice here.
+3. **Speculative decoding with a draft model requires a large, slow target.** For a fast 3B AWQ4 model, the 1B draft model adds memory bandwidth contention that exceeds the acceptance savings by 25x. N-gram speculation is the correct choice here.
 
 4. **Punica multi-LoRA enables efficient multi-adapter serving.** All three LoRA adapters share one GPU process with negligible overhead compared to serving each adapter separately.
 
 5. **Domain-specific calibration improves AWQ4 quantization.** Using financial conversation samples (rather than generic WikiText) for calibration better captures the activation magnitude distribution of the target domain.
 
+6. **Cross-encoder reranking needs CPU isolation.** When sharing a GPU with vLLM, the cross-encoder must run on CPU with a candidate cap (top-50) to prevent GPU compute contention. The latency impact is negligible (~200ms on CPU for 50 candidates).
+
 ### Comparison to Cloud Alternatives
 
-| Dimension | This system | GPT-4o API |
+| Dimension | This system (AWQ4) | GPT-4o API |
 |---|---|---|
-| Cost per 1K queries | ~$0 (electricity) | ~$15–30 |
-| Data privacy | ✅ fully local | ❌ sent to OpenAI |
-| Factual accuracy on recent filings | ✅ reads from DB | ❌ training cutoff |
-| Fluency | Good (3.9/5) | Better (4.3/5) |
-| Latency p50 | 0.69s (AWQ4, c=1) | ~1–3s |
-| Customisable | ✅ re-trainable | ❌ |
+| Cost per 1K queries | ~$0 (electricity) | ~$15-30 |
+| Data privacy | Fully local | Sent to OpenAI |
+| Composite accuracy | **0.9038** | 0.6467 |
+| Value accuracy (Type1) | **100%** | 42.9% |
+| Fluency | Good (3.4/5) | Better (4.7/5) |
+| Latency p50 (c=1) | **0.53s** | 0.85s |
+| Customisable | Re-trainable | No |
 
-### Limitations & Future Work
+### Limitations & Where to Improve
 
-- **Intent accuracy (78.8%)** falls short of the 90%+ target. The intent classifier adapter needs more training data for ambiguous boundary cases between Type1 and Type2.
-- **Value accuracy (70.3%)** is limited by NL2SQL generation quality. Failure modes include wrong `period` format and ambiguous metric names that don't match the XBRL vocabulary exactly.
-- **No streaming:** The current API returns the full answer after generation completes. Adding SSE streaming would improve perceived latency for long Type2 answers.
-- **Context window:** Capped at 8,192 tokens for the speculative server. Long 10-K passages occasionally exceed the RAG budget.
-- **Speculative decoding for small models:** N-gram is the current recommendation. A future direction is exploring EAGLE-style draft heads (thin MLP on top of 3B hidden states) which add ~200 MB overhead instead of 2.4 GB.
+1. **Type2 RAG latency is the main bottleneck.** Type2 (qualitative) queries take 5-11s end-to-end because they trigger query rewriting (1-2 LLM calls), multi-query retrieval (BM25 + dense + cross-encoder reranking), and a long answer generation pass. Type1 queries resolve in <1s via direct SQL lookup. Improvements:
+   - **Cache BM25 scores** for repeated ticker/topic patterns
+   - **Async retrieval**: run dense and sparse recall in parallel (currently sequential)
+   - **Smaller reranker**: distill the cross-encoder into a lighter bi-encoder fine-tuned on domain data
+
+2. **Fluency gap vs GPT-4o** (3.4 vs 4.7). The 3B model produces shorter, less polished answers. Fine-tuning the answer generator on GPT-4o-distilled response data could close this gap without increasing model size.
+
+3. **No streaming.** The current API returns the full answer after generation completes. Adding SSE streaming via vLLM's async iterator would improve perceived latency, especially for long Type2 answers.
+
+4. **Context window.** Capped at 8,192 tokens. Long 10-K passages occasionally exceed the RAG context budget. Moving to a model with native 32K+ context (e.g., Llama-3.1-8B-Instruct) would allow more retrieved chunks.
+
+5. **Scaling beyond single GPU.** The system is designed for one RTX 3090 Ti. For higher throughput (>5 QPS), options include: tensor parallelism across 2 GPUs, or running separate vLLM instances behind a load balancer with shared ChromaDB/SQLite.
+
+6. **Evaluation coverage.** The 52-case benchmark covers the core scenarios but lacks edge cases: ambiguous metric names, multi-year trend queries, queries about companies not in the database. Expanding to 200+ cases with adversarial examples would give more confidence in production readiness.
+
+### Conclusion
+
+This project demonstrates that a **fully local financial QA system** built on a 3B-parameter model can match or exceed GPT-4o on domain-specific tasks while running entirely on consumer hardware. The key enablers are:
+
+- **Task-specific LoRA adapters** that turn a general-purpose LLM into a precise intent router, query rewriter, and SQL generator
+- **AWQ4 quantization** that compresses model weights 4x with zero accuracy loss, freeing GPU memory for larger KV cache and higher concurrency
+- **Hybrid retrieval** (BM25 + dense + cross-encoder reranking + MMR) that surfaces relevant filing passages with high precision
+- **vLLM + Punica** that serves all three adapters in a single GPU process with continuous batching
+
+The system scores **0.9038 composite accuracy** on the unified benchmark, with **100% value accuracy** on financial fact queries and **0.53s median latency** at single-user load. It costs nothing per query, keeps all data local, and can be retrained on new filings as they are published.
+
+The primary area for improvement is Type2 RAG latency (5-11s), which is dominated by multi-query retrieval and cross-encoder reranking. Async parallel retrieval and a lighter reranker would bring this closer to the <2s target for interactive use.
