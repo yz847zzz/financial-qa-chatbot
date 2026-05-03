@@ -75,12 +75,64 @@ CONCURRENCY_LEVELS = [1, 2, 4, 8, 16]
 BURST_REPS = 10
 
 # ---------------------------------------------------------------------------
+# Semantic similarity (cosine) using all-MiniLM-L6-v2
+# ---------------------------------------------------------------------------
+_sim_model = None
+
+
+def _get_sim_model():
+    """Lazy-load sentence-transformer for cosine similarity."""
+    global _sim_model
+    if _sim_model is None:
+        from sentence_transformers import SentenceTransformer
+        _sim_model = SentenceTransformer("all-MiniLM-L6-v2")
+        print("[Eval] Loaded all-MiniLM-L6-v2 for semantic similarity.", flush=True)
+    return _sim_model
+
+
+def cosine_similarity(answer: str, reference: str) -> float:
+    """Compute cosine similarity between answer and reference sentence."""
+    if not answer or not reference:
+        return 0.0
+    model = _get_sim_model()
+    embs = model.encode([answer, reference], normalize_embeddings=True)
+    sim = float(embs[0] @ embs[1])
+    return max(0.0, sim)  # clamp negatives to 0
+
+
+def build_reference(case: dict) -> str:
+    """Build a reference sentence from question + expected keywords + value.
+
+    Since we don't have hand-written expected_answer fields, we construct
+    a plausible reference from what we know: the question phrased as an
+    answer with the expected keywords and value embedded.
+    """
+    q = case.get("question", "")
+    kws = case.get("expected_keywords", [])
+    val = case.get("expected_value")
+
+    parts = list(kws)
+    if val is not None:
+        if isinstance(val, float) and val > 1e6:
+            parts.append(f"${val/1e9:.1f} billion")
+        elif isinstance(val, float) and val < 1.0:
+            parts.append(f"{val*100:.1f}%")
+        else:
+            parts.append(str(val))
+    if parts:
+        return f"{q} Answer: {', '.join(parts)}"
+    return q
+
+
+# ---------------------------------------------------------------------------
 # Intent-aware composite scoring
 # ---------------------------------------------------------------------------
+# Weights: keyword and value are the primary signals (exact match checks).
+# Semantic similarity (cosine) is a softer signal for overall answer quality.
 WEIGHTS = {
-    "Type1": {"key": 0.10, "value": 0.60, "sem": 0.30},
-    "Type2": {"key": 0.30, "value": 0.05, "sem": 0.65},
-    "Type3": {"key": 0.40, "value": 0.00, "sem": 0.60},
+    "Type1": {"key": 0.15, "value": 0.65, "sem": 0.20},
+    "Type2": {"key": 0.40, "value": 0.10, "sem": 0.50},
+    "Type3": {"key": 0.50, "value": 0.00, "sem": 0.50},
 }
 
 
@@ -94,13 +146,13 @@ def map_category(cat: str) -> str:
         return "Type1"
 
 
-def case_score(category: str, intent_ok, value_ok, kw_rate: float) -> float:
+def case_score(category: str, intent_ok, value_ok, kw_rate: float,
+               sem_sim: float = 0.0) -> float:
     t = map_category(category)
     w = WEIGHTS[t]
     key = kw_rate if kw_rate is not None else 0.0
     val = 1.0 if value_ok is True else (0.0 if value_ok is False else 0.5)
-    sem = key  # keyword_hit_rate as semantic proxy
-    score = w["key"] * key + w["value"] * val + w["sem"] * sem
+    score = w["key"] * key + w["value"] * val + w["sem"] * sem_sim
     if intent_ok is False:
         score = min(score, 0.50)
     return round(score, 4)
@@ -126,7 +178,8 @@ def run_case_pipeline(case: dict, idx: int, total: int,
             "id": case["id"], "category": case["category"],
             "question": case["question"], "answer": "",
             "intent_correct": False, "value_correct": False,
-            "keyword_hit_rate": 0.0, "fluency_score": 1,
+            "keyword_hit_rate": 0.0, "semantic_similarity": 0.0,
+            "fluency_score": 1,
             "timings": {"total_s": 0.0}, "error": str(exc),
         }
 
@@ -135,15 +188,18 @@ def run_case_pipeline(case: dict, idx: int, total: int,
     vc = value_correct(answer_text, case.get("expected_value"))
     khr = keyword_hit_rate(answer_text, case.get("expected_keywords") or [])
     flu = local_fluency(answer_text)
+    ref = build_reference(case)
+    sem = cosine_similarity(answer_text, ref)
 
-    print(f"  intent={result.get('intent')}  kw={khr:.2f}  val={vc}  "
+    print(f"  intent={result.get('intent')}  kw={khr:.2f}  val={vc}  sem={sem:.3f}  "
           f"lat={timings.get('total_s', 0):.2f}s", flush=True)
 
     return {
         "id": case["id"], "category": case["category"],
         "question": case["question"], "answer": answer_text[:300],
         "intent_correct": ic, "value_correct": vc,
-        "keyword_hit_rate": round(khr, 3), "fluency_score": flu,
+        "keyword_hit_rate": round(khr, 3), "semantic_similarity": round(sem, 4),
+        "fluency_score": flu,
         "timings": timings,
     }
 
@@ -164,22 +220,26 @@ def run_case_gpt4o(case: dict, idx: int, total: int, client) -> dict:
             "id": case["id"], "category": case["category"],
             "question": case["question"], "answer": "",
             "intent_correct": True, "value_correct": False,
-            "keyword_hit_rate": 0.0, "fluency_score": 1,
+            "keyword_hit_rate": 0.0, "semantic_similarity": 0.0,
+            "fluency_score": 1,
             "timings": {"total_s": 0.0}, "error": str(exc),
         }
 
     vc = value_correct(answer_text, case.get("expected_value"))
     khr = keyword_hit_rate(answer_text, case.get("expected_keywords") or [])
     flu = local_fluency(answer_text)
+    ref = build_reference(case)
+    sem = cosine_similarity(answer_text, ref)
 
-    print(f"  kw={khr:.2f}  val={vc}  lat={latency:.2f}s", flush=True)
+    print(f"  kw={khr:.2f}  val={vc}  sem={sem:.3f}  lat={latency:.2f}s", flush=True)
 
     return {
         "id": case["id"], "category": case["category"],
         "question": case["question"], "answer": answer_text[:300],
         "intent_correct": True,  # GPT-4o handles routing internally
         "value_correct": vc,
-        "keyword_hit_rate": round(khr, 3), "fluency_score": flu,
+        "keyword_hit_rate": round(khr, 3), "semantic_similarity": round(sem, 4),
+        "fluency_score": flu,
         "timings": {"total_s": round(latency, 3)},
     }
 
@@ -279,8 +339,9 @@ def compute_aggregate(records: list) -> dict:
 
     for r in records:
         t = map_category(r["category"])
+        sem = r.get("semantic_similarity", 0.0)
         s = case_score(r["category"], r["intent_correct"],
-                       r["value_correct"], r["keyword_hit_rate"])
+                       r["value_correct"], r["keyword_hit_rate"], sem)
         r["composite_score"] = s  # attach to record
         by_type[t].append(r)
         all_scores.append(s)
@@ -294,12 +355,14 @@ def compute_aggregate(records: list) -> dict:
         value_vals = [int(r["value_correct"]) for r in recs
                       if r["value_correct"] is not None]
         kw_vals = [r["keyword_hit_rate"] for r in recs]
+        sem_vals = [r.get("semantic_similarity", 0.0) for r in recs]
         return {
             "n": len(recs),
             "composite_mean": round(statistics.mean(scores), 4),
             "intent_accuracy": round(statistics.mean(intent_vals), 4) if intent_vals else None,
             "value_accuracy": round(statistics.mean(value_vals), 4) if value_vals else None,
             "keyword_hit_rate": round(statistics.mean(kw_vals), 4),
+            "semantic_similarity": round(statistics.mean(sem_vals), 4),
         }
 
     # Overall
@@ -308,6 +371,7 @@ def compute_aggregate(records: list) -> dict:
     value_all = [int(r["value_correct"]) for r in records
                  if r["value_correct"] is not None]
     kw_all = [r["keyword_hit_rate"] for r in records]
+    sem_all = [r.get("semantic_similarity", 0.0) for r in records]
     flu_all = [r["fluency_score"] for r in records if r["fluency_score"] is not None]
     timings_list = [r["timings"] for r in records]
 
@@ -317,6 +381,7 @@ def compute_aggregate(records: list) -> dict:
         "intent_accuracy": round(statistics.mean(intent_all), 4) if intent_all else None,
         "value_accuracy": round(statistics.mean(value_all), 4) if value_all else None,
         "keyword_hit_rate": round(statistics.mean(kw_all), 4),
+        "semantic_similarity": round(statistics.mean(sem_all), 4),
         "fluency_mean": round(statistics.mean(flu_all), 2) if flu_all else None,
         "latency": latency_stats(timings_list),
         "per_type": {
@@ -477,17 +542,18 @@ def run_compare():
     # Table B: Detailed accuracy breakdown
     print(f"\n  TABLE B: ACCURACY DETAIL")
     print(DASH)
-    hdr = f"  {'Config':<22} {'Intent%':>8} {'Value%':>8} {'Keyword':>8} {'Fluency':>8}"
+    hdr = f"  {'Config':<22} {'Intent%':>8} {'Value%':>8} {'Keyword':>8} {'SemSim':>8} {'Fluency':>8}"
     print(hdr)
-    print("  " + "-" * 58)
+    print("  " + "-" * 68)
     for d in results:
         agg = d["aggregate"]
         ia = f"{agg['intent_accuracy']*100:.1f}%" if agg.get("intent_accuracy") is not None else "  N/A"
         va = f"{agg['value_accuracy']*100:.1f}%" if agg.get("value_accuracy") is not None else "  N/A"
         kw = f"{agg['keyword_hit_rate']:.4f}" if agg.get("keyword_hit_rate") is not None else "  N/A"
+        ss = f"{agg['semantic_similarity']:.4f}" if agg.get("semantic_similarity") is not None else "  N/A"
         fl = f"{agg['fluency_mean']:.1f}" if agg.get("fluency_mean") is not None else "  N/A"
         name = f"{d['config']}/{d['label']}"
-        print(f"  {name:<22} {ia:>8} {va:>8} {kw:>8} {fl:>8}")
+        print(f"  {name:<22} {ia:>8} {va:>8} {kw:>8} {ss:>8} {fl:>8}")
 
     # Table C: Latency
     print(f"\n  TABLE C: LATENCY (pipeline end-to-end, accuracy run)")
@@ -546,10 +612,11 @@ def run_compare():
 
     # Scoring formula reminder
     print(f"\n  SCORING FORMULA:")
-    print(f"  Type1: 0.10*keyword + 0.60*value + 0.30*semantic")
-    print(f"  Type2: 0.30*keyword + 0.05*value + 0.65*semantic")
-    print(f"  Type3: 0.40*keyword + 0.00*value + 0.60*semantic")
-    print(f"  Intent miss: capped at 0.50. Semantic proxy: keyword_hit_rate.")
+    print(f"  Type1: 0.15*keyword + 0.65*value + 0.20*cosine_sim")
+    print(f"  Type2: 0.40*keyword + 0.10*value + 0.50*cosine_sim")
+    print(f"  Type3: 0.50*keyword + 0.00*value + 0.50*cosine_sim")
+    print(f"  Semantic: cosine similarity (all-MiniLM-L6-v2) between answer and reference.")
+    print(f"  Intent miss: capped at 0.50.")
 
     print(f"\n{LINE}\n")
 
@@ -633,6 +700,7 @@ def main():
     print(f"  Intent accuracy   : {agg.get('intent_accuracy')}")
     print(f"  Value accuracy    : {agg.get('value_accuracy')}")
     print(f"  Keyword hit rate  : {agg.get('keyword_hit_rate')}")
+    print(f"  Semantic sim      : {agg.get('semantic_similarity')}")
     lat = agg.get("latency", {})
     print(f"  Latency mean/p50  : {lat.get('total_mean')}s / {lat.get('total_p50')}s")
 

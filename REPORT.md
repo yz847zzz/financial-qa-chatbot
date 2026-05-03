@@ -383,15 +383,15 @@ differently per question type.
 
 ### 6.1 Scoring Formula
 
-| Type | keyword weight | value_correct weight | semantic weight |
+| Type | keyword weight | value_correct weight | cosine_sim weight |
 |---|---|---|---|
-| **Type1** (exact financial fact) | 0.10 | **0.60** | 0.30 |
-| **Type2** (analytical / qualitative) | 0.30 | 0.05 | **0.65** |
-| **Type3** (casual / greeting) | **0.40** | 0.00 | **0.60** |
+| **Type1** (exact financial fact) | 0.15 | **0.65** | 0.20 |
+| **Type2** (analytical / qualitative) | **0.40** | 0.10 | **0.50** |
+| **Type3** (casual / greeting) | **0.50** | 0.00 | **0.50** |
 
 - **keyword**: fraction of reference keywords present in the answer
 - **value_correct**: 1.0 = exact match, 0.0 = wrong, 0.5 = N/A (no ground truth)
-- **semantic**: BERTScore F1 where answer text is available; keyword_hit_rate proxy otherwise
+- **cosine_sim**: cosine similarity between answer and reference sentence embeddings (`all-MiniLM-L6-v2`). Reference is constructed from question + expected keywords + expected value.
 - **Intent penalty**: score is capped at 0.50 if the intent was misclassified
 
 ### 6.2 Composite Accuracy Scores
