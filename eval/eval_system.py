@@ -45,9 +45,10 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "deployment"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # eval/ siblings
 
 
 # ── Ground-truth test cases ────────────────────────────────────────────────────
@@ -983,7 +984,7 @@ def main():
     print_summary(records)
 
     # ── Save results ───────────────────────────────────────────────────────────
-    out_dir = ROOT / "eval_results"
+    out_dir = ROOT / "eval" / "results"
     out_dir.mkdir(exist_ok=True)
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
     out_path = out_dir / f"system_eval_{ts}.json"

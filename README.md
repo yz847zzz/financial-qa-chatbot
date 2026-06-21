@@ -49,20 +49,36 @@ All LLM calls share **one vLLM process** using Punica multi-LoRA batching (SGMV 
 financial-qa-chatbot/
 │
 ├── chatbot.py                      ← interactive REPL + single-question CLI
-├── smoke_test.py                   ← quick sanity checks
-├── eval_unified.py                 ← unified eval: local / vLLM / GPT-4o configs
-├── eval_rescore.py                 ← offline rescore with multi-ref cosine similarity
-├── eval_benchmark.py               ← legacy 52-case benchmark
-├── eval_sweep.py                   ← quantization × concurrency sweep runner
-├── eval_plot.py                    ← matplotlib plots from sweep JSONs
-├── eval_testcases_expanded.json    ← 556 QA test cases (panel-aligned ground truth)
-├── eval_references.json            ← 556 × 3 GPT-4o reference answers
-├── quantize_awq.py                 ← W4A16 INT4 quantization (llm-compressor)
+├── demo.py                         ← demo
+├── smoke_test.py                   ← smoke test
+│
+├── eval/                           ── Evaluation ──────────────────────────────
+│   ├── eval_unified.py             ← unified eval runner (local / vLLM / GPT-4o)
+│   ├── eval_system.py              ← core metrics, test cases, GPT-4o baseline
+│   ├── eval_benchmark.py           ← benchmark utilities
+│   ├── eval_rescore.py             ← offline rescore with GPT-4o multi-ref cosine
+│   ├── eval_sweep.py               ← quantization × concurrency sweep
+│   ├── eval_speculative.py         ← speculative decoding eval
+│   ├── eval_plot.py                ← matplotlib plots from sweep JSONs
+│   ├── eval_final_score.py         ← score aggregation
+│   ├── testdata/                   ← test inputs (tracked)
+│   │   ├── testcases.json          ← 556 QA cases (panel-aligned ground truth)
+│   │   └── references.json         ← 556 × 3 GPT-4o reference answers
+│   └── results/                    ← output JSONs (git-ignored)
 │
 ├── scripts/
-│   ├── download_model.py           ← download Llama weights from HuggingFace
-│   ├── generate_eval_dataset.py    ← generate test cases from panel table
-│   └── generate_eval_references.py ← generate GPT-4o reference answers (3 per case)
+│   ├── data/
+│   │   └── download_model.py       ← download Llama weights from HuggingFace
+│   ├── eval/
+│   │   ├── generate_eval_dataset.py   ← generate test cases from panel table
+│   │   └── generate_eval_references.py ← GPT-4o reference answer generator
+│   ├── reports/
+│   │   ├── generate_report.py
+│   │   ├── generate_report_charts.py
+│   │   ├── generate_slides.py
+│   │   └── plot_throughput_latency.py
+│   └── model/
+│       └── quantize_awq.py         ← W4A16 INT4 quantization (llm-compressor)
 │
 ├── data_pipeline/                  ── Part 1: build data stores ────────────
 │   ├── ingestion/
@@ -153,8 +169,8 @@ All credentials are read from `.env` — **never hard-coded**. See `.env.example
 > 3. Add it to `.env` as `HF_TOKEN=hf_...`
 
 ```bash
-python scripts/download_model.py          # downloads ~6 GB to models/llama/
-python scripts/download_model.py --verify # also runs a test prompt after download
+python scripts/data/download_model.py          # downloads ~6 GB to models/llama/
+python scripts/data/download_model.py --verify # also runs a test prompt after download
 ```
 
 ### 5 — Build the data stores
@@ -317,16 +333,16 @@ It is slower than both fp16 and AWQ4 while offering no quality advantage. **Not 
 
 ```bash
 # Step 1 — Quantize to W4A16 (run once, ~5 min, requires WSL2 + GPU)
-python quantize_awq.py
+python scripts/model/quantize_awq.py
 # Output: models/llama/llama-3.2-3b-w4a16/  (~3 GB)
 
 # Step 2 — For each quant level: start server in WSL2, run sweep on Windows
 bash deployment/scripts/start_server_quant.sh fp16
 # (wait for "Application startup complete")
-python eval_sweep.py --quant fp16 --concurrency 1 2 4 8 16
+python eval/eval_sweep.py --quant fp16 --concurrency 1 2 4 8 16
 
 # Repeat for int8 and awq4, then generate plots:
-python eval_plot.py
+python eval/eval_plot.py
 # → eval_results/plots/{throughput,latency,accuracy,qps_surface_3d}.png
 ```
 

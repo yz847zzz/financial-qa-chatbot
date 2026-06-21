@@ -51,9 +51,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "deployment"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # eval/ siblings
 
 from eval_system import (
     TEST_CASES,
@@ -66,7 +67,7 @@ from eval_system import (
 )
 from eval_benchmark import local_fluency, latency_stats
 
-EVAL_DIR = ROOT / "eval_results"
+EVAL_DIR = ROOT / "eval" / "results"
 EVAL_DIR.mkdir(exist_ok=True)
 
 # Throughput burst question

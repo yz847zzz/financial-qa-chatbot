@@ -38,7 +38,7 @@ import httpx
 # ── Configuration ──────────────────────────────────────────────────────────────
 VLLM_BASE      = "http://localhost:8001/v1"
 METRICS_URL    = "http://localhost:8001/metrics"
-RESULTS_DIR    = Path("eval_results")
+RESULTS_DIR    = ROOT / "eval" / "results"
 BURST_REPS     = 20          # total requests per concurrency burst
 CONCURRENCY    = 8           # fixed concurrency for spec sweep (from quant sweep sweet-spot)
 MAX_TOKENS     = 120

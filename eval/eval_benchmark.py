@@ -34,9 +34,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "deployment"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # eval/ siblings
 
 from eval_system import (
     TEST_CASES,
@@ -632,7 +633,7 @@ def main() -> None:
     }
 
     # ── Save to JSON ──────────────────────────────────────────────────────────
-    out_dir = ROOT / "eval_results"
+    out_dir = ROOT / "eval" / "results"
     out_dir.mkdir(exist_ok=True)
 
     if args.output:

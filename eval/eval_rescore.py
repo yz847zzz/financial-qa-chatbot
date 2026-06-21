@@ -22,9 +22,10 @@ import statistics
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "deployment"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # eval/ siblings
 
 from eval_system import TEST_CASES, value_correct as eval_value_correct
 from eval_benchmark import latency_stats
@@ -37,7 +38,7 @@ from eval_unified import (
     build_reference,
 )
 
-EVAL_DIR = ROOT / "eval_results"
+EVAL_DIR = ROOT / "eval" / "results"
 
 # Build lookup: test case id -> test case dict (default: built-in 52)
 CASES_BY_ID = {c["id"]: c for c in TEST_CASES}

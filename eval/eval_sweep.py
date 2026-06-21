@@ -58,9 +58,10 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime
 from pathlib import Path
 
-ROOT = Path(__file__).parent
+ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "deployment"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))  # eval/ siblings
 
 # ── Configuration ──────────────────────────────────────────────────────────────
 
@@ -298,7 +299,7 @@ def main() -> None:
         "accuracy": accuracy_result,
     }
 
-    out_dir = ROOT / "eval_results"
+    out_dir = ROOT / "eval" / "results"
     out_dir.mkdir(exist_ok=True)
     out_path = Path(args.output) if args.output else out_dir / f"sweep_{args.quant}_{ts}.json"
 

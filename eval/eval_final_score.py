@@ -25,9 +25,10 @@ import json
 import statistics
 import argparse
 from pathlib import Path
+ROOT = Path(__file__).resolve().parent.parent
 from typing import Optional
 
-EVAL_DIR = Path("eval_results")
+EVAL_DIR = ROOT / "eval" / "results"
 
 # ---------------------------------------------------------------------------
 # Scoring weights per intent type

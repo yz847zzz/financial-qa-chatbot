@@ -59,6 +59,8 @@ Thumbs.db
 
 # ── Evaluation results (generated — not tracked) ─────────────────────────────
 eval_results/
+eval/results/
+eval_resultsarchive/
 
 # ── HuggingFace cache ─────────────────────────────────────────────────────────
 .cache/

@@ -20,9 +20,9 @@ from pathlib import Path
 
 random.seed(42)
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT / "data" / "financials.db"
-OUT_PATH = ROOT / "eval_testcases_expanded.json"
+OUT_PATH = ROOT / "eval" / "testdata" / "testcases.json"
 
 sys.path.insert(0, str(ROOT))
 from eval_system import TEST_CASES
