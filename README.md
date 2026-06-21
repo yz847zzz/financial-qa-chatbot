@@ -50,13 +50,19 @@ financial-qa-chatbot/
 │
 ├── chatbot.py                      ← interactive REPL + single-question CLI
 ├── smoke_test.py                   ← quick sanity checks
-├── eval_benchmark.py               ← 52-case benchmark vs GPT-4o baseline
+├── eval_unified.py                 ← unified eval: local / vLLM / GPT-4o configs
+├── eval_rescore.py                 ← offline rescore with multi-ref cosine similarity
+├── eval_benchmark.py               ← legacy 52-case benchmark
 ├── eval_sweep.py                   ← quantization × concurrency sweep runner
 ├── eval_plot.py                    ← matplotlib plots from sweep JSONs
+├── eval_testcases_expanded.json    ← 556 QA test cases (panel-aligned ground truth)
+├── eval_references.json            ← 556 × 3 GPT-4o reference answers
 ├── quantize_awq.py                 ← W4A16 INT4 quantization (llm-compressor)
 │
 ├── scripts/
-│   └── download_model.py           ← download Llama weights from HuggingFace
+│   ├── download_model.py           ← download Llama weights from HuggingFace
+│   ├── generate_eval_dataset.py    ← generate test cases from panel table
+│   └── generate_eval_references.py ← generate GPT-4o reference answers (3 per case)
 │
 ├── data_pipeline/                  ── Part 1: build data stores ────────────
 │   ├── ingestion/
@@ -221,7 +227,7 @@ Sweep runner: [`eval_sweep.py`](eval_sweep.py) · Plots: [`eval_plot.py`](eval_p
 | CUDA | 12.4 |
 | vLLM | 0.6.x |
 | Base model | Llama-3.2-3B-Instruct |
-| Eval dataset | 52 financial QA cases (Type1 / Type2 / Type3) |
+| Eval dataset | **556 financial QA cases** (Type1 / Type2 / Type3, 7 companies × 6 FY years × 9 metrics + qualitative + chat) |
 
 ---
 
@@ -253,15 +259,26 @@ Sweep runner: [`eval_sweep.py`](eval_sweep.py) · Plots: [`eval_plot.py`](eval_p
 
 ---
 
-### Accuracy (52 test cases, concurrency = 1)
+### Accuracy (556 test cases, concurrency = 1)
+
+Scoring: intent-aware composite = weighted sum of value accuracy, keyword hit rate, and semantic similarity
+(cosine distance vs 3 GPT-4o reference answers per question). Expected values sourced from the `panel` table
+— the same canonical source the NL2SQL adapter queries at inference time.
 
 | Metric | fp16 | int8 | awq4 |
 |---|:---:|:---:|:---:|
-| Intent accuracy | 75.0% | 78.8% | 78.8% |
-| Value accuracy (±5%) | 66.7% | 70.3% | 70.3% |
-| Keyword hit rate | 70.9% | 75.1% | 72.8% |
+| **Overall composite** | **0.7177** | 0.7153 | 0.7131 |
+| Type1 composite (397 cases) | **0.7101** | **0.7122** | 0.7065 |
+| Type2 composite (117 cases) | **0.7160** | 0.7009 | 0.6848 |
+| Type3 composite (42 cases) | 0.7943 | 0.7844 | **0.8548** |
+| Intent accuracy | **99.1%** | 98.6% | 97.8% |
+| Value accuracy (±5%) | 99.0% | **99.5%** | **99.5%** |
+| Keyword hit rate | **80.2%** | 79.8% | 78.0% |
+| Semantic similarity | **0.559** | 0.557 | 0.548 |
+| **Latency p50** | 1.47s | 2.24s | **1.18s** |
 
-> Accuracy is **equivalent across all three quantization levels** — INT4 compression does not degrade answer quality at this model size.
+> **Type2 (qualitative RAG) is the most quantization-sensitive dimension:** awq4 trails fp16 by 3.1% on Type2.
+> Type1 (SQL-grounded facts) is almost unaffected — all three reach ≥99% value accuracy.
 
 ---
 
@@ -289,7 +306,10 @@ Sweep runner: [`eval_sweep.py`](eval_sweep.py) · Plots: [`eval_plot.py`](eval_p
 
 **Why INT8 (bitsandbytes) is the worst option:**
 
-bitsandbytes quantizes weights but *dequantizes them back to bf16* at runtime before each matrix multiply. This saves memory but adds overhead — effectively the same compute cost as fp16 with extra memory operations. It is fundamentally slower than both fp16 and AWQ4.
+bitsandbytes quantizes weights but *dequantizes them back to bf16* at runtime before each matrix multiply,
+and uses mixed-precision (fp16 for statistical outlier features) with per-step coordination overhead.
+This saves VRAM but adds compute — resulting in p50 latency **52% worse than fp16** on RTX 3090 Ti.
+It is slower than both fp16 and AWQ4 while offering no quality advantage. **Not recommended.**
 
 ---
 
@@ -352,20 +372,20 @@ bash deployment/scripts/start_server_spec.sh fp16 4 1b
 
 ---
 
-## Benchmark vs GPT-4o (52 cases)
+## Benchmark vs GPT-4o (556 cases)
 
-Full benchmark using [`eval_benchmark.py`](eval_benchmark.py):
+Full benchmark using [`eval_unified.py`](eval_unified.py) with [`eval_testcases_expanded.json`](eval_testcases_expanded.json):
 
 | Metric | This pipeline (awq4) | GPT-4o |
 |---|:---:|:---:|
-| Intent accuracy | 78.8% | — |
-| Value correct (±5%) | 70.3% | 75.0% |
-| Keyword hit rate | 72.8% | 82.0% |
-| Fluency (1–5, LLM-judged) | 3.9 | 4.3 |
+| Overall composite | **0.7131** | 0.6172 |
+| Value accuracy (±5%) | **99.5%** | 42.9% |
+| Keyword hit rate | **78.0%** | 75.4% |
+| Semantic similarity | 0.548 | **0.857** |
 | **Runs locally / no API cost** | ✅ | ❌ |
 | **Answers from actual DB** | ✅ | ❌ |
 
-GPT-4o scores higher on fluency and keyword overlap, but it frequently refuses to answer questions about recent fiscal years due to training-cutoff uncertainty. Our pipeline reads from the actual SQLite database and **never hallucinates a number**.
+GPT-4o scores higher on semantic similarity (fluency of generated text) but **fails on 57% of exact-value questions** due to knowledge-cutoff uncertainty and hallucination. Our pipeline reads directly from the SQLite database and never fabricates a number.
 
 ---
 
