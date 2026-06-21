@@ -79,6 +79,9 @@ BURST_REPS = 10
 # ---------------------------------------------------------------------------
 _sim_model = None
 
+# Loaded from --references file: {case_id -> {"answer": [ref1, ref2, ref3], ...}}
+_refs_by_id: dict[int, dict] = {}
+
 
 def _get_sim_model():
     """Lazy-load sentence-transformer for cosine similarity."""
@@ -91,13 +94,27 @@ def _get_sim_model():
 
 
 def cosine_similarity(answer: str, reference: str) -> float:
-    """Compute cosine similarity between answer and reference sentence."""
+    """Compute cosine similarity between answer and a single reference."""
     if not answer or not reference:
         return 0.0
     model = _get_sim_model()
     embs = model.encode([answer, reference], normalize_embeddings=True)
-    sim = float(embs[0] @ embs[1])
-    return max(0.0, sim)  # clamp negatives to 0
+    return max(0.0, float(embs[0] @ embs[1]))
+
+
+def cosine_similarity_multi_ref(answer: str, references: list[str]) -> float:
+    """Max cosine similarity over multiple reference answers (FINDMIND-style).
+
+    Taking max instead of mean rewards any phrasing match, which is appropriate
+    when references are deliberately varied phrasings of the same correct answer.
+    """
+    if not answer or not references:
+        return 0.0
+    model = _get_sim_model()
+    answer_emb = model.encode([answer], normalize_embeddings=True)[0]
+    ref_embs = model.encode(references, normalize_embeddings=True)
+    sims = [max(0.0, float(answer_emb @ ref_emb)) for ref_emb in ref_embs]
+    return max(sims)
 
 
 def build_reference(case: dict) -> str:
@@ -185,11 +202,15 @@ def run_case_pipeline(case: dict, idx: int, total: int,
 
     answer_text = result.get("answer") or ""
     ic = intent_correct(result, case)
-    vc = value_correct(answer_text, case.get("expected_value"))
+    vc = value_correct(answer_text, case.get("expected_value"),
+                       acceptable_values=case.get("acceptable_values"))
     khr = keyword_hit_rate(answer_text, case.get("expected_keywords") or [])
     flu = local_fluency(answer_text)
-    ref = build_reference(case)
-    sem = cosine_similarity(answer_text, ref)
+    refs = _refs_by_id.get(case["id"], {}).get("answer")
+    if refs:
+        sem = cosine_similarity_multi_ref(answer_text, refs)
+    else:
+        sem = cosine_similarity(answer_text, build_reference(case))
 
     print(f"  intent={result.get('intent')}  kw={khr:.2f}  val={vc}  sem={sem:.3f}  "
           f"lat={timings.get('total_s', 0):.2f}s", flush=True)
@@ -225,11 +246,15 @@ def run_case_gpt4o(case: dict, idx: int, total: int, client) -> dict:
             "timings": {"total_s": 0.0}, "error": str(exc),
         }
 
-    vc = value_correct(answer_text, case.get("expected_value"))
+    vc = value_correct(answer_text, case.get("expected_value"),
+                       acceptable_values=case.get("acceptable_values"))
     khr = keyword_hit_rate(answer_text, case.get("expected_keywords") or [])
     flu = local_fluency(answer_text)
-    ref = build_reference(case)
-    sem = cosine_similarity(answer_text, ref)
+    refs = _refs_by_id.get(case["id"], {}).get("answer")
+    if refs:
+        sem = cosine_similarity_multi_ref(answer_text, refs)
+    else:
+        sem = cosine_similarity(answer_text, build_reference(case))
 
     print(f"  kw={khr:.2f}  val={vc}  sem={sem:.3f}  lat={latency:.2f}s", flush=True)
 
@@ -641,6 +666,11 @@ def main():
                         help="Comma-separated concurrency levels (default: 1,2,4,8,16)")
     parser.add_argument("--output", type=str, default=None,
                         help="Custom output path")
+    parser.add_argument("--testset", type=str, default=None,
+                        help="Path to expanded test-case JSON (default: use built-in 52 cases)")
+    parser.add_argument("--references", type=str, default=None,
+                        help="Path to eval_references.json (GPT-4o multi-ref answers). "
+                             "Enables accurate semantic similarity scoring.")
     args = parser.parse_args()
 
     if args.compare:
@@ -650,8 +680,21 @@ def main():
     if not args.config:
         parser.error("--config is required (or use --compare)")
 
-    # Select cases
-    cases = TEST_CASES
+    # Load multi-reference answers if provided
+    if args.references:
+        with open(args.references, encoding="utf-8") as f:
+            for rec in json.load(f):
+                _refs_by_id[rec["id"]] = rec
+        print(f"Loaded {len(_refs_by_id)} reference answer sets from {args.references}",
+              flush=True)
+
+    # Select cases -- either built-in 52 or expanded JSON
+    if args.testset:
+        with open(args.testset) as f:
+            cases = json.load(f)
+        print(f"Loaded {len(cases)} cases from {args.testset}", flush=True)
+    else:
+        cases = TEST_CASES
     if args.cases:
         ids = {int(x.strip()) for x in args.cases.split(",")}
         cases = [c for c in cases if c["id"] in ids]

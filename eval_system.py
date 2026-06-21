@@ -485,10 +485,16 @@ def _extract_number(text: str) -> float | None:
     return val
 
 
-def value_correct(answer: str, expected: float | None, tol: float = 0.05) -> bool | None:
+def value_correct(answer: str, expected: float | None, tol: float = 0.05,
+                   acceptable_values: list[float] | None = None) -> bool | None:
     """
     Check if expected numeric value appears in the answer within tol tolerance.
     Returns None if expected is None (no numeric check needed).
+
+    If acceptable_values is provided, also checks if the answer matches ANY of
+    those values (handles DB metric name ambiguity where multiple valid values
+    exist for the same concept, e.g. "Revenues" vs "Total revenues").
+
     Handles:
       - Raw integers:   $383,285,000,000
       - Scaled values:  383.285B / 383.29 billion
@@ -528,10 +534,12 @@ def value_correct(answer: str, expected: float | None, tol: float = 0.05) -> boo
             # Accept if it looks like a loss (negative sign or loss keyword)
             if "-" in answer_stripped or loss_words:
                 return True
-        # Also try scaled match
-        for m in re.finditer(r"(\d+(?:\.\d+)?)\s*([BbMmTt]?)\b", answer):
-            val = float(m.group(1))
-            suffix = m.group(2).upper()
+        # Also try scaled match (handle comma-separated integers)
+        for m in re.finditer(r"(\d[\d,]*(?:\.\d+)?)\s*([BbMmTt](?:illion|rillion)?)?(?:\b|$)", answer):
+            raw = m.group(1).replace(",", "")
+            val = float(raw)
+            suffix_raw = (m.group(2) or "").upper()
+            suffix = suffix_raw[0] if suffix_raw else ""
             multiplier = {"B": 1e9, "M": 1e6, "T": 1e12}.get(suffix, 0)
             if multiplier:
                 if abs(val * multiplier - abs_exp) / abs_exp <= tol:
@@ -541,14 +549,18 @@ def value_correct(answer: str, expected: float | None, tol: float = 0.05) -> boo
 
     # ── Large positive values ─────────────────────────────────────────────────
     # Fast path: first 6 significant digits as a substring
+    answer_no_sep = answer.replace(",", "").replace(" ", "")
     raw_str = str(int(expected))[:6]
-    if raw_str in answer.replace(",", "").replace(" ", ""):
+    if raw_str in answer_no_sep:
         return True
 
     # Try every number found in the answer with B/M/T suffix awareness
-    for m in re.finditer(r"(\d+(?:\.\d+)?)\s*([BbMmTt]?)\b", answer):
-        val = float(m.group(1))
-        suffix = m.group(2).upper()
+    # Match comma-separated integers (e.g. "12,805,000,000") and decimals (e.g. "383.29")
+    for m in re.finditer(r"(\d[\d,]*(?:\.\d+)?)\s*([BbMmTt](?:illion|rillion)?)?(?:\b|$)", answer):
+        raw = m.group(1).replace(",", "")
+        val = float(raw)
+        suffix_raw = (m.group(2) or "").upper()
+        suffix = suffix_raw[0] if suffix_raw else ""
         if suffix == "B":
             val *= 1e9
         elif suffix == "M":
@@ -564,6 +576,44 @@ def value_correct(answer: str, expected: float | None, tol: float = 0.05) -> boo
         if abs(val - expected) / (abs(expected) + 1e-9) <= tol:
             return True
 
+    # ── Fallback: check acceptable_values (DB metric ambiguity) ──────────────
+    if acceptable_values:
+        for alt in acceptable_values:
+            if alt == expected or alt == 0:
+                continue
+            if _value_in_answer(answer, alt, tol):
+                return True
+
+    return False
+
+
+def _value_in_answer(answer: str, expected: float, tol: float = 0.05) -> bool:
+    """Check if a single expected value appears in the answer text."""
+    abs_exp = abs(expected)
+    # Fast path: first 6 significant digits as substring
+    raw_str = str(int(expected))[:6]
+    if raw_str in answer.replace(",", "").replace(" ", ""):
+        return True
+    # Try scaled numbers (handle comma-separated integers)
+    for m in re.finditer(r"(\d[\d,]*(?:\.\d+)?)\s*([BbMmTt](?:illion|rillion)?)?(?:\b|$)", answer):
+        raw = m.group(1).replace(",", "")
+        val = float(raw)
+        suffix_raw = (m.group(2) or "").upper()
+        suffix = suffix_raw[0] if suffix_raw else ""
+        if suffix == "B":
+            val *= 1e9
+        elif suffix == "M":
+            val *= 1e6
+        elif suffix == "T":
+            val *= 1e12
+        else:
+            for multiplier in [1e9, 1e6, 1e3, 1]:
+                scaled = val * multiplier
+                if abs(scaled - abs_exp) / (abs_exp + 1e-9) <= tol:
+                    return True
+            continue
+        if abs(val - abs_exp) / (abs_exp + 1e-9) <= tol:
+            return True
     return False
 
 

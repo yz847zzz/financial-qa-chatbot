@@ -134,7 +134,9 @@ def load_vectordb():
         retriever = HybridRetriever(collection, recall_k=20)
         return retriever
     except Exception as e:
+        import traceback
         print(f"[WARN] VectorDB not available: {e}")
+        traceback.print_exc()
         return None
 
 
@@ -198,15 +200,38 @@ _INTENT_EXAMPLES = [
     ("Which 3 companies had the highest net income in FY2023?",           "Type1"),
     ("Compare Apple and Microsoft revenue in FY2023.",                    "Type1"),
     ("Which company spent the most on R&D in FY2023?",                   "Type1"),
-    # Meta explanation — Type3, not Type2
+    # Meta / definitional — Type3, NOT Type2 (no company, no filing lookup needed)
     ("Can you explain what return on assets means?",                      "Type3"),
     ("What does net margin tell you about a company?",                    "Type3"),
+    ("What is a debt covenant?",                                          "Type3"),
+    ("What is free cash flow?",                                           "Type3"),
+    ("What does inventory turnover mean for a retailer?",                 "Type3"),
+    ("What is the difference between revenue and profit?",                "Type3"),
+    ("Can you explain what EBITDA means?",                                "Type3"),
+    ("What is depreciation and amortization?",                            "Type3"),
+    ("What is working capital?",                                          "Type3"),
+    ("How do I read a balance sheet?",                                    "Type3"),
 ]
 
 # Fast keyword-based pre-filter to avoid an LLM call for obvious cases
 _TYPE3_PATTERNS = re.compile(
-    r"^\s*(hi|hello|hey|thanks|thank you|bye|goodbye|what can you|how are you|"
-    r"who are you|what do you do|help me understand what)\b",
+    r"^\s*("
+    # Greetings / sign-offs
+    r"hi|hello|hey|thanks|thank you|bye|goodbye|good morning|good afternoon|"
+    r"what can you|how are you|who are you|what do you do|"
+    # Definitional / conceptual — "What is X?", "What does X mean?", "Define X"
+    r"what is (a |an |the )?(?!apple|microsoft|google|amazon|nvidia|tesla|meta|"
+    r"adobe|walmart|costco|jpmorgan|disney|pfizer|nike|boeing|exxon|netflix|"
+    r"salesforce|merck|intel|qualcomm|abbvie|broadcom|unitedhealth|home depot|"
+    r"coca.cola|3m|caterpillar|fedex|ibm|chevron|procter|starbucks|amgen|"
+    r"aapl|msft|goog|amzn|nvda|tsla|meta|adbe|wmt|cost|jpm|dis|pfe|nke|ba|xom)"
+    r"|what does .{3,60} mean"
+    r"|can you explain (what |how |why )?"
+    r"|how (do i|do you|does one) (read|calculate|compute|interpret|use|understand|measure)"
+    r"|explain (what |how |why )?"
+    r"|define |what('s| is) the difference between"
+    r"|why (is|does|do|are) .{0,30} (important|matter|used|work)"
+    r")\b",
     re.I,
 )
 _TYPE1_PATTERNS = re.compile(

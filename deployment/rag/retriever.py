@@ -28,6 +28,7 @@ Cross-encoder model options (all downloadable from HuggingFace):
 
 import re
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Any
 
 import numpy as np
@@ -196,26 +197,51 @@ class EmbeddingModel:
 
 class BM25Index:
     """
-    Thin wrapper around rank_bm25.BM25Okapi.
-    Loads all documents from ChromaDB once and builds the index in memory.
-    Stores document metadata alongside text so filter masking works at query time.
+    Sparse BM25 using bm25s (inverted index, O(k) query vs rank_bm25's O(n)).
+
+    rank_bm25 scores every document in the corpus on each query (dense numpy).
+    bm25s builds a true inverted index: only documents containing query tokens
+    are scored, which is typically 1-5% of the corpus — 20-50x faster.
+
+    Cache: pickle of (ids, metas, bm25s-retriever). Version-tagged so stale
+    caches from rank_bm25 are automatically rebuilt.
     """
 
-    def __init__(self, collection):
-        try:
-            from rank_bm25 import BM25Okapi
-        except ImportError:
-            raise ImportError("pip install rank-bm25")
+    _CACHE_DIR  = Path(__file__).resolve().parents[2] / "data"
+    _CACHE_FILE = _CACHE_DIR / "bm25_cache.pkl"
+    _CACHE_VER  = "bm25s-v1"   # bump when tokenizer or lib changes
 
-        print("Building BM25 index from ChromaDB documents ...", flush=True)
+    # When a metadata filter is active, over-fetch by this factor so we have
+    # enough candidates after filtering (BM25 naturally ranks matching-company
+    # docs higher, so top-5000 almost always yields ≥ k filtered results).
+    _FILTER_FETCH = 5000
+
+    def __init__(self, collection, cache_path: Path | str | None = None):
+        try:
+            import bm25s as _lib
+        except ImportError:
+            raise ImportError("pip install bm25s")
+
+        self._lib = _lib
+        cache_path = Path(cache_path) if cache_path else self._CACHE_FILE
+        doc_count  = collection.count()
+
+        if cache_path.exists():
+            loaded = self._load_cache(cache_path, doc_count)
+            if loaded:
+                self._ids, self._metas, self._retriever = loaded
+                print(f"BM25 index loaded from cache: {len(self._ids):,} docs.", flush=True)
+                return
+
+        # ── Build from scratch ────────────────────────────────────────────────
+        print("Building BM25 index (bm25s sparse inverted index) …", flush=True)
 
         PAGE = 5000
         all_ids, all_docs, all_metas = [], [], []
         offset = 0
         while True:
             batch = collection.get(
-                limit=PAGE,
-                offset=offset,
+                limit=PAGE, offset=offset,
                 include=["documents", "metadatas"],
             )
             if not batch["ids"]:
@@ -227,16 +253,51 @@ class BM25Index:
             if len(batch["ids"]) < PAGE:
                 break
 
-        self._ids = all_ids
-        self._docs = all_docs
-        self._metas = all_metas  # stored for filter masking
-        tokenized = [self._tokenize(d) for d in all_docs]
-        self._bm25 = BM25Okapi(tokenized)
-        print(f"BM25 index built: {len(all_ids):,} documents.", flush=True)
+        self._ids   = all_ids
+        self._metas = all_metas
 
-    @staticmethod
-    def _tokenize(text: str) -> list[str]:
-        return re.findall(r"[a-zA-Z0-9$%]+", text.lower())
+        tokenized = _lib.tokenize(all_docs, stopwords="en", show_progress=True)
+        self._retriever = _lib.BM25()
+        self._retriever.index(tokenized)
+        print(f"BM25 index built: {len(all_ids):,} docs.", flush=True)
+
+        self._save_cache(cache_path)
+
+    # ── Cache ─────────────────────────────────────────────────────────────────
+
+    def _save_cache(self, path: Path) -> None:
+        import pickle
+        try:
+            path.parent.mkdir(parents=True, exist_ok=True)
+            with open(path, "wb") as f:
+                pickle.dump({
+                    "version":   self._CACHE_VER,
+                    "doc_count": len(self._ids),
+                    "ids":       self._ids,
+                    "metas":     self._metas,
+                    "retriever": self._retriever,
+                }, f, protocol=pickle.HIGHEST_PROTOCOL)
+            print(f"BM25 cache saved: {path} ({path.stat().st_size/1024/1024:.1f} MB)", flush=True)
+        except Exception as e:
+            print(f"Warning: BM25 cache save failed: {e}", flush=True)
+
+    def _load_cache(self, path: Path, expected_count: int):
+        import pickle
+        try:
+            with open(path, "rb") as f:
+                data = pickle.load(f)
+            if data.get("version") != self._CACHE_VER:
+                print(f"BM25 cache version mismatch — rebuilding (bm25s).", flush=True)
+                return None
+            if data.get("doc_count") != expected_count:
+                print(f"BM25 cache stale ({data['doc_count']} vs {expected_count}) — rebuilding.", flush=True)
+                return None
+            return data["ids"], data["metas"], data["retriever"]
+        except Exception as e:
+            print(f"BM25 cache load failed ({e}) — rebuilding.", flush=True)
+            return None
+
+    # ── Search ────────────────────────────────────────────────────────────────
 
     def search(
         self,
@@ -245,28 +306,36 @@ class BM25Index:
         filters: MetadataFilters | None = None,
     ) -> list[tuple[str, float]]:
         """
-        Returns up to k (chunk_id, bm25_score) pairs, sorted by score descending.
+        Returns up to k (chunk_id, bm25_score) pairs, score descending.
 
-        If filters are provided, only documents whose metadata satisfies the
-        filters are eligible — the BM25 scores of masked-out documents are set
-        to -inf before sorting (pre-filter, not post-filter).
+        With filters: over-fetches _FILTER_FETCH candidates then post-filters
+        by metadata. BM25 naturally ranks same-company docs highest, so the
+        filter hit-rate is very high near the top.
+
+        Without filters: directly fetches k results (fast path).
         """
-        scores = self._bm25.get_scores(self._tokenize(query))
+        has_filter = filters and any([filters.ticker, filters.filing_type, filters.year])
+        fetch_k    = min(len(self._ids), self._FILTER_FETCH if has_filter else k)
 
-        # Apply metadata mask: zero out ineligible documents
-        if filters and any([filters.ticker, filters.filing_type, filters.year]):
-            mask = np.array([
-                _matches_filters(m, filters) for m in self._metas
-            ], dtype=bool)
-            scores = np.where(mask, scores, -np.inf)
+        query_tokens = self._lib.tokenize(
+            [query], stopwords="en", show_progress=False
+        )
+        results, scores = self._retriever.retrieve(
+            query_tokens, k=fetch_k, show_progress=False
+        )
+        indices    = results[0]   # shape (fetch_k,), dtype int
+        doc_scores = scores[0]    # shape (fetch_k,), dtype float
 
-        top_indices = np.argsort(scores)[::-1][:k]
-        # Exclude masked-out (score == -inf) results
-        return [
-            (self._ids[i], float(scores[i]))
-            for i in top_indices
-            if scores[i] > -np.inf
-        ]
+        out = []
+        for idx, score in zip(indices, doc_scores):
+            if score <= 0:
+                break                          # bm25s returns sorted; 0 means no match
+            if has_filter and not _matches_filters(self._metas[idx], filters):
+                continue
+            out.append((self._ids[idx], float(score)))
+            if len(out) >= k:
+                break
+        return out
 
 
 # ── Stage 1: Recall ────────────────────────────────────────────────────────────
@@ -613,8 +682,13 @@ class HybridRetriever:
             filters = parse_filters(query)
             _log_filters(query, filters)
 
+        has_filter = any([filters.ticker, filters.filing_type, filters.year])
         dense_hits  = _dense_recall(query, self._collection, self._embed, self._recall_k, filters)
-        sparse_hits = _sparse_recall(query, self._bm25, self._recall_k, self._collection, filters)
+        # BM25 is O(n) over all 516k docs — only worth running when a metadata
+        # filter narrows the effective candidate set. Without a filter it's slower
+        # than dense HNSW (O(log n)) and adds little signal on broad queries.
+        sparse_hits = (_sparse_recall(query, self._bm25, self._recall_k, self._collection, filters)
+                       if has_filter else [])
         candidates  = _reciprocal_rank_fusion(dense_hits, sparse_hits)
         # Cap candidates before cross-encoder to limit GPU work
         candidates  = candidates[: self._rerank_top_n]
@@ -655,11 +729,14 @@ class HybridRetriever:
             filters = parse_filters(queries[0])
             _log_filters(queries[0], filters)
 
+        has_filter = any([filters.ticker, filters.filing_type, filters.year])
+
         # Recall across all queries — dedup by chunk_id, keep best RRF score
         merged: dict[str, RetrievedChunk] = {}
         for q in queries:
             dense_hits  = _dense_recall(q, self._collection, self._embed, self._recall_k, filters)
-            sparse_hits = _sparse_recall(q, self._bm25, self._recall_k, self._collection, filters)
+            sparse_hits = (_sparse_recall(q, self._bm25, self._recall_k, self._collection, filters)
+                           if has_filter else [])
             for chunk in _reciprocal_rank_fusion(dense_hits, sparse_hits):
                 if chunk.chunk_id not in merged:
                     merged[chunk.chunk_id] = chunk
@@ -714,9 +791,9 @@ class HybridRetriever:
 def _log_filters(query: str, filters: MetadataFilters) -> None:
     active = {k: v for k, v in vars(filters).items() if v is not None}
     if active:
-        print(f"[Retriever] filters from query: {active}", flush=True)
+        print(f"[Retriever] filters: {active}  (BM25 + Dense)", flush=True)
     else:
-        print("[Retriever] no metadata filters extracted — broad search", flush=True)
+        print("[Retriever] no filters — Dense-only (BM25 skipped)", flush=True)
 
 
 # ── Quick test ─────────────────────────────────────────────────────────────────

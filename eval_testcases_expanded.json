@@ -1,0 +1,7108 @@
+[
+  {
+    "id": 1,
+    "category": "Type1",
+    "question": "What was Apple's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 383285000000.0,
+    "expected_keywords": [
+      "383",
+      "apple",
+      "revenue"
+    ]
+  },
+  {
+    "id": 2,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 72738000000.0,
+    "expected_keywords": [
+      "72",
+      "microsoft",
+      "net income"
+    ]
+  },
+  {
+    "id": 3,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 72361000000.0,
+    "expected_keywords": [
+      "72",
+      "microsoft",
+      "net income"
+    ]
+  },
+  {
+    "id": 4,
+    "category": "Type1",
+    "question": "What was Adobe's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 19409000000.0,
+    "expected_keywords": [
+      "19",
+      "adobe",
+      "revenue"
+    ]
+  },
+  {
+    "id": 5,
+    "category": "Type1",
+    "question": "What was Adobe's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 5428000000.0,
+    "expected_keywords": [
+      "5",
+      "adobe",
+      "net income"
+    ]
+  },
+  {
+    "id": 6,
+    "category": "Type1",
+    "question": "What was Apple's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 114301000000.0,
+    "expected_keywords": [
+      "114",
+      "apple",
+      "operating income"
+    ]
+  },
+  {
+    "id": 7,
+    "category": "Type1",
+    "question": "What was Apple's net profit margin in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 0.2531,
+    "expected_keywords": [
+      "25",
+      "apple",
+      "margin"
+    ]
+  },
+  {
+    "id": 8,
+    "category": "Type1",
+    "question": "What was Microsoft's return on assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 0.1756,
+    "expected_keywords": [
+      "17",
+      "microsoft",
+      "return"
+    ]
+  },
+  {
+    "id": 9,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "microsoft",
+      "msft"
+    ]
+  },
+  {
+    "id": 10,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "ci",
+      "apple",
+      "aapl",
+      "cost"
+    ]
+  },
+  {
+    "id": 11,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Microsoft revenue in FY2023.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "383",
+      "211",
+      "apple",
+      "microsoft"
+    ]
+  },
+  {
+    "id": 12,
+    "category": "Type1-compare",
+    "question": "What were Apple's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "383",
+      "96",
+      "apple"
+    ]
+  },
+  {
+    "id": 13,
+    "category": "Type2",
+    "question": "How did Apple describe its AI strategy in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "ai",
+      "artificial intelligence"
+    ]
+  },
+  {
+    "id": 14,
+    "category": "Type2",
+    "question": "What risks did Microsoft identify related to its cloud business?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "cloud",
+      "risk"
+    ]
+  },
+  {
+    "id": 15,
+    "category": "Type2",
+    "question": "How did Apple describe its supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "supply chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 16,
+    "category": "Type2",
+    "question": "What did Adobe say about competition in its most recent annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "competition",
+      "competitor"
+    ]
+  },
+  {
+    "id": 17,
+    "category": "Type3",
+    "question": "Hello! What can you help me with?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "financial",
+      "filing",
+      "question"
+    ]
+  },
+  {
+    "id": 18,
+    "category": "Type3",
+    "question": "Thank you, that was very helpful.",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": []
+  },
+  {
+    "id": 19,
+    "category": "Type1+Type2",
+    "question": "What was Apple's revenue in FY2023 and how did they describe their supply chain risks?",
+    "expected_intent": null,
+    "expected_value": 383285000000.0,
+    "expected_keywords": [
+      "383",
+      "apple",
+      "supply chain",
+      "risk"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 20,
+    "category": "Multi-Type1",
+    "question": "What was Apple's revenue in FY2023 and what was Microsoft's net income in FY2023?",
+    "expected_intent": null,
+    "expected_value": null,
+    "expected_keywords": [
+      "383",
+      "72",
+      "apple",
+      "microsoft"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type1"
+    ]
+  },
+  {
+    "id": 21,
+    "category": "Type1",
+    "question": "What was Amazon's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 574785000000.0,
+    "expected_keywords": [
+      "574",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 22,
+    "category": "Type1",
+    "question": "What was Google's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 73795000000.0,
+    "expected_keywords": [
+      "73",
+      "google",
+      "net income"
+    ]
+  },
+  {
+    "id": 23,
+    "category": "Type1",
+    "question": "What was NVIDIA's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 26974000000.0,
+    "expected_keywords": [
+      "26",
+      "nvidia",
+      "revenue"
+    ]
+  },
+  {
+    "id": 24,
+    "category": "Type1",
+    "question": "What was NVIDIA's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 60922000000.0,
+    "expected_keywords": [
+      "60",
+      "nvidia",
+      "revenue"
+    ]
+  },
+  {
+    "id": 25,
+    "category": "Type1",
+    "question": "What was Tesla's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 96773000000.0,
+    "expected_keywords": [
+      "96",
+      "tesla",
+      "revenue"
+    ]
+  },
+  {
+    "id": 26,
+    "category": "Type1",
+    "question": "What was Tesla's diluted EPS in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 4.3,
+    "expected_keywords": [
+      "4",
+      "tesla",
+      "eps"
+    ]
+  },
+  {
+    "id": 27,
+    "category": "Type1",
+    "question": "What was Microsoft's diluted earnings per share in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 9.68,
+    "expected_keywords": [
+      "9",
+      "microsoft",
+      "eps"
+    ]
+  },
+  {
+    "id": 28,
+    "category": "Type1",
+    "question": "What was Apple's diluted EPS in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 6.13,
+    "expected_keywords": [
+      "6",
+      "apple",
+      "eps"
+    ]
+  },
+  {
+    "id": 29,
+    "category": "Type1",
+    "question": "How much did Apple spend on share buybacks in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 77550000000.0,
+    "expected_keywords": [
+      "77",
+      "apple",
+      "buyback"
+    ]
+  },
+  {
+    "id": 30,
+    "category": "Type1",
+    "question": "What was Microsoft's R&D expense in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 27195000000.0,
+    "expected_keywords": [
+      "27",
+      "microsoft",
+      "research"
+    ]
+  },
+  {
+    "id": 31,
+    "category": "Type1",
+    "question": "What was Google's research and development expense in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 45427000000.0,
+    "expected_keywords": [
+      "45",
+      "google",
+      "research"
+    ]
+  },
+  {
+    "id": 32,
+    "category": "Type1",
+    "question": "What was Amazon's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": -2722000000.0,
+    "expected_keywords": [
+      "amazon",
+      "loss",
+      "2022"
+    ]
+  },
+  {
+    "id": 33,
+    "category": "Type1",
+    "question": "What was Google's net profit margin in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 0.24007,
+    "expected_keywords": [
+      "24",
+      "google",
+      "margin"
+    ]
+  },
+  {
+    "id": 34,
+    "category": "Type1",
+    "question": "What was Microsoft's operating cash flow in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 87582000000.0,
+    "expected_keywords": [
+      "87",
+      "microsoft",
+      "cash"
+    ]
+  },
+  {
+    "id": 35,
+    "category": "Type1",
+    "question": "What was Tesla's capital expenditure in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 8898000000.0,
+    "expected_keywords": [
+      "8",
+      "tesla",
+      "capex"
+    ]
+  },
+  {
+    "id": 36,
+    "category": "Type1",
+    "question": "What was Apple's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 394328000000.0,
+    "expected_keywords": [
+      "394",
+      "apple",
+      "revenue"
+    ]
+  },
+  {
+    "id": 37,
+    "category": "Type1",
+    "question": "What was Microsoft's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 198270000000.0,
+    "expected_keywords": [
+      "198",
+      "microsoft",
+      "revenue"
+    ]
+  },
+  {
+    "id": 38,
+    "category": "Type1",
+    "question": "What was NVIDIA's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 29760000000.0,
+    "expected_keywords": [
+      "29",
+      "nvidia",
+      "net income"
+    ]
+  },
+  {
+    "id": 39,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies spent the most on R&D in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "merck",
+      "apple",
+      "aapl"
+    ]
+  },
+  {
+    "id": 40,
+    "category": "Type1-ranking",
+    "question": "Which 3 companies had the highest capital expenditure in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "google",
+      "goog",
+      "microsoft"
+    ]
+  },
+  {
+    "id": 41,
+    "category": "Type1-compare",
+    "question": "Compare Amazon and Microsoft total revenue in FY2023.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "574",
+      "211",
+      "amazon",
+      "microsoft"
+    ]
+  },
+  {
+    "id": 42,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "26",
+      "60",
+      "nvidia"
+    ]
+  },
+  {
+    "id": 43,
+    "category": "Type1-compare",
+    "question": "What were Walmart's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "605",
+      "11",
+      "walmart"
+    ]
+  },
+  {
+    "id": 44,
+    "category": "Type2",
+    "question": "How did NVIDIA describe its data center and AI chip strategy in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "data center",
+      "gpu"
+    ]
+  },
+  {
+    "id": 45,
+    "category": "Type2",
+    "question": "What risks did Tesla identify related to autonomous driving in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "autonomous",
+      "risk"
+    ]
+  },
+  {
+    "id": 46,
+    "category": "Type2",
+    "question": "How did Amazon describe AWS and its competitive position in cloud?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "aws",
+      "cloud"
+    ]
+  },
+  {
+    "id": 47,
+    "category": "Type2",
+    "question": "What regulatory and antitrust risks did Google disclose in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "regulatory",
+      "antitrust"
+    ]
+  },
+  {
+    "id": 48,
+    "category": "Type2",
+    "question": "How did Microsoft describe its partnership with OpenAI in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "openai",
+      "ai"
+    ]
+  },
+  {
+    "id": 49,
+    "category": "Type3",
+    "question": "What companies do you have financial data on?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": []
+  },
+  {
+    "id": 50,
+    "category": "Type3",
+    "question": "Can you explain what return on assets means?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "assets",
+      "return",
+      "profit"
+    ]
+  },
+  {
+    "id": 51,
+    "category": "Type1+Type2",
+    "question": "What was NVIDIA's revenue in FY2024 and how did they describe their AI chip strategy?",
+    "expected_intent": null,
+    "expected_value": 60922000000.0,
+    "expected_keywords": [
+      "60",
+      "nvidia",
+      "ai",
+      "data center"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 52,
+    "category": "Multi-Type1",
+    "question": "What was Amazon's revenue in FY2023 and what was Google's net income in FY2023?",
+    "expected_intent": null,
+    "expected_value": null,
+    "expected_keywords": [
+      "574",
+      "73",
+      "amazon",
+      "google"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type1"
+    ]
+  },
+  {
+    "id": 53,
+    "category": "Type1",
+    "question": "What was Apple's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 391035000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "391",
+      "revenue"
+    ]
+  },
+  {
+    "id": 54,
+    "category": "Type1",
+    "question": "What was Microsoft's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 211915000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "212",
+      "revenue"
+    ]
+  },
+  {
+    "id": 55,
+    "category": "Type1",
+    "question": "What was Microsoft's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 245122000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "245",
+      "revenue"
+    ]
+  },
+  {
+    "id": 56,
+    "category": "Type1",
+    "question": "What was Google's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 282836000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "283",
+      "revenue"
+    ]
+  },
+  {
+    "id": 57,
+    "category": "Type1",
+    "question": "What was Google's total revenue in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 307394000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "307",
+      "revenue"
+    ]
+  },
+  {
+    "id": 58,
+    "category": "Type1",
+    "question": "What was Google's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 350018000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "350",
+      "revenue"
+    ]
+  },
+  {
+    "id": 59,
+    "category": "Type1",
+    "question": "What was NVIDIA's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 26914000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "27",
+      "revenue"
+    ]
+  },
+  {
+    "id": 60,
+    "category": "Type1",
+    "question": "What was Tesla's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 81462000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "81",
+      "revenue"
+    ]
+  },
+  {
+    "id": 61,
+    "category": "Type1",
+    "question": "What was Tesla's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 97690000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "98",
+      "revenue"
+    ]
+  },
+  {
+    "id": 62,
+    "category": "Type1",
+    "question": "What was Adobe's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 17606000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "18",
+      "revenue"
+    ]
+  },
+  {
+    "id": 63,
+    "category": "Type1",
+    "question": "What was Adobe's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 21505000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "22",
+      "revenue"
+    ]
+  },
+  {
+    "id": 64,
+    "category": "Type1",
+    "question": "What was Amazon's total revenue in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 513983000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "514",
+      "revenue"
+    ]
+  },
+  {
+    "id": 65,
+    "category": "Type1",
+    "question": "What was Amazon's total revenue in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 637959000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "638",
+      "revenue"
+    ]
+  },
+  {
+    "id": 66,
+    "category": "Type1",
+    "question": "How much revenue did Apple generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 394328000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "394",
+      "revenue"
+    ]
+  },
+  {
+    "id": 67,
+    "category": "Type1",
+    "question": "How much revenue did Apple generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 383285000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "383",
+      "revenue"
+    ]
+  },
+  {
+    "id": 68,
+    "category": "Type1",
+    "question": "How much revenue did Apple generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 391035000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "391",
+      "revenue"
+    ]
+  },
+  {
+    "id": 69,
+    "category": "Type1",
+    "question": "How much revenue did Microsoft generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 198270000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "198",
+      "revenue"
+    ]
+  },
+  {
+    "id": 70,
+    "category": "Type1",
+    "question": "How much revenue did Microsoft generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 211915000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "212",
+      "revenue"
+    ]
+  },
+  {
+    "id": 71,
+    "category": "Type1",
+    "question": "How much revenue did Microsoft generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 245122000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "245",
+      "revenue"
+    ]
+  },
+  {
+    "id": 72,
+    "category": "Type1",
+    "question": "How much revenue did Google generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 282836000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "283",
+      "revenue"
+    ]
+  },
+  {
+    "id": 73,
+    "category": "Type1",
+    "question": "How much revenue did Google generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 307394000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "307",
+      "revenue"
+    ]
+  },
+  {
+    "id": 74,
+    "category": "Type1",
+    "question": "How much revenue did Google generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 350018000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "350",
+      "revenue"
+    ]
+  },
+  {
+    "id": 75,
+    "category": "Type1",
+    "question": "How much revenue did NVIDIA generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 26914000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "27",
+      "revenue"
+    ]
+  },
+  {
+    "id": 76,
+    "category": "Type1",
+    "question": "How much revenue did NVIDIA generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 26974000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "27",
+      "revenue"
+    ]
+  },
+  {
+    "id": 77,
+    "category": "Type1",
+    "question": "How much revenue did NVIDIA generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 60922000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "61",
+      "revenue"
+    ]
+  },
+  {
+    "id": 78,
+    "category": "Type1",
+    "question": "How much revenue did Tesla generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 81462000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "81",
+      "revenue"
+    ]
+  },
+  {
+    "id": 79,
+    "category": "Type1",
+    "question": "How much revenue did Tesla generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 96773000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "97",
+      "revenue"
+    ]
+  },
+  {
+    "id": 80,
+    "category": "Type1",
+    "question": "How much revenue did Tesla generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 97690000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "98",
+      "revenue"
+    ]
+  },
+  {
+    "id": 81,
+    "category": "Type1",
+    "question": "How much revenue did Adobe generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 17606000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "18",
+      "revenue"
+    ]
+  },
+  {
+    "id": 82,
+    "category": "Type1",
+    "question": "How much revenue did Adobe generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 19409000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "19",
+      "revenue"
+    ]
+  },
+  {
+    "id": 83,
+    "category": "Type1",
+    "question": "How much revenue did Adobe generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 21505000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "22",
+      "revenue"
+    ]
+  },
+  {
+    "id": 84,
+    "category": "Type1",
+    "question": "How much revenue did Amazon generate in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 513983000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "514",
+      "revenue"
+    ]
+  },
+  {
+    "id": 85,
+    "category": "Type1",
+    "question": "How much revenue did Amazon generate in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 574785000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "575",
+      "revenue"
+    ]
+  },
+  {
+    "id": 86,
+    "category": "Type1",
+    "question": "How much revenue did Amazon generate in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 637959000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "638",
+      "revenue"
+    ]
+  },
+  {
+    "id": 87,
+    "category": "Type1",
+    "question": "What was Apple's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 99803000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "100",
+      "net income"
+    ]
+  },
+  {
+    "id": 88,
+    "category": "Type1",
+    "question": "What was Apple's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 96995000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "97",
+      "net income"
+    ]
+  },
+  {
+    "id": 89,
+    "category": "Type1",
+    "question": "What was Apple's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 93736000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "94",
+      "net income"
+    ]
+  },
+  {
+    "id": 90,
+    "category": "Type1",
+    "question": "What was Microsoft's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 88136000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "88",
+      "net income"
+    ]
+  },
+  {
+    "id": 91,
+    "category": "Type1",
+    "question": "What was Google's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 59972000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "60",
+      "net income"
+    ]
+  },
+  {
+    "id": 92,
+    "category": "Type1",
+    "question": "What was Google's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 100118000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "100",
+      "net income"
+    ]
+  },
+  {
+    "id": 93,
+    "category": "Type1",
+    "question": "What was NVIDIA's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 9752000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "10",
+      "net income"
+    ]
+  },
+  {
+    "id": 94,
+    "category": "Type1",
+    "question": "What was NVIDIA's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 4368000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "4",
+      "net income"
+    ]
+  },
+  {
+    "id": 95,
+    "category": "Type1",
+    "question": "What was Tesla's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 12556000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "13",
+      "net income"
+    ]
+  },
+  {
+    "id": 96,
+    "category": "Type1",
+    "question": "What was Tesla's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 14997000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "15",
+      "net income"
+    ]
+  },
+  {
+    "id": 97,
+    "category": "Type1",
+    "question": "What was Tesla's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 7091000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "7",
+      "net income"
+    ]
+  },
+  {
+    "id": 98,
+    "category": "Type1",
+    "question": "What was Adobe's net income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 4756000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "5",
+      "net income"
+    ]
+  },
+  {
+    "id": 99,
+    "category": "Type1",
+    "question": "What was Adobe's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 5560000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "6",
+      "net income"
+    ]
+  },
+  {
+    "id": 100,
+    "category": "Type1",
+    "question": "What was Amazon's net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 30425000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "30",
+      "net income"
+    ]
+  },
+  {
+    "id": 101,
+    "category": "Type1",
+    "question": "What was Amazon's net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 59248000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "59",
+      "net income"
+    ]
+  },
+  {
+    "id": 102,
+    "category": "Type1",
+    "question": "How much profit did Apple earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 99803000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "100",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 103,
+    "category": "Type1",
+    "question": "How much profit did Apple earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 96995000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "97",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 104,
+    "category": "Type1",
+    "question": "How much profit did Apple earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 93736000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "94",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 105,
+    "category": "Type1",
+    "question": "How much profit did Microsoft earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 72738000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "73",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 106,
+    "category": "Type1",
+    "question": "How much profit did Microsoft earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 72361000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "72",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 107,
+    "category": "Type1",
+    "question": "How much profit did Microsoft earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 88136000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "88",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 108,
+    "category": "Type1",
+    "question": "How much profit did Google earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 59972000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "60",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 109,
+    "category": "Type1",
+    "question": "How much profit did Google earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 73795000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "74",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 110,
+    "category": "Type1",
+    "question": "How much profit did Google earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 100118000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "100",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 111,
+    "category": "Type1",
+    "question": "How much profit did NVIDIA earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 9752000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "10",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 112,
+    "category": "Type1",
+    "question": "How much profit did NVIDIA earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 4368000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "4",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 113,
+    "category": "Type1",
+    "question": "How much profit did NVIDIA earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 29760000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "30",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 114,
+    "category": "Type1",
+    "question": "How much profit did Tesla earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 12556000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "13",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 115,
+    "category": "Type1",
+    "question": "How much profit did Tesla earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 14997000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "15",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 116,
+    "category": "Type1",
+    "question": "How much profit did Tesla earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 7091000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "7",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 117,
+    "category": "Type1",
+    "question": "How much profit did Adobe earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 4756000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "5",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 118,
+    "category": "Type1",
+    "question": "How much profit did Adobe earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 5428000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "5",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 119,
+    "category": "Type1",
+    "question": "How much profit did Adobe earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 5560000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "6",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 120,
+    "category": "Type1",
+    "question": "How much profit did Amazon earn in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": -2722000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "-3",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 121,
+    "category": "Type1",
+    "question": "How much profit did Amazon earn in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 30425000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "30",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 122,
+    "category": "Type1",
+    "question": "How much profit did Amazon earn in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 59248000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "59",
+      "profit",
+      "income"
+    ]
+  },
+  {
+    "id": 123,
+    "category": "Type1",
+    "question": "What was Apple's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 119437000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "119",
+      "operating"
+    ]
+  },
+  {
+    "id": 124,
+    "category": "Type1",
+    "question": "What was Apple's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 123216000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "123",
+      "operating"
+    ]
+  },
+  {
+    "id": 125,
+    "category": "Type1",
+    "question": "What was Microsoft's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 83383000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "83",
+      "operating"
+    ]
+  },
+  {
+    "id": 126,
+    "category": "Type1",
+    "question": "What was Microsoft's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 88523000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "89",
+      "operating"
+    ]
+  },
+  {
+    "id": 127,
+    "category": "Type1",
+    "question": "What was Microsoft's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 109433000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "109",
+      "operating"
+    ]
+  },
+  {
+    "id": 128,
+    "category": "Type1",
+    "question": "What was Google's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 74842000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "75",
+      "operating"
+    ]
+  },
+  {
+    "id": 129,
+    "category": "Type1",
+    "question": "What was Google's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 84293000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "84",
+      "operating"
+    ]
+  },
+  {
+    "id": 130,
+    "category": "Type1",
+    "question": "What was Google's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 112390000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "112",
+      "operating"
+    ]
+  },
+  {
+    "id": 131,
+    "category": "Type1",
+    "question": "What was NVIDIA's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 10041000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "10",
+      "operating"
+    ]
+  },
+  {
+    "id": 132,
+    "category": "Type1",
+    "question": "What was NVIDIA's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 4224000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "4",
+      "operating"
+    ]
+  },
+  {
+    "id": 133,
+    "category": "Type1",
+    "question": "What was NVIDIA's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 32972000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "33",
+      "operating"
+    ]
+  },
+  {
+    "id": 134,
+    "category": "Type1",
+    "question": "What was Tesla's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 13656000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "14",
+      "operating"
+    ]
+  },
+  {
+    "id": 135,
+    "category": "Type1",
+    "question": "What was Tesla's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 8891000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "9",
+      "operating"
+    ]
+  },
+  {
+    "id": 136,
+    "category": "Type1",
+    "question": "What was Tesla's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 7076000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "7",
+      "operating"
+    ]
+  },
+  {
+    "id": 137,
+    "category": "Type1",
+    "question": "What was Adobe's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 6098000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "6",
+      "operating"
+    ]
+  },
+  {
+    "id": 138,
+    "category": "Type1",
+    "question": "What was Adobe's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 6650000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "7",
+      "operating"
+    ]
+  },
+  {
+    "id": 139,
+    "category": "Type1",
+    "question": "What was Adobe's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 6741000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "7",
+      "operating"
+    ]
+  },
+  {
+    "id": 140,
+    "category": "Type1",
+    "question": "What was Amazon's operating income in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 12248000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "12",
+      "operating"
+    ]
+  },
+  {
+    "id": 141,
+    "category": "Type1",
+    "question": "What was Amazon's operating income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 36852000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "37",
+      "operating"
+    ]
+  },
+  {
+    "id": 142,
+    "category": "Type1",
+    "question": "What was Amazon's operating income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 68593000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "69",
+      "operating"
+    ]
+  },
+  {
+    "id": 143,
+    "category": "Type1",
+    "question": "What were Apple's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 352755000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "353",
+      "total assets"
+    ]
+  },
+  {
+    "id": 144,
+    "category": "Type1",
+    "question": "What were Apple's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 352583000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "353",
+      "total assets"
+    ]
+  },
+  {
+    "id": 145,
+    "category": "Type1",
+    "question": "What were Apple's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 364980000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "365",
+      "total assets"
+    ]
+  },
+  {
+    "id": 146,
+    "category": "Type1",
+    "question": "What were Microsoft's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 364840000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "365",
+      "total assets"
+    ]
+  },
+  {
+    "id": 147,
+    "category": "Type1",
+    "question": "What were Microsoft's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 411976000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "412",
+      "total assets"
+    ]
+  },
+  {
+    "id": 148,
+    "category": "Type1",
+    "question": "What were Microsoft's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 512163000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "512",
+      "total assets"
+    ]
+  },
+  {
+    "id": 149,
+    "category": "Type1",
+    "question": "What were Google's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 365264000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "365",
+      "total assets"
+    ]
+  },
+  {
+    "id": 150,
+    "category": "Type1",
+    "question": "What were Google's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 402392000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "402",
+      "total assets"
+    ]
+  },
+  {
+    "id": 151,
+    "category": "Type1",
+    "question": "What were Google's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 450256000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "450",
+      "total assets"
+    ]
+  },
+  {
+    "id": 152,
+    "category": "Type1",
+    "question": "What were NVIDIA's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 44187000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "44",
+      "total assets"
+    ]
+  },
+  {
+    "id": 153,
+    "category": "Type1",
+    "question": "What were NVIDIA's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 41182000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "41",
+      "total assets"
+    ]
+  },
+  {
+    "id": 154,
+    "category": "Type1",
+    "question": "What were NVIDIA's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 65728000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "66",
+      "total assets"
+    ]
+  },
+  {
+    "id": 155,
+    "category": "Type1",
+    "question": "What were Tesla's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 82338000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "82",
+      "total assets"
+    ]
+  },
+  {
+    "id": 156,
+    "category": "Type1",
+    "question": "What were Tesla's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 106618000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "107",
+      "total assets"
+    ]
+  },
+  {
+    "id": 157,
+    "category": "Type1",
+    "question": "What were Tesla's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 122070000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "122",
+      "total assets"
+    ]
+  },
+  {
+    "id": 158,
+    "category": "Type1",
+    "question": "What were Adobe's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 27165000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "27",
+      "total assets"
+    ]
+  },
+  {
+    "id": 159,
+    "category": "Type1",
+    "question": "What were Adobe's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 29779000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "30",
+      "total assets"
+    ]
+  },
+  {
+    "id": 160,
+    "category": "Type1",
+    "question": "What were Adobe's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 30230000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "30",
+      "total assets"
+    ]
+  },
+  {
+    "id": 161,
+    "category": "Type1",
+    "question": "What were Amazon's total assets in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 462675000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "463",
+      "total assets"
+    ]
+  },
+  {
+    "id": 162,
+    "category": "Type1",
+    "question": "What were Amazon's total assets in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 527854000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "528",
+      "total assets"
+    ]
+  },
+  {
+    "id": 163,
+    "category": "Type1",
+    "question": "What were Amazon's total assets in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 624894000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "625",
+      "total assets"
+    ]
+  },
+  {
+    "id": 164,
+    "category": "Type1",
+    "question": "What were Apple's total liabilities in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 302083000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "302",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 165,
+    "category": "Type1",
+    "question": "What were Apple's total liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 290437000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "290",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 166,
+    "category": "Type1",
+    "question": "What were Apple's total liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 308030000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "308",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 167,
+    "category": "Type1",
+    "question": "What were Microsoft's total liabilities in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 198298000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "198",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 168,
+    "category": "Type1",
+    "question": "What were Microsoft's total liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 205753000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "206",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 169,
+    "category": "Type1",
+    "question": "What were Microsoft's total liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 243686000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "244",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 170,
+    "category": "Type1",
+    "question": "What were Google's total liabilities in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 109120000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "109",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 171,
+    "category": "Type1",
+    "question": "What were Google's total liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 119013000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "119",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 172,
+    "category": "Type1",
+    "question": "What were Google's total liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 125172000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "125",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 173,
+    "category": "Type1",
+    "question": "What were NVIDIA's total liabilities in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 17575000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "18",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 174,
+    "category": "Type1",
+    "question": "What were NVIDIA's total liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 19081000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "19",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 175,
+    "category": "Type1",
+    "question": "What were NVIDIA's total liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 22750000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "23",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 176,
+    "category": "Type1",
+    "question": "What were Tesla's total liabilities in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 36440000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "36",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 177,
+    "category": "Type1",
+    "question": "What were Tesla's total liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 43009000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "43",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 178,
+    "category": "Type1",
+    "question": "What were Tesla's total liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 48390000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "48",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 179,
+    "category": "Type1",
+    "question": "What were Adobe's total liabilities in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 13114000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "13",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 180,
+    "category": "Type1",
+    "question": "What were Adobe's total liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 13261000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "13",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 181,
+    "category": "Type1",
+    "question": "What were Adobe's total liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 16125000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "16",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 182,
+    "category": "Type1",
+    "question": "What was Microsoft's goodwill in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 67524000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "68",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 183,
+    "category": "Type1",
+    "question": "What was Microsoft's goodwill in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 67886000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "68",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 184,
+    "category": "Type1",
+    "question": "What was Microsoft's goodwill in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 119220000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "119",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 185,
+    "category": "Type1",
+    "question": "What was Google's goodwill in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 28960000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "29",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 186,
+    "category": "Type1",
+    "question": "What was Google's goodwill in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 29198000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "29",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 187,
+    "category": "Type1",
+    "question": "What was Google's goodwill in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 31885000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "32",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 188,
+    "category": "Type1",
+    "question": "What was NVIDIA's goodwill in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 4349000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "4",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 189,
+    "category": "Type1",
+    "question": "What was NVIDIA's goodwill in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 4372000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "4",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 190,
+    "category": "Type1",
+    "question": "What was NVIDIA's goodwill in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 4430000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "4",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 191,
+    "category": "Type1",
+    "question": "What was Tesla's goodwill in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 194000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "194",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 192,
+    "category": "Type1",
+    "question": "What was Tesla's goodwill in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 253000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "253",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 193,
+    "category": "Type1",
+    "question": "What was Tesla's goodwill in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 244000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "244",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 194,
+    "category": "Type1",
+    "question": "What was Adobe's goodwill in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 12787000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "13",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 195,
+    "category": "Type1",
+    "question": "What was Adobe's goodwill in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 12805000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "13",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 196,
+    "category": "Type1",
+    "question": "What was Adobe's goodwill in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 12788000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "13",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 197,
+    "category": "Type1",
+    "question": "What was Amazon's goodwill in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 20288000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "20",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 198,
+    "category": "Type1",
+    "question": "What was Amazon's goodwill in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 22789000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "23",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 199,
+    "category": "Type1",
+    "question": "What was Amazon's goodwill in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 23074000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "23",
+      "goodwill"
+    ]
+  },
+  {
+    "id": 200,
+    "category": "Type1",
+    "question": "How much cash did Apple have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 23646000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "24",
+      "cash"
+    ]
+  },
+  {
+    "id": 201,
+    "category": "Type1",
+    "question": "How much cash did Apple have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 29965000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "30",
+      "cash"
+    ]
+  },
+  {
+    "id": 202,
+    "category": "Type1",
+    "question": "How much cash did Apple have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 29943000000.0,
+    "expected_keywords": [
+      "aapl",
+      "apple",
+      "30",
+      "cash"
+    ]
+  },
+  {
+    "id": 203,
+    "category": "Type1",
+    "question": "How much cash did Microsoft have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 13931000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "14",
+      "cash"
+    ]
+  },
+  {
+    "id": 204,
+    "category": "Type1",
+    "question": "How much cash did Microsoft have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 34704000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "35",
+      "cash"
+    ]
+  },
+  {
+    "id": 205,
+    "category": "Type1",
+    "question": "How much cash did Microsoft have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 18315000000.0,
+    "expected_keywords": [
+      "msft",
+      "microsoft",
+      "18",
+      "cash"
+    ]
+  },
+  {
+    "id": 206,
+    "category": "Type1",
+    "question": "How much cash did Google have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 21879000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "22",
+      "cash"
+    ]
+  },
+  {
+    "id": 207,
+    "category": "Type1",
+    "question": "How much cash did Google have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 24048000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "24",
+      "cash"
+    ]
+  },
+  {
+    "id": 208,
+    "category": "Type1",
+    "question": "How much cash did Google have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 23466000000.0,
+    "expected_keywords": [
+      "goog",
+      "google",
+      "23",
+      "cash"
+    ]
+  },
+  {
+    "id": 209,
+    "category": "Type1",
+    "question": "How much cash did NVIDIA have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 1990000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "2",
+      "cash"
+    ]
+  },
+  {
+    "id": 210,
+    "category": "Type1",
+    "question": "How much cash did NVIDIA have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 3389000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "3",
+      "cash"
+    ]
+  },
+  {
+    "id": 211,
+    "category": "Type1",
+    "question": "How much cash did NVIDIA have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 7280000000.0,
+    "expected_keywords": [
+      "nvda",
+      "nvidia",
+      "7",
+      "cash"
+    ]
+  },
+  {
+    "id": 212,
+    "category": "Type1",
+    "question": "How much cash did Tesla have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 16253000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "16",
+      "cash"
+    ]
+  },
+  {
+    "id": 213,
+    "category": "Type1",
+    "question": "How much cash did Tesla have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 16398000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "16",
+      "cash"
+    ]
+  },
+  {
+    "id": 214,
+    "category": "Type1",
+    "question": "How much cash did Tesla have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 16139000000.0,
+    "expected_keywords": [
+      "tsla",
+      "tesla",
+      "16",
+      "cash"
+    ]
+  },
+  {
+    "id": 215,
+    "category": "Type1",
+    "question": "How much cash did Adobe have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 4236000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "4",
+      "cash"
+    ]
+  },
+  {
+    "id": 216,
+    "category": "Type1",
+    "question": "How much cash did Adobe have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 7141000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "7",
+      "cash"
+    ]
+  },
+  {
+    "id": 217,
+    "category": "Type1",
+    "question": "How much cash did Adobe have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 7613000000.0,
+    "expected_keywords": [
+      "adbe",
+      "adobe",
+      "8",
+      "cash"
+    ]
+  },
+  {
+    "id": 218,
+    "category": "Type1",
+    "question": "How much cash did Amazon have in FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": 53888000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "54",
+      "cash"
+    ]
+  },
+  {
+    "id": 219,
+    "category": "Type1",
+    "question": "How much cash did Amazon have in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": 73387000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "73",
+      "cash"
+    ]
+  },
+  {
+    "id": 220,
+    "category": "Type1",
+    "question": "How much cash did Amazon have in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": 78779000000.0,
+    "expected_keywords": [
+      "amzn",
+      "amazon",
+      "79",
+      "cash"
+    ]
+  },
+  {
+    "id": 221,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Microsoft revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "microsoft",
+      "revenue"
+    ]
+  },
+  {
+    "id": 222,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Google revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "google",
+      "revenue"
+    ]
+  },
+  {
+    "id": 223,
+    "category": "Type1-compare",
+    "question": "Compare Apple and NVIDIA revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "nvidia",
+      "revenue"
+    ]
+  },
+  {
+    "id": 224,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Tesla revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "tesla",
+      "revenue"
+    ]
+  },
+  {
+    "id": 225,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Adobe revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "adobe",
+      "revenue"
+    ]
+  },
+  {
+    "id": 226,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Amazon revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 227,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Google revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "google",
+      "revenue"
+    ]
+  },
+  {
+    "id": 228,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and NVIDIA revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "nvidia",
+      "revenue"
+    ]
+  },
+  {
+    "id": 229,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Tesla revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "tesla",
+      "revenue"
+    ]
+  },
+  {
+    "id": 230,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Adobe revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "adobe",
+      "revenue"
+    ]
+  },
+  {
+    "id": 231,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Amazon revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 232,
+    "category": "Type1-compare",
+    "question": "Compare Google and NVIDIA revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "nvidia",
+      "revenue"
+    ]
+  },
+  {
+    "id": 233,
+    "category": "Type1-compare",
+    "question": "Compare Google and Tesla revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "tesla",
+      "revenue"
+    ]
+  },
+  {
+    "id": 234,
+    "category": "Type1-compare",
+    "question": "Compare Google and Adobe revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "adobe",
+      "revenue"
+    ]
+  },
+  {
+    "id": 235,
+    "category": "Type1-compare",
+    "question": "Compare Google and Amazon revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 236,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Tesla revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "tesla",
+      "revenue"
+    ]
+  },
+  {
+    "id": 237,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Adobe revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "adobe",
+      "revenue"
+    ]
+  },
+  {
+    "id": 238,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Amazon revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 239,
+    "category": "Type1-compare",
+    "question": "Compare Tesla and Adobe revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "adobe",
+      "revenue"
+    ]
+  },
+  {
+    "id": 240,
+    "category": "Type1-compare",
+    "question": "Compare Tesla and Amazon revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 241,
+    "category": "Type1-compare",
+    "question": "Compare Adobe and Amazon revenue in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "amazon",
+      "revenue"
+    ]
+  },
+  {
+    "id": 242,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Microsoft net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "microsoft",
+      "net income"
+    ]
+  },
+  {
+    "id": 243,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Google net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "google",
+      "net income"
+    ]
+  },
+  {
+    "id": 244,
+    "category": "Type1-compare",
+    "question": "Compare Apple and NVIDIA net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "nvidia",
+      "net income"
+    ]
+  },
+  {
+    "id": 245,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Tesla net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "tesla",
+      "net income"
+    ]
+  },
+  {
+    "id": 246,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Adobe net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "adobe",
+      "net income"
+    ]
+  },
+  {
+    "id": 247,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Amazon net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "amazon",
+      "net income"
+    ]
+  },
+  {
+    "id": 248,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Google net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "google",
+      "net income"
+    ]
+  },
+  {
+    "id": 249,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and NVIDIA net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "nvidia",
+      "net income"
+    ]
+  },
+  {
+    "id": 250,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Tesla net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "tesla",
+      "net income"
+    ]
+  },
+  {
+    "id": 251,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Adobe net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "adobe",
+      "net income"
+    ]
+  },
+  {
+    "id": 252,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Amazon net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "amazon",
+      "net income"
+    ]
+  },
+  {
+    "id": 253,
+    "category": "Type1-compare",
+    "question": "Compare Google and NVIDIA net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "nvidia",
+      "net income"
+    ]
+  },
+  {
+    "id": 254,
+    "category": "Type1-compare",
+    "question": "Compare Google and Tesla net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "tesla",
+      "net income"
+    ]
+  },
+  {
+    "id": 255,
+    "category": "Type1-compare",
+    "question": "Compare Google and Adobe net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "adobe",
+      "net income"
+    ]
+  },
+  {
+    "id": 256,
+    "category": "Type1-compare",
+    "question": "Compare Google and Amazon net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "amazon",
+      "net income"
+    ]
+  },
+  {
+    "id": 257,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Tesla net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "tesla",
+      "net income"
+    ]
+  },
+  {
+    "id": 258,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Adobe net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "adobe",
+      "net income"
+    ]
+  },
+  {
+    "id": 259,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Amazon net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "amazon",
+      "net income"
+    ]
+  },
+  {
+    "id": 260,
+    "category": "Type1-compare",
+    "question": "Compare Tesla and Adobe net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "adobe",
+      "net income"
+    ]
+  },
+  {
+    "id": 261,
+    "category": "Type1-compare",
+    "question": "Compare Tesla and Amazon net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "amazon",
+      "net income"
+    ]
+  },
+  {
+    "id": 262,
+    "category": "Type1-compare",
+    "question": "Compare Adobe and Amazon net income in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "amazon",
+      "net income"
+    ]
+  },
+  {
+    "id": 263,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Apple or Microsoft?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "microsoft",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 264,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Apple or Google?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "google",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 265,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Apple or NVIDIA?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "nvidia",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 266,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Apple or Tesla?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "tesla",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 267,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Apple or Adobe?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "adobe",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 268,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Apple or Amazon?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "amazon",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 269,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Microsoft or Google?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "google",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 270,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Microsoft or NVIDIA?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "nvidia",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 271,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Microsoft or Tesla?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "tesla",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 272,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Microsoft or Adobe?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "adobe",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 273,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Microsoft or Amazon?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "amazon",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 274,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Google or NVIDIA?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "nvidia",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 275,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Google or Tesla?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "tesla",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 276,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Google or Adobe?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "adobe",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 277,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Google or Amazon?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "amazon",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 278,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, NVIDIA or Tesla?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "tesla",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 279,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, NVIDIA or Adobe?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "adobe",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 280,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, NVIDIA or Amazon?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "amazon",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 281,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Tesla or Adobe?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "adobe",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 282,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Tesla or Amazon?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "amazon",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 283,
+    "category": "Type1-compare",
+    "question": "Which had higher revenue in FY2024, Adobe or Amazon?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "amazon",
+      "revenue",
+      "higher"
+    ]
+  },
+  {
+    "id": 284,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Microsoft total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "microsoft",
+      "total assets"
+    ]
+  },
+  {
+    "id": 285,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Google total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "google",
+      "total assets"
+    ]
+  },
+  {
+    "id": 286,
+    "category": "Type1-compare",
+    "question": "Compare Apple and NVIDIA total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "nvidia",
+      "total assets"
+    ]
+  },
+  {
+    "id": 287,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Tesla total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "tesla",
+      "total assets"
+    ]
+  },
+  {
+    "id": 288,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Adobe total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "adobe",
+      "total assets"
+    ]
+  },
+  {
+    "id": 289,
+    "category": "Type1-compare",
+    "question": "Compare Apple and Amazon total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "amazon",
+      "total assets"
+    ]
+  },
+  {
+    "id": 290,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Google total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "google",
+      "total assets"
+    ]
+  },
+  {
+    "id": 291,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and NVIDIA total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "nvidia",
+      "total assets"
+    ]
+  },
+  {
+    "id": 292,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Tesla total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "tesla",
+      "total assets"
+    ]
+  },
+  {
+    "id": 293,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Adobe total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "adobe",
+      "total assets"
+    ]
+  },
+  {
+    "id": 294,
+    "category": "Type1-compare",
+    "question": "Compare Microsoft and Amazon total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "amazon",
+      "total assets"
+    ]
+  },
+  {
+    "id": 295,
+    "category": "Type1-compare",
+    "question": "Compare Google and NVIDIA total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "nvidia",
+      "total assets"
+    ]
+  },
+  {
+    "id": 296,
+    "category": "Type1-compare",
+    "question": "Compare Google and Tesla total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "tesla",
+      "total assets"
+    ]
+  },
+  {
+    "id": 297,
+    "category": "Type1-compare",
+    "question": "Compare Google and Adobe total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "adobe",
+      "total assets"
+    ]
+  },
+  {
+    "id": 298,
+    "category": "Type1-compare",
+    "question": "Compare Google and Amazon total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "amazon",
+      "total assets"
+    ]
+  },
+  {
+    "id": 299,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Tesla total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "tesla",
+      "total assets"
+    ]
+  },
+  {
+    "id": 300,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Adobe total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "adobe",
+      "total assets"
+    ]
+  },
+  {
+    "id": 301,
+    "category": "Type1-compare",
+    "question": "Compare NVIDIA and Amazon total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "amazon",
+      "total assets"
+    ]
+  },
+  {
+    "id": 302,
+    "category": "Type1-compare",
+    "question": "Compare Tesla and Adobe total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "adobe",
+      "total assets"
+    ]
+  },
+  {
+    "id": 303,
+    "category": "Type1-compare",
+    "question": "Compare Tesla and Amazon total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "amazon",
+      "total assets"
+    ]
+  },
+  {
+    "id": 304,
+    "category": "Type1-compare",
+    "question": "Compare Adobe and Amazon total assets in FY2024.",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "amazon",
+      "total assets"
+    ]
+  },
+  {
+    "id": 305,
+    "category": "Type1-compare",
+    "question": "How did Apple's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 306,
+    "category": "Type1-compare",
+    "question": "How did Apple's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 307,
+    "category": "Type1-compare",
+    "question": "How did Apple's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 308,
+    "category": "Type1-compare",
+    "question": "How did Apple's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 309,
+    "category": "Type1-compare",
+    "question": "How did Apple's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 310,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 311,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 312,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 313,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 314,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 315,
+    "category": "Type1-compare",
+    "question": "How did Google's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 316,
+    "category": "Type1-compare",
+    "question": "How did Google's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 317,
+    "category": "Type1-compare",
+    "question": "How did Google's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 318,
+    "category": "Type1-compare",
+    "question": "How did Google's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 319,
+    "category": "Type1-compare",
+    "question": "How did Google's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 320,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 321,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 322,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 323,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 324,
+    "category": "Type1-compare",
+    "question": "How did Tesla's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 325,
+    "category": "Type1-compare",
+    "question": "How did Tesla's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 326,
+    "category": "Type1-compare",
+    "question": "How did Tesla's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 327,
+    "category": "Type1-compare",
+    "question": "How did Tesla's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 328,
+    "category": "Type1-compare",
+    "question": "How did Tesla's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 329,
+    "category": "Type1-compare",
+    "question": "How did Adobe's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 330,
+    "category": "Type1-compare",
+    "question": "How did Adobe's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 331,
+    "category": "Type1-compare",
+    "question": "How did Adobe's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 332,
+    "category": "Type1-compare",
+    "question": "How did Adobe's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 333,
+    "category": "Type1-compare",
+    "question": "How did Adobe's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 334,
+    "category": "Type1-compare",
+    "question": "How did Amazon's revenue change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 335,
+    "category": "Type1-compare",
+    "question": "How did Amazon's revenue change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 336,
+    "category": "Type1-compare",
+    "question": "How did Amazon's revenue change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 337,
+    "category": "Type1-compare",
+    "question": "How did Amazon's revenue change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 338,
+    "category": "Type1-compare",
+    "question": "How did Amazon's revenue change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "change"
+    ]
+  },
+  {
+    "id": 339,
+    "category": "Type1-compare",
+    "question": "How did Apple's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 340,
+    "category": "Type1-compare",
+    "question": "How did Apple's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 341,
+    "category": "Type1-compare",
+    "question": "How did Apple's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 342,
+    "category": "Type1-compare",
+    "question": "How did Apple's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 343,
+    "category": "Type1-compare",
+    "question": "How did Apple's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 344,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 345,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 346,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 347,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 348,
+    "category": "Type1-compare",
+    "question": "How did Microsoft's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 349,
+    "category": "Type1-compare",
+    "question": "How did Google's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 350,
+    "category": "Type1-compare",
+    "question": "How did Google's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 351,
+    "category": "Type1-compare",
+    "question": "How did Google's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 352,
+    "category": "Type1-compare",
+    "question": "How did Google's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 353,
+    "category": "Type1-compare",
+    "question": "How did Google's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 354,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 355,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 356,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 357,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 358,
+    "category": "Type1-compare",
+    "question": "How did NVIDIA's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 359,
+    "category": "Type1-compare",
+    "question": "How did Tesla's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 360,
+    "category": "Type1-compare",
+    "question": "How did Tesla's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 361,
+    "category": "Type1-compare",
+    "question": "How did Tesla's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 362,
+    "category": "Type1-compare",
+    "question": "How did Tesla's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 363,
+    "category": "Type1-compare",
+    "question": "How did Tesla's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 364,
+    "category": "Type1-compare",
+    "question": "How did Adobe's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 365,
+    "category": "Type1-compare",
+    "question": "How did Adobe's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 366,
+    "category": "Type1-compare",
+    "question": "How did Adobe's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 367,
+    "category": "Type1-compare",
+    "question": "How did Adobe's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 368,
+    "category": "Type1-compare",
+    "question": "How did Adobe's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 369,
+    "category": "Type1-compare",
+    "question": "How did Amazon's net income change from FY2019 to FY2020?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 370,
+    "category": "Type1-compare",
+    "question": "How did Amazon's net income change from FY2020 to FY2021?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 371,
+    "category": "Type1-compare",
+    "question": "How did Amazon's net income change from FY2021 to FY2022?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 372,
+    "category": "Type1-compare",
+    "question": "How did Amazon's net income change from FY2022 to FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 373,
+    "category": "Type1-compare",
+    "question": "How did Amazon's net income change from FY2023 to FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "net income",
+      "change"
+    ]
+  },
+  {
+    "id": 374,
+    "category": "Type1-compare",
+    "question": "What were Apple's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 375,
+    "category": "Type1-compare",
+    "question": "What were Microsoft's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 376,
+    "category": "Type1-compare",
+    "question": "What were Microsoft's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 377,
+    "category": "Type1-compare",
+    "question": "What were Google's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 378,
+    "category": "Type1-compare",
+    "question": "What were Google's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 379,
+    "category": "Type1-compare",
+    "question": "What were NVIDIA's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 380,
+    "category": "Type1-compare",
+    "question": "What were NVIDIA's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 381,
+    "category": "Type1-compare",
+    "question": "What were Tesla's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 382,
+    "category": "Type1-compare",
+    "question": "What were Tesla's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 383,
+    "category": "Type1-compare",
+    "question": "What were Adobe's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 384,
+    "category": "Type1-compare",
+    "question": "What were Adobe's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 385,
+    "category": "Type1-compare",
+    "question": "What were Amazon's revenue and net income in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 386,
+    "category": "Type1-compare",
+    "question": "What were Amazon's revenue and net income in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "revenue",
+      "net income"
+    ]
+  },
+  {
+    "id": 387,
+    "category": "Type1-compare",
+    "question": "What were Apple's total assets and liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 388,
+    "category": "Type1-compare",
+    "question": "What were Apple's total assets and liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 389,
+    "category": "Type1-compare",
+    "question": "What were Microsoft's total assets and liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 390,
+    "category": "Type1-compare",
+    "question": "What were Microsoft's total assets and liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 391,
+    "category": "Type1-compare",
+    "question": "What were Google's total assets and liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 392,
+    "category": "Type1-compare",
+    "question": "What were Google's total assets and liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 393,
+    "category": "Type1-compare",
+    "question": "What were NVIDIA's total assets and liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 394,
+    "category": "Type1-compare",
+    "question": "What were NVIDIA's total assets and liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 395,
+    "category": "Type1-compare",
+    "question": "What were Tesla's total assets and liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 396,
+    "category": "Type1-compare",
+    "question": "What were Tesla's total assets and liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 397,
+    "category": "Type1-compare",
+    "question": "What were Adobe's total assets and liabilities in FY2023?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 398,
+    "category": "Type1-compare",
+    "question": "What were Adobe's total assets and liabilities in FY2024?",
+    "expected_intent": "Type1",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 399,
+    "category": "Type2",
+    "question": "How did NVIDIA describe its competitive landscape in its most recent 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "competition",
+      "competitive",
+      "market"
+    ]
+  },
+  {
+    "id": 400,
+    "category": "Type2",
+    "question": "How did Apple describe its competitive landscape in its most recent 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "competition",
+      "competitive",
+      "market"
+    ]
+  },
+  {
+    "id": 401,
+    "category": "Type2",
+    "question": "How did Salesforce describe its competitive landscape in its most recent 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "competition",
+      "competitive",
+      "market"
+    ]
+  },
+  {
+    "id": 402,
+    "category": "Type2",
+    "question": "How did Nike describe its competitive landscape in its most recent 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "competition",
+      "competitive",
+      "market"
+    ]
+  },
+  {
+    "id": 403,
+    "category": "Type2",
+    "question": "How did Pfizer describe its competitive landscape in its most recent 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "competition",
+      "competitive",
+      "market"
+    ]
+  },
+  {
+    "id": 404,
+    "category": "Type2",
+    "question": "How did Google describe its competitive landscape in its most recent 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "competition",
+      "competitive",
+      "market"
+    ]
+  },
+  {
+    "id": 405,
+    "category": "Type2",
+    "question": "What risks did NVIDIA identify related to its business in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "risk",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": 406,
+    "category": "Type2",
+    "question": "What risks did Google identify related to its business in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "risk",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": 407,
+    "category": "Type2",
+    "question": "What risks did Johnson & Johnson identify related to its business in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "johnson & johnson",
+      "jnj",
+      "risk",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": 408,
+    "category": "Type2",
+    "question": "What risks did Apple identify related to its business in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "risk",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": 409,
+    "category": "Type2",
+    "question": "What risks did Pfizer identify related to its business in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "risk",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": 410,
+    "category": "Type2",
+    "question": "What risks did Microsoft identify related to its business in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "msft",
+      "risk",
+      "uncertainty"
+    ]
+  },
+  {
+    "id": 411,
+    "category": "Type2",
+    "question": "How did Amazon describe its growth strategy in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "growth",
+      "strategy"
+    ]
+  },
+  {
+    "id": 412,
+    "category": "Type2",
+    "question": "How did Netflix describe its growth strategy in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "growth",
+      "strategy"
+    ]
+  },
+  {
+    "id": 413,
+    "category": "Type2",
+    "question": "How did Apple describe its growth strategy in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "growth",
+      "strategy"
+    ]
+  },
+  {
+    "id": 414,
+    "category": "Type2",
+    "question": "How did Salesforce describe its growth strategy in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "growth",
+      "strategy"
+    ]
+  },
+  {
+    "id": 415,
+    "category": "Type2",
+    "question": "How did NVIDIA describe its growth strategy in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "growth",
+      "strategy"
+    ]
+  },
+  {
+    "id": 416,
+    "category": "Type2",
+    "question": "How did Exxon Mobil describe its growth strategy in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "exxon mobil",
+      "xom",
+      "growth",
+      "strategy"
+    ]
+  },
+  {
+    "id": 417,
+    "category": "Type2",
+    "question": "What did Nike say about supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "supply",
+      "chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 418,
+    "category": "Type2",
+    "question": "What did Johnson & Johnson say about supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "johnson & johnson",
+      "jnj",
+      "supply",
+      "chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 419,
+    "category": "Type2",
+    "question": "What did Netflix say about supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "supply",
+      "chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 420,
+    "category": "Type2",
+    "question": "What did Walmart say about supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "walmart",
+      "wmt",
+      "supply",
+      "chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 421,
+    "category": "Type2",
+    "question": "What did Boeing say about supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "boeing",
+      "ba",
+      "supply",
+      "chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 422,
+    "category": "Type2",
+    "question": "What did Tesla say about supply chain risks in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "tsla",
+      "supply",
+      "chain",
+      "risk"
+    ]
+  },
+  {
+    "id": 423,
+    "category": "Type2",
+    "question": "How did Apple discuss regulatory risks in its most recent filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "regulatory",
+      "regulation",
+      "compliance"
+    ]
+  },
+  {
+    "id": 424,
+    "category": "Type2",
+    "question": "How did Adobe discuss regulatory risks in its most recent filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "adbe",
+      "regulatory",
+      "regulation",
+      "compliance"
+    ]
+  },
+  {
+    "id": 425,
+    "category": "Type2",
+    "question": "How did Johnson & Johnson discuss regulatory risks in its most recent filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "johnson & johnson",
+      "jnj",
+      "regulatory",
+      "regulation",
+      "compliance"
+    ]
+  },
+  {
+    "id": 426,
+    "category": "Type2",
+    "question": "How did Costco discuss regulatory risks in its most recent filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "costco",
+      "cost",
+      "regulatory",
+      "regulation",
+      "compliance"
+    ]
+  },
+  {
+    "id": 427,
+    "category": "Type2",
+    "question": "How did Tesla discuss regulatory risks in its most recent filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "tsla",
+      "regulatory",
+      "regulation",
+      "compliance"
+    ]
+  },
+  {
+    "id": 428,
+    "category": "Type2",
+    "question": "How did Google discuss regulatory risks in its most recent filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "regulatory",
+      "regulation",
+      "compliance"
+    ]
+  },
+  {
+    "id": 429,
+    "category": "Type2",
+    "question": "What did Amazon say about its capital allocation strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "capital",
+      "allocation"
+    ]
+  },
+  {
+    "id": 430,
+    "category": "Type2",
+    "question": "What did JPMorgan say about its capital allocation strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "jpmorgan",
+      "jpm",
+      "capital",
+      "allocation"
+    ]
+  },
+  {
+    "id": 431,
+    "category": "Type2",
+    "question": "What did NVIDIA say about its capital allocation strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "capital",
+      "allocation"
+    ]
+  },
+  {
+    "id": 432,
+    "category": "Type2",
+    "question": "What did Microsoft say about its capital allocation strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "msft",
+      "capital",
+      "allocation"
+    ]
+  },
+  {
+    "id": 433,
+    "category": "Type2",
+    "question": "What did Nike say about its capital allocation strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "capital",
+      "allocation"
+    ]
+  },
+  {
+    "id": 434,
+    "category": "Type2",
+    "question": "What did Pfizer say about its capital allocation strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "capital",
+      "allocation"
+    ]
+  },
+  {
+    "id": 435,
+    "category": "Type2",
+    "question": "What environmental or sustainability risks did Exxon Mobil disclose?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "exxon mobil",
+      "xom",
+      "environmental",
+      "sustainability",
+      "climate"
+    ]
+  },
+  {
+    "id": 436,
+    "category": "Type2",
+    "question": "What environmental or sustainability risks did Nike disclose?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "environmental",
+      "sustainability",
+      "climate"
+    ]
+  },
+  {
+    "id": 437,
+    "category": "Type2",
+    "question": "What environmental or sustainability risks did Salesforce disclose?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "environmental",
+      "sustainability",
+      "climate"
+    ]
+  },
+  {
+    "id": 438,
+    "category": "Type2",
+    "question": "What environmental or sustainability risks did Disney disclose?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "disney",
+      "dis",
+      "environmental",
+      "sustainability",
+      "climate"
+    ]
+  },
+  {
+    "id": 439,
+    "category": "Type2",
+    "question": "What environmental or sustainability risks did Apple disclose?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "environmental",
+      "sustainability",
+      "climate"
+    ]
+  },
+  {
+    "id": 440,
+    "category": "Type2",
+    "question": "What environmental or sustainability risks did Costco disclose?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "costco",
+      "cost",
+      "environmental",
+      "sustainability",
+      "climate"
+    ]
+  },
+  {
+    "id": 441,
+    "category": "Type2",
+    "question": "How did Pfizer describe its technology investments in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "technology",
+      "innovation"
+    ]
+  },
+  {
+    "id": 442,
+    "category": "Type2",
+    "question": "How did NVIDIA describe its technology investments in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "technology",
+      "innovation"
+    ]
+  },
+  {
+    "id": 443,
+    "category": "Type2",
+    "question": "How did Disney describe its technology investments in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "disney",
+      "dis",
+      "technology",
+      "innovation"
+    ]
+  },
+  {
+    "id": 444,
+    "category": "Type2",
+    "question": "How did Microsoft describe its technology investments in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "msft",
+      "technology",
+      "innovation"
+    ]
+  },
+  {
+    "id": 445,
+    "category": "Type2",
+    "question": "How did Salesforce describe its technology investments in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "technology",
+      "innovation"
+    ]
+  },
+  {
+    "id": 446,
+    "category": "Type2",
+    "question": "How did Tesla describe its technology investments in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "tsla",
+      "technology",
+      "innovation"
+    ]
+  },
+  {
+    "id": 447,
+    "category": "Type2",
+    "question": "What did Exxon Mobil say about its workforce and talent strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "exxon mobil",
+      "xom",
+      "workforce",
+      "talent",
+      "employee"
+    ]
+  },
+  {
+    "id": 448,
+    "category": "Type2",
+    "question": "What did Amazon say about its workforce and talent strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "workforce",
+      "talent",
+      "employee"
+    ]
+  },
+  {
+    "id": 449,
+    "category": "Type2",
+    "question": "What did Google say about its workforce and talent strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "workforce",
+      "talent",
+      "employee"
+    ]
+  },
+  {
+    "id": 450,
+    "category": "Type2",
+    "question": "What did Apple say about its workforce and talent strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "apple",
+      "aapl",
+      "workforce",
+      "talent",
+      "employee"
+    ]
+  },
+  {
+    "id": 451,
+    "category": "Type2",
+    "question": "What did JPMorgan say about its workforce and talent strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "jpmorgan",
+      "jpm",
+      "workforce",
+      "talent",
+      "employee"
+    ]
+  },
+  {
+    "id": 452,
+    "category": "Type2",
+    "question": "What did NVIDIA say about its workforce and talent strategy?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "workforce",
+      "talent",
+      "employee"
+    ]
+  },
+  {
+    "id": 453,
+    "category": "Type2",
+    "question": "How did Boeing discuss macroeconomic risks in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "boeing",
+      "ba",
+      "macroeconomic",
+      "economic",
+      "inflation"
+    ]
+  },
+  {
+    "id": 454,
+    "category": "Type2",
+    "question": "How did Google discuss macroeconomic risks in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "macroeconomic",
+      "economic",
+      "inflation"
+    ]
+  },
+  {
+    "id": 455,
+    "category": "Type2",
+    "question": "How did Netflix discuss macroeconomic risks in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "macroeconomic",
+      "economic",
+      "inflation"
+    ]
+  },
+  {
+    "id": 456,
+    "category": "Type2",
+    "question": "How did Johnson & Johnson discuss macroeconomic risks in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "johnson & johnson",
+      "jnj",
+      "macroeconomic",
+      "economic",
+      "inflation"
+    ]
+  },
+  {
+    "id": 457,
+    "category": "Type2",
+    "question": "How did Microsoft discuss macroeconomic risks in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "msft",
+      "macroeconomic",
+      "economic",
+      "inflation"
+    ]
+  },
+  {
+    "id": 458,
+    "category": "Type2",
+    "question": "How did Amazon discuss macroeconomic risks in its annual report?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "macroeconomic",
+      "economic",
+      "inflation"
+    ]
+  },
+  {
+    "id": 459,
+    "category": "Type2",
+    "question": "What cybersecurity risks did Salesforce identify in its filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "cybersecurity",
+      "security",
+      "data"
+    ]
+  },
+  {
+    "id": 460,
+    "category": "Type2",
+    "question": "What cybersecurity risks did Pfizer identify in its filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "cybersecurity",
+      "security",
+      "data"
+    ]
+  },
+  {
+    "id": 461,
+    "category": "Type2",
+    "question": "What cybersecurity risks did Exxon Mobil identify in its filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "exxon mobil",
+      "xom",
+      "cybersecurity",
+      "security",
+      "data"
+    ]
+  },
+  {
+    "id": 462,
+    "category": "Type2",
+    "question": "What cybersecurity risks did Google identify in its filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "cybersecurity",
+      "security",
+      "data"
+    ]
+  },
+  {
+    "id": 463,
+    "category": "Type2",
+    "question": "What cybersecurity risks did Adobe identify in its filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "adbe",
+      "cybersecurity",
+      "security",
+      "data"
+    ]
+  },
+  {
+    "id": 464,
+    "category": "Type2",
+    "question": "What cybersecurity risks did Johnson & Johnson identify in its filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "johnson & johnson",
+      "jnj",
+      "cybersecurity",
+      "security",
+      "data"
+    ]
+  },
+  {
+    "id": 465,
+    "category": "Type2",
+    "question": "What did Amazon say about international operations in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "international",
+      "global"
+    ]
+  },
+  {
+    "id": 466,
+    "category": "Type2",
+    "question": "What did Salesforce say about international operations in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "international",
+      "global"
+    ]
+  },
+  {
+    "id": 467,
+    "category": "Type2",
+    "question": "What did Google say about international operations in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "international",
+      "global"
+    ]
+  },
+  {
+    "id": 468,
+    "category": "Type2",
+    "question": "What did Boeing say about international operations in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "boeing",
+      "ba",
+      "international",
+      "global"
+    ]
+  },
+  {
+    "id": 469,
+    "category": "Type2",
+    "question": "What did JPMorgan say about international operations in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "jpmorgan",
+      "jpm",
+      "international",
+      "global"
+    ]
+  },
+  {
+    "id": 470,
+    "category": "Type2",
+    "question": "What did Walmart say about international operations in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "walmart",
+      "wmt",
+      "international",
+      "global"
+    ]
+  },
+  {
+    "id": 471,
+    "category": "Type2",
+    "question": "How did Nike discuss its product pipeline in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "product",
+      "pipeline"
+    ]
+  },
+  {
+    "id": 472,
+    "category": "Type2",
+    "question": "How did Netflix discuss its product pipeline in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "product",
+      "pipeline"
+    ]
+  },
+  {
+    "id": 473,
+    "category": "Type2",
+    "question": "How did Adobe discuss its product pipeline in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "adbe",
+      "product",
+      "pipeline"
+    ]
+  },
+  {
+    "id": 474,
+    "category": "Type2",
+    "question": "How did Costco discuss its product pipeline in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "costco",
+      "cost",
+      "product",
+      "pipeline"
+    ]
+  },
+  {
+    "id": 475,
+    "category": "Type2",
+    "question": "How did Amazon discuss its product pipeline in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "product",
+      "pipeline"
+    ]
+  },
+  {
+    "id": 476,
+    "category": "Type2",
+    "question": "How did Tesla discuss its product pipeline in recent filings?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "tsla",
+      "product",
+      "pipeline"
+    ]
+  },
+  {
+    "id": 477,
+    "category": "Type2",
+    "question": "What did Nike disclose about litigation risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "litigation",
+      "legal"
+    ]
+  },
+  {
+    "id": 478,
+    "category": "Type2",
+    "question": "What did Netflix disclose about litigation risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "litigation",
+      "legal"
+    ]
+  },
+  {
+    "id": 479,
+    "category": "Type2",
+    "question": "What did JPMorgan disclose about litigation risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "jpmorgan",
+      "jpm",
+      "litigation",
+      "legal"
+    ]
+  },
+  {
+    "id": 480,
+    "category": "Type2",
+    "question": "What did Johnson & Johnson disclose about litigation risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "johnson & johnson",
+      "jnj",
+      "litigation",
+      "legal"
+    ]
+  },
+  {
+    "id": 481,
+    "category": "Type2",
+    "question": "What did Disney disclose about litigation risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "disney",
+      "dis",
+      "litigation",
+      "legal"
+    ]
+  },
+  {
+    "id": 482,
+    "category": "Type2",
+    "question": "What did Pfizer disclose about litigation risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "litigation",
+      "legal"
+    ]
+  },
+  {
+    "id": 483,
+    "category": "Type2",
+    "question": "How did Microsoft describe its pricing strategy in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "microsoft",
+      "msft",
+      "pricing",
+      "strategy"
+    ]
+  },
+  {
+    "id": 484,
+    "category": "Type2",
+    "question": "How did Netflix describe its pricing strategy in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "pricing",
+      "strategy"
+    ]
+  },
+  {
+    "id": 485,
+    "category": "Type2",
+    "question": "How did Nike describe its pricing strategy in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "pricing",
+      "strategy"
+    ]
+  },
+  {
+    "id": 486,
+    "category": "Type2",
+    "question": "How did Disney describe its pricing strategy in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "disney",
+      "dis",
+      "pricing",
+      "strategy"
+    ]
+  },
+  {
+    "id": 487,
+    "category": "Type2",
+    "question": "How did Adobe describe its pricing strategy in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "adobe",
+      "adbe",
+      "pricing",
+      "strategy"
+    ]
+  },
+  {
+    "id": 488,
+    "category": "Type2",
+    "question": "How did Amazon describe its pricing strategy in its 10-K?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "pricing",
+      "strategy"
+    ]
+  },
+  {
+    "id": 489,
+    "category": "Type2",
+    "question": "What did Salesforce say about its R&D investments?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "research",
+      "development",
+      "r&d"
+    ]
+  },
+  {
+    "id": 490,
+    "category": "Type2",
+    "question": "What did Google say about its R&D investments?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "google",
+      "goog",
+      "research",
+      "development",
+      "r&d"
+    ]
+  },
+  {
+    "id": 491,
+    "category": "Type2",
+    "question": "What did Amazon say about its R&D investments?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "research",
+      "development",
+      "r&d"
+    ]
+  },
+  {
+    "id": 492,
+    "category": "Type2",
+    "question": "What did Pfizer say about its R&D investments?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "pfizer",
+      "pfe",
+      "research",
+      "development",
+      "r&d"
+    ]
+  },
+  {
+    "id": 493,
+    "category": "Type2",
+    "question": "What did Boeing say about its R&D investments?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "boeing",
+      "ba",
+      "research",
+      "development",
+      "r&d"
+    ]
+  },
+  {
+    "id": 494,
+    "category": "Type2",
+    "question": "What did Exxon Mobil say about its R&D investments?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "exxon mobil",
+      "xom",
+      "research",
+      "development",
+      "r&d"
+    ]
+  },
+  {
+    "id": 495,
+    "category": "Type2",
+    "question": "How did JPMorgan describe its market position in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "jpmorgan",
+      "jpm",
+      "market",
+      "position"
+    ]
+  },
+  {
+    "id": 496,
+    "category": "Type2",
+    "question": "How did Amazon describe its market position in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "amazon",
+      "amzn",
+      "market",
+      "position"
+    ]
+  },
+  {
+    "id": 497,
+    "category": "Type2",
+    "question": "How did Walmart describe its market position in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "walmart",
+      "wmt",
+      "market",
+      "position"
+    ]
+  },
+  {
+    "id": 498,
+    "category": "Type2",
+    "question": "How did Costco describe its market position in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "costco",
+      "cost",
+      "market",
+      "position"
+    ]
+  },
+  {
+    "id": 499,
+    "category": "Type2",
+    "question": "How did Nike describe its market position in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "market",
+      "position"
+    ]
+  },
+  {
+    "id": 500,
+    "category": "Type2",
+    "question": "How did Netflix describe its market position in its annual filing?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "netflix",
+      "nflx",
+      "market",
+      "position"
+    ]
+  },
+  {
+    "id": 501,
+    "category": "Type2",
+    "question": "What did Tesla say about customer concentration risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "tesla",
+      "tsla",
+      "customer",
+      "concentration",
+      "risk"
+    ]
+  },
+  {
+    "id": 502,
+    "category": "Type2",
+    "question": "What did Salesforce say about customer concentration risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "salesforce",
+      "crm",
+      "customer",
+      "concentration",
+      "risk"
+    ]
+  },
+  {
+    "id": 503,
+    "category": "Type2",
+    "question": "What did Nike say about customer concentration risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nike",
+      "nke",
+      "customer",
+      "concentration",
+      "risk"
+    ]
+  },
+  {
+    "id": 504,
+    "category": "Type2",
+    "question": "What did NVIDIA say about customer concentration risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "nvidia",
+      "nvda",
+      "customer",
+      "concentration",
+      "risk"
+    ]
+  },
+  {
+    "id": 505,
+    "category": "Type2",
+    "question": "What did Exxon Mobil say about customer concentration risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "exxon mobil",
+      "xom",
+      "customer",
+      "concentration",
+      "risk"
+    ]
+  },
+  {
+    "id": 506,
+    "category": "Type2",
+    "question": "What did Costco say about customer concentration risks?",
+    "expected_intent": "Type2",
+    "expected_value": null,
+    "expected_keywords": [
+      "costco",
+      "cost",
+      "customer",
+      "concentration",
+      "risk"
+    ]
+  },
+  {
+    "id": 507,
+    "category": "Type3",
+    "question": "What's the difference between revenue and net income?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "revenue",
+      "net income",
+      "difference"
+    ]
+  },
+  {
+    "id": 508,
+    "category": "Type3",
+    "question": "Do you have quarterly data?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "quarterly",
+      "data"
+    ]
+  },
+  {
+    "id": 509,
+    "category": "Type3",
+    "question": "How do you analyze SEC filings?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "analyze",
+      "sec",
+      "filing"
+    ]
+  },
+  {
+    "id": 510,
+    "category": "Type3",
+    "question": "Who built this system?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "system",
+      "chatbot"
+    ]
+  },
+  {
+    "id": 511,
+    "category": "Type3",
+    "question": "Can you help me with stock trading advice?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "invest",
+      "advice",
+      "not"
+    ]
+  },
+  {
+    "id": 512,
+    "category": "Type3",
+    "question": "What is earnings per share?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "earnings",
+      "share"
+    ]
+  },
+  {
+    "id": 513,
+    "category": "Type3",
+    "question": "Good morning!",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "hello",
+      "good",
+      "help"
+    ]
+  },
+  {
+    "id": 514,
+    "category": "Type3",
+    "question": "What SEC filings do you have access to?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "sec",
+      "filing",
+      "10-k"
+    ]
+  },
+  {
+    "id": 515,
+    "category": "Type3",
+    "question": "Can you compare two companies for me?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "compare",
+      "companies"
+    ]
+  },
+  {
+    "id": 516,
+    "category": "Type3",
+    "question": "How accurate are your financial numbers?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "accurate",
+      "data",
+      "source"
+    ]
+  },
+  {
+    "id": 517,
+    "category": "Type3",
+    "question": "What types of questions can I ask?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "type",
+      "question"
+    ]
+  },
+  {
+    "id": 518,
+    "category": "Type3",
+    "question": "What time period does your data cover?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "period",
+      "data",
+      "year"
+    ]
+  },
+  {
+    "id": 519,
+    "category": "Type3",
+    "question": "What is a 10-K filing?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "10-k",
+      "annual",
+      "sec"
+    ]
+  },
+  {
+    "id": 520,
+    "category": "Type3",
+    "question": "How is net income different from operating income?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "net income",
+      "operating",
+      "difference"
+    ]
+  },
+  {
+    "id": 521,
+    "category": "Type3",
+    "question": "Can you explain what EBITDA means?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "ebitda",
+      "earnings"
+    ]
+  },
+  {
+    "id": 522,
+    "category": "Type3",
+    "question": "What is the difference between assets and liabilities?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "assets",
+      "liabilities",
+      "difference"
+    ]
+  },
+  {
+    "id": 523,
+    "category": "Type3",
+    "question": "Thanks for the help, goodbye!",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": []
+  },
+  {
+    "id": 524,
+    "category": "Type3",
+    "question": "Are you an AI?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "ai",
+      "assistant"
+    ]
+  },
+  {
+    "id": 525,
+    "category": "Type3",
+    "question": "What is free cash flow and why does it matter?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "free cash flow",
+      "cash"
+    ]
+  },
+  {
+    "id": 526,
+    "category": "Type3",
+    "question": "Can you explain gross margin vs operating margin?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "gross margin",
+      "operating margin"
+    ]
+  },
+  {
+    "id": 527,
+    "category": "Type3",
+    "question": "What does it mean when a company has negative equity?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "equity",
+      "negative",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 528,
+    "category": "Type3",
+    "question": "How do I read a balance sheet?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "balance sheet",
+      "assets",
+      "liabilities"
+    ]
+  },
+  {
+    "id": 529,
+    "category": "Type3",
+    "question": "What is goodwill on a balance sheet?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "goodwill",
+      "intangible",
+      "assets"
+    ]
+  },
+  {
+    "id": 530,
+    "category": "Type3",
+    "question": "What is the difference between diluted and basic EPS?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "diluted",
+      "basic",
+      "eps"
+    ]
+  },
+  {
+    "id": 531,
+    "category": "Type3",
+    "question": "Can you help me understand capital expenditure?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "capital expenditure",
+      "capex",
+      "investment"
+    ]
+  },
+  {
+    "id": 532,
+    "category": "Type3",
+    "question": "What does R&D expense tell us about a company?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "research",
+      "development",
+      "r&d",
+      "innovation"
+    ]
+  },
+  {
+    "id": 533,
+    "category": "Type3",
+    "question": "What is operating leverage?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "operating",
+      "leverage",
+      "fixed"
+    ]
+  },
+  {
+    "id": 534,
+    "category": "Type3",
+    "question": "What does a high debt-to-equity ratio mean?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "debt",
+      "equity",
+      "leverage",
+      "ratio"
+    ]
+  },
+  {
+    "id": 535,
+    "category": "Type3",
+    "question": "How do companies use stock buybacks?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "buyback",
+      "repurchase",
+      "shares"
+    ]
+  },
+  {
+    "id": 536,
+    "category": "Type3",
+    "question": "What is working capital?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "working capital",
+      "current assets",
+      "current liabilities"
+    ]
+  },
+  {
+    "id": 537,
+    "category": "Type3",
+    "question": "Can you compare a company's performance year over year?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "year over year",
+      "growth",
+      "compare"
+    ]
+  },
+  {
+    "id": 538,
+    "category": "Type3",
+    "question": "What is the difference between revenue and profit?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "revenue",
+      "profit",
+      "difference"
+    ]
+  },
+  {
+    "id": 539,
+    "category": "Type3",
+    "question": "How do you calculate return on equity?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "return on equity",
+      "roe",
+      "net income"
+    ]
+  },
+  {
+    "id": 540,
+    "category": "Type3",
+    "question": "What are the main sections of a 10-K filing?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "10-k",
+      "section",
+      "risk",
+      "financial"
+    ]
+  },
+  {
+    "id": 541,
+    "category": "Type3",
+    "question": "What is depreciation and amortization?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "depreciation",
+      "amortization",
+      "da"
+    ]
+  },
+  {
+    "id": 542,
+    "category": "Type3",
+    "question": "Can you explain what accounts receivable means?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "accounts receivable",
+      "revenue",
+      "customer"
+    ]
+  },
+  {
+    "id": 543,
+    "category": "Type3",
+    "question": "What is a debt covenant?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "debt",
+      "covenant",
+      "agreement"
+    ]
+  },
+  {
+    "id": 544,
+    "category": "Type3",
+    "question": "What does inventory turnover mean for a retailer?",
+    "expected_intent": "Type3",
+    "expected_value": null,
+    "expected_keywords": [
+      "inventory",
+      "turnover",
+      "retail"
+    ]
+  },
+  {
+    "id": 545,
+    "category": "Type1+Type2",
+    "question": "What was Apple's revenue in FY2024 and how did they describe their growth strategy?",
+    "expected_intent": null,
+    "expected_value": 391035000000.0,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "growth",
+      "strategy"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 546,
+    "category": "Type1+Type2",
+    "question": "What was Microsoft's revenue in FY2024 and how did they describe their growth strategy?",
+    "expected_intent": null,
+    "expected_value": 245122000000.0,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "growth",
+      "strategy"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 547,
+    "category": "Type1+Type2",
+    "question": "What was Google's revenue in FY2024 and how did they describe their growth strategy?",
+    "expected_intent": null,
+    "expected_value": 350018000000.0,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "growth",
+      "strategy"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 548,
+    "category": "Type1+Type2",
+    "question": "What was NVIDIA's revenue in FY2024 and how did they describe their growth strategy?",
+    "expected_intent": null,
+    "expected_value": 60922000000.0,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "growth",
+      "strategy"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 549,
+    "category": "Type1+Type2",
+    "question": "What was Apple's net income in FY2024 and what risks did they identify?",
+    "expected_intent": null,
+    "expected_value": 93736000000.0,
+    "expected_keywords": [
+      "apple",
+      "net income",
+      "risk"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 550,
+    "category": "Type1+Type2",
+    "question": "What was Microsoft's net income in FY2024 and what risks did they identify?",
+    "expected_intent": null,
+    "expected_value": 88136000000.0,
+    "expected_keywords": [
+      "microsoft",
+      "net income",
+      "risk"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 551,
+    "category": "Type1+Type2",
+    "question": "What was Google's net income in FY2024 and what risks did they identify?",
+    "expected_intent": null,
+    "expected_value": 100118000000.0,
+    "expected_keywords": [
+      "google",
+      "net income",
+      "risk"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 552,
+    "category": "Type1+Type2",
+    "question": "What was NVIDIA's net income in FY2024 and what risks did they identify?",
+    "expected_intent": null,
+    "expected_value": 29760000000.0,
+    "expected_keywords": [
+      "nvidia",
+      "net income",
+      "risk"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 553,
+    "category": "Type1+Type2",
+    "question": "Report Apple's FY2024 revenue and discuss their competitive position.",
+    "expected_intent": null,
+    "expected_value": 391035000000.0,
+    "expected_keywords": [
+      "apple",
+      "revenue",
+      "competitive"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 554,
+    "category": "Type1+Type2",
+    "question": "Report Microsoft's FY2024 revenue and discuss their competitive position.",
+    "expected_intent": null,
+    "expected_value": 245122000000.0,
+    "expected_keywords": [
+      "microsoft",
+      "revenue",
+      "competitive"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 555,
+    "category": "Type1+Type2",
+    "question": "Report Google's FY2024 revenue and discuss their competitive position.",
+    "expected_intent": null,
+    "expected_value": 350018000000.0,
+    "expected_keywords": [
+      "google",
+      "revenue",
+      "competitive"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  },
+  {
+    "id": 556,
+    "category": "Type1+Type2",
+    "question": "Report NVIDIA's FY2024 revenue and discuss their competitive position.",
+    "expected_intent": null,
+    "expected_value": 60922000000.0,
+    "expected_keywords": [
+      "nvidia",
+      "revenue",
+      "competitive"
+    ],
+    "expected_sub_intents": [
+      "Type1",
+      "Type2"
+    ]
+  }
+]
