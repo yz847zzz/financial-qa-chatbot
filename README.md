@@ -6,7 +6,7 @@ A production-oriented study of **LLM inference acceleration** applied to a finan
 
 ## Highlights
 
-- **W4A16 AWQ4 is the clear winner** — 6× faster than fp16 at c=1, 20% faster p50 latency overall, with only 0.46% composite accuracy loss
+- **AWQ4 is the clear winner** — 6× faster than fp16 at c=1, 20% faster p50 latency overall, with only 0.46% composite accuracy loss
 - **bitsandbytes INT8 is 52% slower than fp16** on RTX 3090 Ti due to runtime dequantization overhead — not recommended for production
 - **Selective QKV quantization** — only attention Q/K/V projections are quantized to INT4; FFN layers stay in bf16, preserving output quality while capturing the bulk of memory savings
 - **vLLM single-base multi-LoRA** — one 6 GB base model serves NL2SQL, intent classification, and query-rewriting adapters via SGMV batching; ~3× storage reduction vs. separate fine-tuned models
@@ -18,7 +18,7 @@ A production-oriented study of **LLM inference acceleration** applied to a finan
 
 ## Throughput (QPS) vs Concurrency
 
-| Concurrency | fp16 (bfloat16) | int8 (bitsandbytes) | **awq4 (W4A16 Marlin)** |
+| Concurrency | fp16 (bfloat16) | int8 (bitsandbytes) | **awq4 (Marlin)** |
 |:-----------:|:---------------:|:-------------------:|:-----------------------:|
 | 1           | 0.15            | 0.04                | **0.90**                |
 | 2           | 0.51            | 0.18                | **1.34**                |
@@ -84,13 +84,13 @@ GPT-4o generates more fluent prose (higher semantic sim) but **fails on 57% of e
 |---|:---:|:---:|:---:|
 | fp16 (bfloat16) | ~6 GB | ~18 GB | 64 seq |
 | int8 (bitsandbytes) | ~3 GB | ~21 GB | 96 seq |
-| awq4 (W4A16 Marlin) | ~1.5 GB | ~22.5 GB | 128 seq |
+| awq4 (Marlin) | ~1.5 GB | ~22.5 GB | 128 seq |
 
 ---
 
 ## Quantization Strategy: Attention QKV Only
 
-We applied W4A16 INT4 quantization **selectively to attention Q/K/V projection weights** (`q_proj`, `k_proj`, `v_proj`) while keeping FFN layers (gate/up/down projections) in bfloat16.
+We applied INT4 quantization **selectively to attention Q/K/V projection weights** (`q_proj`, `k_proj`, `v_proj`) while keeping FFN layers (gate/up/down projections) in bfloat16.
 
 **Why this decision:**
 
