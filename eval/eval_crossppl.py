@@ -52,7 +52,8 @@ sys.path.insert(0, str(ROOT))
 sys.path.insert(0, str(ROOT / "deployment"))
 sys.path.insert(0, str(Path(__file__).resolve().parent))   # eval/ siblings
 
-RESULTS_DIR = ROOT / "eval" / "results"
+RESULTS_DIR     = ROOT / "eval" / "results"
+NEW_RESULTS_DIR = ROOT / "eval" / "new_eval_results"
 
 # Default result files (latest 556-case runs)
 DEFAULT_FILES = {
@@ -285,7 +286,7 @@ def main():
     print(LINE)
 
     # Save results
-    out = Path(args.output) if args.output else RESULTS_DIR / "crossppl_results.json"
+    out = Path(args.output) if args.output else NEW_RESULTS_DIR / "crossppl_results.json"
     payload = {
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
         "reference_model": "fp16 Llama-3.2-3B-Instruct",
