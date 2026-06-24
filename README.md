@@ -58,8 +58,9 @@ Scoring: intent-aware composite of value accuracy (65% weight for Type1), keywor
 | Intent accuracy | **99.1%** | 98.6% | 97.8% |
 | Latency p50 | 1.47s | 2.24s | **1.18s** |
 
-> Type2 (qualitative) is the most quantization-sensitive dimension: awq4 trails fp16 by 3.1%.
+> Type2 (qualitative RAG) is the most quantization-sensitive: awq4 trails fp16 by 3.1%.
 > Type1 (SQL-grounded) is unaffected — all three reach ≥99% value accuracy.
+> Type3 scores have high variance (42 cases, open-ended chat questions); differences across quantization levels are within noise range and should not be interpreted as a real signal.
 
 ---
 
