@@ -8,7 +8,7 @@ A production-oriented study of **LLM inference acceleration** applied to a finan
 
 - **AWQ4 is the clear winner** — 6× faster than fp16 at c=1, 20% faster p50 latency overall, with only 0.46% composite accuracy loss
 - **bitsandbytes INT8 is 52% slower than fp16** on RTX 3090 Ti due to runtime dequantization overhead — not recommended for production
-- **Selective QKV quantization** — only attention Q/K/V projections are quantized to INT4; FFN layers stay in bf16, preserving output quality while capturing the bulk of memory savings
+- **All-layer INT4 quantization (W4A16)** — every Linear layer (attention + FFN) quantized with group-size 128; only `lm_head` kept in fp16 as it maps directly to token probabilities and is accuracy-sensitive
 - **vLLM single-base multi-LoRA** — one 6 GB base model serves NL2SQL, intent classification, and query-rewriting adapters via SGMV batching; ~3× storage reduction vs. separate fine-tuned models
 - **vLLM PagedAttention + continuous batching** — prefix cache hit rate 89.9% in practice; KV cache managed as virtual memory pages, enabling 3.32 QPS peak at c=16
 - **99.5% value accuracy on 556-case benchmark** vs 42.9% for GPT-4o (knowledge cutoff causes factual hallucination)
@@ -88,21 +88,29 @@ GPT-4o generates more fluent prose (higher semantic sim) but **fails on 57% of e
 
 ---
 
-## Quantization Strategy: Attention QKV Only
+## Quantization Strategy: All Linear Layers (lm_head excluded)
 
-We applied INT4 quantization **selectively to attention Q/K/V projection weights** (`q_proj`, `k_proj`, `v_proj`) while keeping FFN layers (gate/up/down projections) in bfloat16.
+W4A16 INT4 quantization is applied to **all Linear layers** with group-size 128 via llm-compressor oneshot GPTQ. The single exception is `lm_head`.
 
-**Why this decision:**
+```python
+recipe = QuantizationModifier(
+    config_groups={"group_0": QuantizationScheme(
+        targets=["Linear"],          # all attention + FFN layers
+        weights=QuantizationArgs(num_bits=4, group_size=128, ...),
+    )},
+    ignore=["lm_head"],              # kept in fp16
+)
+```
 
-1. **Bandwidth, not compute, is the bottleneck.** Transformer inference at low batch sizes is memory-bandwidth-bound — weights are loaded from HBM for every generated token. Attention QKV projections are accessed on every decode step and are the highest-frequency bottleneck; reducing their size from 2 bytes to 0.5 bytes per weight has an outsized effect on HBM transfer time.
+**Why exclude only `lm_head`:**
+`lm_head` maps the last hidden state directly to logits over the full 32k-token vocabulary — errors here propagate without correction and directly change which token is sampled. It is also tiny (~50 MB) so keeping it in fp16 costs almost nothing in VRAM.
 
-2. **FFN outlier activations resist quantization.** Feed-forward layers in Llama use SwiGLU activation, which produces heavy-tailed feature distributions with large outlier values. Aggressive INT4 quantization of these layers introduces significant representational error. Attention projections have smoother activation distributions and are more amenable to low-bit quantization.
+**Why quantize all other layers equally:**
+Both attention and FFN layers are memory-bandwidth-bound at low batch sizes. Quantizing all of them to INT4 reduces the weight footprint from ~6 GB to ~1.5 GB (4× reduction), which is the primary driver of the throughput gains. Calibration-based GPTQ on domain-specific financial QA data compensates for reduced precision by choosing per-group scale factors that minimise layer-wise reconstruction error.
 
-3. **KV cache headroom.** Smaller Q/K/V weights free up GPU VRAM that would otherwise be occupied by weight pages, leaving more room for the KV cache. This directly increases the max batch size and context length at a given memory budget.
+**Result:** <0.5% overall accuracy degradation (99.5% value accuracy vs 99.0% for fp16) across 556 financial QA cases.
 
-4. **Accuracy result.** QKV-only W4A16 quantization shows <0.5% overall accuracy degradation on our 556-case benchmark (99.5% value accuracy vs 99.0% for fp16), confirming that the remaining bf16 FFN layers absorb the distribution-sensitive computation.
-
-**Why not bitsandbytes INT8?** bitsandbytes dequantizes weights back to bf16 at runtime before each matrix multiply (LLM.int8() approach), adding coordination overhead with no compute savings. Result: 52% slower p50 latency than fp16 on RTX 3090 Ti — worse on every axis.
+**Why not bitsandbytes INT8?** bitsandbytes dequantizes weights back to bf16 at runtime before each matrix multiply, adding coordination overhead with no compute savings. Result: 52% slower p50 latency than fp16 on RTX 3090 Ti in current tests; warrants further investigation before production use.
 
 ---
 
