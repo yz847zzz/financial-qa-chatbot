@@ -51,16 +51,16 @@ Scoring: intent-aware composite of value accuracy (65% weight for Type1), keywor
 | Metric | fp16 | int8 | awq4 |
 |---|:---:|:---:|:---:|
 | **Overall composite** | **0.7177** | 0.7153 | 0.7131 |
-| Type1 — exact facts (397 cases) | **0.7101** | 0.7122 | 0.7065 |
-| Type2 — qualitative RAG (117 cases) | **0.7160** | 0.7009 | 0.6848 |
-| Type3 — chat / meta (42 cases) | 0.7943 | 0.7844 | **0.8548** |
+| SQL 检索回答 — exact facts (397 cases) | **0.7101** | 0.7122 | 0.7065 |
+| VDB 检索回答 — qualitative RAG (117 cases) | **0.7160** | 0.7009 | 0.6848 |
+| 日常问答 — chat / meta (42 cases) | 0.7943 | 0.7844 | **0.8548** |
 | Value accuracy (±5%) | 99.0% | **99.5%** | **99.5%** |
 | Intent accuracy | **99.1%** | 98.6% | 97.8% |
 | Latency p50 | 1.47s | 2.24s | **1.18s** |
 
-> Type2 (qualitative RAG) is the most quantization-sensitive: awq4 trails fp16 by 3.1%.
-> Type1 (SQL-grounded) is unaffected — all three reach ≥99% value accuracy.
-> Type3 scores have high variance (42 cases, open-ended chat questions); differences across quantization levels are within noise range and should not be interpreted as a real signal.
+> VDB 检索回答 (qualitative RAG) is the most quantization-sensitive: awq4 trails fp16 by 3.1%.
+> SQL 检索回答 (SQL-grounded) is unaffected — all three reach ≥99% value accuracy.
+> 日常问答 scores have high variance (42 cases, open-ended chat questions); differences across quantization levels are within noise range.
 
 ---
 
